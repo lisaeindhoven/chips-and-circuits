@@ -1,10 +1,14 @@
-import pandas as pd
+"""
+main.py
+
+Minor Programmeren, Programmeertheorie, Chips & Circuits
+Misbaksels: Mik Schutte, Sebastiaan van der Laan & Lisa Eindhoven
+
+This file is the main python file
+"""
 import os
 
-# Create test netlist
+from helpers import *
 
-netlist_path = 'C:\\Users\\miksc\\OneDrive\\Documenten\\Study\\Minor AI\\Python Scripts\\PT\\chips-and-circuits\\Docs\\example\\netlist_1.csv'
-
-with open(netlist_path) as f:
-    netlist = pd.read_csv(f)
-    print(netlist)
+# Get a dictionary with gate names and coordinates
+gates = get_gates_coordinates()
