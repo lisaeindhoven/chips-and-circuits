@@ -1,14 +1,27 @@
+"""
+helpers.py
+
+Minor Programmeren, Programmeertheorie, Chips & Circuits
+Misbaksels: Mik Schutte, Sebastiaan van der Laan & Lisa Eindhoven
+
+This file contains the helper function for main.py
+"""
 import csv
 
-def get_gates_coordinates():
-    """returns a dictionary with the coordinates of the gates"""
-    gates_csv_path = "Docs\example\print_0.csv"
+from gates import *
 
-    with open(gates_csv_path, mode='r') as f:
+def get_gates():
+    """returns a dictionary with the gate number, coordinate and connected gates"""
+    gate_coordinates_csv_path = "Docs\example\print_0.csv"
+    gate_connections_csv_path = "Docs\example\netlist_1.csv"
+
+    # Get coordinates
+    with open(gate_coordinates_csv_path, mode='r') as f:
         reader = csv.reader(f)
-        gates = {}
+        gates = []
         for row in reader:
-            gates[row[0]] = row[1] + "," + row[2]
-        gates.pop("chip")
-        
+            if row[0] != "chip":
+                gate = Gate(row[1], row[2])
+                gates.append(gate)
+
     return gates
