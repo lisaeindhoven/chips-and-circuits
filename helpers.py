@@ -9,11 +9,8 @@ This file contains the helper function for main.py
 import csv
 
 from gates import *
-<<<<<<< HEAD
 from grid import *
-=======
 from nets import *
->>>>>>> 4ddc0522a05eb135bd44d91e8dac9e62bb8f7167
 
 def get_gates_and_nets():
     """returns a dictionary with the gate number, coordinate and connected gates"""
