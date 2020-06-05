@@ -12,4 +12,5 @@ from helpers import *
 
 # Get a dictionary with gate names, coordinates and connections
 gates = get_gates()
-print(gates[0].x_coordinate)
+
+print(gates[0].connections)
