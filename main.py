@@ -10,6 +10,5 @@ import os
 
 from helpers import *
 
-# Get a dictionary with gate names, coordinates and connections
-gates = get_gates()
-print(gates[0].x_coordinate)
+# Get gates and nets list with all the gates and nets
+gates, nets = get_gates_and_nets()
