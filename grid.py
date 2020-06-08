@@ -1,21 +1,21 @@
-''''
-grid.py
+''''grid.py
 
-File containing the Grid class, used to create a grid matrix and
-to place gates.
-'''
+File containing the Grid class, used to create a grid-matrix and
+to place gates'''
 
 import numpy as np
+#TODO name class Grid(), or Matrix()?
 
 class Grid():
     def __init__(self, gate_list):
-        self.gate_list = gate_list
+        self.matrix = self.make_matrix(gate_list)
+        self.fill_matrix(gate_list)
 
 
     def make_matrix(self, gate_list):
-        """ Determines the dimension of the grid based on
+        """ Determines the dimensions of the matrix based on
             the highest x and y value of a gate's location
-            and creates a matrix with these dimensions.""" 
+            and creates a matrix with these dimensions""" 
         x_list = []
         y_list = []
 
@@ -25,17 +25,16 @@ class Grid():
 
         self.x_dim = max(x_list) + 1
         self.y_dim = max(y_list) + 1
-
-        self.grid = np.zeros(shape = (self.x_dim, self.y_dim))
+        return np.empty(shape=(self.x_dim, self.y_dim), dtype=object)
     
 
-    def set_gates(self, gate_list):
+    def fill_matrix(self, gate_list):
         """ Places gates from gate_list at their respective 
-            location on the grid."""
+            location on the grid-matrix"""
         for gate in gate_list:
-            self.grid[gate.x][gate.y] = 1 #Or Grid ID
+            self.matrix[gate.x][gate.y] = gate
 
 
-    def show_grid(self):
-        """ Displays the grid matrix filled thus far.""""
-        print(self.grid)
+    def show_matrix(self):
+        """ Displays the grid-matrix filled thus far"""
+        return self.matrix
