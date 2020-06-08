@@ -13,5 +13,5 @@ from helpers import *
 # Get gates and nets list with all the gates and nets
 gates, nets = get_gates_and_nets()
 
+# Create a matrix of the grid with all the gates
 grid = Grid(gates)
-print(grid.show_matrix())
