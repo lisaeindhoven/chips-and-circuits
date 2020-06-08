@@ -36,11 +36,9 @@ class Grid():
             self.matrix[gate.x][gate.y] = gate
 
         # Add list to every open space for possible wire.
-        for row in range(self.x_dim):
-            for column in range(self.y_dim):
-                if not self.matrix[row][column]:
-                    self.matrix[row][column] = [0,0]
-
+        for idx, obj in np.ndenumerate(self.matrix):
+            if not obj:
+                self.matrix[idx] = []
 
     def show_matrix(self):
         """Displays the grid-matrix filled thus far"""
