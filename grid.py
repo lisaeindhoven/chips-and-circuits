@@ -26,7 +26,8 @@ class Grid():
         self.x_dim = max(x_list) + 1
         self.y_dim = max(y_list) + 1
 
-        self.grid = np.zeros(shape = (self.x_dim, self.y_dim))
+        # self.grid = np.zeros(shape = (self.x_dim, self.y_dim))
+        self.grid = 
     
 
     def set_gates(self, gate_list):
