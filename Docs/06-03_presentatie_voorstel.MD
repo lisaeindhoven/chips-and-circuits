@@ -1,3 +1,5 @@
+# voorlopige opzet
+
 Toestandsruimte / state space:
     - alle logische configuraties: 
         elke weg (tussen twee aangrenzende coordinaten) kan wel of niet bezet worden * n (zonder enig constraint, dus inclusief dubbele alignments).
@@ -29,5 +31,7 @@ Datastructuur:
 
         - adjacency dict met gate(s) met dict met de route [(1,5),(2,5),(3,5),(4,5),(5,5),(6,5)]
 
+EN / OF:
 
-Python Graphs:
+Numpy driedimensionale array met min path.
+
