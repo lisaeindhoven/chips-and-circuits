@@ -17,8 +17,7 @@ class Nets():
 
     def get_connection(self):
         """return tuple of the connected gate ids"""
-        connection = (self.begin_gate.id, self.end_gate.id)
-        return connection
+        return (self.begin_gate.id, self.end_gate.id)
 
     def add_wire(self, coordinate):
         """add new coordinate to the route"""
