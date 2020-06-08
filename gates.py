@@ -16,6 +16,9 @@ class Gate():
 
         # TODO variabele om verbindingen op te slaan en voltooid weer te geven en bij te houden
 
+    def __str__(self):
+        return "Gate" + self.id
+
     def add_connection(self, connection):
         """add a gate object to connections"""
         self.connections.append(connection)

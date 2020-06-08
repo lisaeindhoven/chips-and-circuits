@@ -29,12 +29,23 @@ class Grid():
     
 
     def fill_matrix(self, gate_list):
-        """ Places gates from gate_list at their respective 
+        """Places gates from gate_list at their respective 
             location on the grid-matrix"""
+        # Add every gate into the matrix
         for gate in gate_list:
             self.matrix[gate.x][gate.y] = gate
 
+        # Add list to every open space for possible wire.
+        for row in range(self.x_dim):
+            for column in range(self.y_dim):
+                if not self.matrix[row][column]:
+                    self.matrix[row][column] = [0,0]
+
 
     def show_matrix(self):
-        """ Displays the grid-matrix filled thus far"""
+        """Displays the grid-matrix filled thus far"""
         return self.matrix
+
+    def item(self, coordinate):
+        """Returns the item in the given coordinate"""
+        return self.matrix.item(coordinate)
