@@ -1,8 +1,8 @@
 # stapsgewijs pseudocode versie 0.1: RANDOM ./gates&netlist/chip_0/netlist_1.csv
 
-1) random gate kiezen
+1) random wire kiezen uit netlist
 
-2) random verbinding kiezen tussen gate uit 1) en een van de twee mogelijke vriendjes
+2) random start kiezen uit die twee gates, ander is eindpunt
 
 3) random richting: 
     - 1-4 opties: TEL OPTIES IN MATRIX
