@@ -7,6 +7,7 @@
 3) random richting: 
     - 1-4 opties: TEL OPTIES IN MATRIX
         - niet terug
+        - voorkeur voor LEEG punt
         keuze gemaakt:
         PAD TOEVOEGEN AAN WIRELIJST IN GATEOBJECT
         PAD TOEVOEGEN IN MATRIX
