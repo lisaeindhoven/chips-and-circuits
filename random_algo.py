@@ -5,6 +5,7 @@ def random_algo(grid, gates, nets):
     # Get a random connection from the netlist
     nets_copy = copy.deepcopy(nets)
     random.shuffle(nets_copy)
+    conflict = 0
     while nets_copy:
         current_net = nets_copy.pop()
         coordinate = current_net.get_coordinates()
@@ -35,26 +36,38 @@ def random_algo(grid, gates, nets):
             east = (current_coordinate[0]+1, current_coordinate[1])
             options = [north, south, west, east]
             random.shuffle(options)
-            while options:
+
+            while len(options) > 0:
+                print(options)
                 current_option = options.pop()
                 print(f"current option = {current_option}")
-                try:
+                # if current_option
+                try: 
                     item = grid.item(current_option)
+                    print(f"try: {item}")
+                    print(if item == [])
+                    if item and item == []:
+                        # TODO: wat gebeurd er als options leeg is
+                        current_net.add_wire(current_option)
+                        print(f"current {current_coordinate}")
+                        print(f"goal {goal_coordinate}")
+                        if current_option != goal_coordinate:
+                            print("hier")
+                            grid.add_wire(current_option, current_net)
+                            print(grid.show_matrix())
+                        current_coordinate = copy.deepcopy(current_option)
+                        print(f"stap gezet naar {current_coordinate}")
+                        break
                 except:
-                    continue
+                    print("except")
 
                 # TODO: kijken of er omheen al het eindpunt zit
-                if item == []:
-                    break
-
-            # TODO: wat gebeurd er als options leeg is
-
-            current_net.add_wire(current_option)
-            if current_option != goal_coordinate:
-                grid.add_wire(current_option, current_net)
+            # TODO: wat gebeurd er als options leeg is en we niet opnieuw naar while current_coordinate 
+            conflict += 1
+            break
             
-            current_coordinate = copy.deepcopy(current_option)
-            print(f"stap gezet naar {current_coordinate}")
+
+                
 
         # TODO 4) stukje gelegd
         #           a) wire af? -> stap 5

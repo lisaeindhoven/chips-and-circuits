@@ -46,8 +46,9 @@ class Grid():
 
     def item(self, coordinate):
         """ Returns the item in the given coordinate"""
+        print(self.matrix.item(coordinate))
         return self.matrix.item(coordinate)
 
     def add_wire(self, coordinate, net):
         """ Add a net to the grid-matrix"""
-        self.matrix[coordinate].append(net)   #Naast gate, neem gate?
+        self.matrix[coordinate].append(net)
