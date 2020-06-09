@@ -18,6 +18,7 @@ gates, nets = get_gates_and_nets()
 grid = Grid(gates)
 
 # TODO: algorithm/heuristics, create wires and save them in the nets and matrix
+# run = random_algo(grid, gates, nets)
 
 # Get results and create csv file
-get_results(nets, grid)
+print(get_results(nets, grid))

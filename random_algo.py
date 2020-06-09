@@ -1,6 +1,6 @@
 import os
 
-def random_algo():
+def random_algo(grid, gates, nets):
     # TODO 1) pak random connectie uit netlist
 
     # TODO 2) pak random beginpunt van die twee gates, sla ook eindpunt op als xy coordinaat
