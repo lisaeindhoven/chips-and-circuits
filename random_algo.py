@@ -36,7 +36,7 @@ def random_algo(grid, gates, nets):
             east = (current_coordinate[0]+1, current_coordinate[1])
             options = [north, south, west, east]
             random.shuffle(options)
-
+            counter = 0
             while len(options) > 0:
                 print(options)
                 current_option = options.pop()
@@ -45,8 +45,7 @@ def random_algo(grid, gates, nets):
                 try: 
                     item = grid.item(current_option)
                     print(f"try: {item}")
-                    print(if item == [])
-                    if item and item == []:
+                    if item == []:
                         # TODO: wat gebeurd er als options leeg is
                         current_net.add_wire(current_option)
                         print(f"current {current_coordinate}")
@@ -58,13 +57,18 @@ def random_algo(grid, gates, nets):
                         current_coordinate = copy.deepcopy(current_option)
                         print(f"stap gezet naar {current_coordinate}")
                         break
+                    else:
+                        print("plek bezet")
                 except:
+                    counter += 1
                     print("except")
 
                 # TODO: kijken of er omheen al het eindpunt zit
             # TODO: wat gebeurd er als options leeg is en we niet opnieuw naar while current_coordinate 
             conflict += 1
-            break
+            print(conflict)
+
+    
             
 
                 
