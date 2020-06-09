@@ -9,18 +9,16 @@ def get_results(nets, grid):
     for net in nets:
         wire_count += (len(net.wires) - 1)
 
-    # Check grid matrix for intersections
-    for row in range(grid.x_dim):
-            for column in range(grid.y_dim):
-                coordinate_value = grid.matrix[row][column]
-
+    # Check grid matrix for intersections           
     for index, coordinate_value in np.ndenumerate(grid.matrix):
-        if coordinate_value:
+        if coordinate_value != []:
             continue
-        if len(coordinate_value) == 2:       #TODO Nest deze if loop.
+
+        # TODO: hier kan wire count worden gebruikt
+        if len(coordinate_value) == 2:
             intersection_count += 1
         elif len(coordinate_value) > 2:
-            print("CONFLIFT op", index)
+            print("CONFLIFT op", index) 
 
     # Count total costs
     total_costs = wire_count + 300 * intersection_count
@@ -36,4 +34,4 @@ def get_results(nets, grid):
         writer.writerow(["NAME CHIP", total_costs])
 
         
-    print(total_costs)
+    return total_costs

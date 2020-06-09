@@ -37,6 +37,6 @@ def get_gates_and_nets():
                 gates[int(row[0])-1].add_net(net)
                 gates[int(row[1])-1].add_net(net)
                 nets.append(net)
-            count += 1
+                count += 1
 
     return gates, nets
