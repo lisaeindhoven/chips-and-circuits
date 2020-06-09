@@ -46,7 +46,6 @@ class Grid():
 
     def item(self, coordinate):
         """ Returns the item in the given coordinate"""
-        print(self.matrix.item(coordinate))
         return self.matrix.item(coordinate)
 
     def add_wire(self, coordinate, net):

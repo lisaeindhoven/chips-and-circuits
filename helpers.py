@@ -12,11 +12,8 @@ from gates import *
 from grid import *
 from nets import *
 
-def get_gates_and_nets():
+def get_gates_and_nets(gate_coordinates_csv_path, gate_connections_csv_path):
     """returns a dictionary with the gate number, coordinate and connected gates"""
-    gate_coordinates_csv_path = "Docs/example/print_0.csv"
-    gate_connections_csv_path = "Docs/example/netlist_1.csv"
-
     # Get coordinates
     with open(gate_coordinates_csv_path, mode='r') as f:
         reader = csv.reader(f)

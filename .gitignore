@@ -1,1 +1,4 @@
-__pycache_
+__pycache__/
+*.py[cod]
+
+Docs/Results
