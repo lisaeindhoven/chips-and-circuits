@@ -1,4 +1,5 @@
 import csv
+import numpy as np
 
 def get_results(nets, grid):
     wire_count = 0
@@ -12,13 +13,15 @@ def get_results(nets, grid):
     for row in range(grid.x_dim):
             for column in range(grid.y_dim):
                 coordinate_value = grid.matrix[row][column]
-                if coordinate_value != []:
-                    continue
-                if len(coordinate_value) == 2:
-                    intersection_count += 1
-                elif len(coordinate_value) > 2:
-                    print("CONFLIFT op (" + grid.x_dim + ", " + grid.y_dim + ")")
-    
+
+    for index, coordinate_value in np.ndenumerate(grid.matrix):
+        if coordinate_value:
+            continue
+        if len(coordinate_value) == 2:       #TODO Nest deze if loop.
+            intersection_count += 1
+        elif len(coordinate_value) > 2:
+            print("CONFLIFT op", index)
+
     # Count total costs
     total_costs = wire_count + 300 * intersection_count
     

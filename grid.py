@@ -2,8 +2,8 @@
 
 File containing the Grid class, used to create a grid-matrix and
 to place gates'''
-
 import numpy as np
+
 #TODO name class Grid(), or Matrix()?
 
 class Grid():
@@ -29,7 +29,7 @@ class Grid():
     
 
     def fill_matrix(self, gate_list):
-        """Places gates from gate_list at their respective 
+        """ Places gates from gate_list at their respective 
             location on the grid-matrix"""
         # Add every gate into the matrix
         for gate in gate_list:
@@ -41,9 +41,13 @@ class Grid():
                 self.matrix[index] = []
 
     def show_matrix(self):
-        """Displays the grid-matrix filled thus far"""
+        """ Displays the grid-matrix filled thus far"""
         return self.matrix
 
     def item(self, coordinate):
-        """Returns the item in the given coordinate"""
+        """ Returns the item in the given coordinate"""
         return self.matrix.item(coordinate)
+
+    def add_wire(self, coordinate, net):
+        """ Add a net to the grid-matrix"""
+        self.matrix[coordinate].append(net)   #Naast gate, neem gate?
