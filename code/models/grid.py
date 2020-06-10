@@ -10,9 +10,6 @@ class Grid():
     def __init__(self, gate_list):
         self.matrix = self.make_matrix(gate_list)
         self.fill_matrix(gate_list)
-        self.x_dim = 0
-        self.y_dim = 0
-        self.z_dim = 0
 
 
     def make_matrix(self, gate_list):
@@ -28,7 +25,8 @@ class Grid():
 
         self.x_dim = max(x_list) + 1
         self.y_dim = max(y_list) + 1
-        return np.empty(shape=(self.x_dim, self.y_dim), dtype=object)
+        self.z_dim = 8
+        return np.empty(shape=(self.x_dim, self.y_dim, self.z_dim), dtype=object)
     
 
     def fill_matrix(self, gate_list):

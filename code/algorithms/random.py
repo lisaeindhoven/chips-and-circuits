@@ -1,9 +1,11 @@
-import random, copy
+import random as rnd
+import copy
 
 # TODO: prints weghalen!!
 # TODO: header schrijven
+# TODO: huisvesten in een class?
 
-def random_algo(grid, gates, nets):
+def random(grid, gates, nets):
     """ Header"""
     # TODO: conflict weghalen, het is nu voor ons om te kijken hoeveel paden niet volledig gemaakt zijn
     conflict = 0
@@ -12,7 +14,7 @@ def random_algo(grid, gates, nets):
     random_net_ids = []
     for net in nets:
         random_net_ids.append(net.id - 1)
-    random.shuffle(random_net_ids)
+    rnd.shuffle(random_net_ids)
 
     # for every net in random order
     for random_net in random_net_ids:
@@ -30,12 +32,14 @@ def random_algo(grid, gates, nets):
             print(f"current {current_coordinate}")
 
             # Find path options
-            north = (current_coordinate[0], current_coordinate[1]+1)
-            south = (current_coordinate[0], current_coordinate[1]-1)
-            west = (current_coordinate[0]-1, current_coordinate[1])
-            east = (current_coordinate[0]+1, current_coordinate[1])
-            options = [north, south, west, east]
-            random.shuffle(options)
+            north = (current_coordinate[0], current_coordinate[1]+1, current_coordinate[2])
+            south = (current_coordinate[0], current_coordinate[1]-1, current_coordinate[2])
+            west = (current_coordinate[0]-1, current_coordinate[1], current_coordinate[2])
+            east = (current_coordinate[0]+1, current_coordinate[1], current_coordinate[2])
+            up = (current_coordinate[0], current_coordinate[1], current_coordinate[2]+1)
+            down = (current_coordinate[0], current_coordinate[1], current_coordinate[2]-1)
+            options = [north, south, west, east, up, down]
+            rnd.shuffle(options)
             print(f"options {options}")
 
             # This boolean will change if there if a path found and saved
@@ -46,7 +50,7 @@ def random_algo(grid, gates, nets):
                 print(f"current option = {current_option}")
 
                 # Filter invalid options
-                if min(current_option) < 0 or current_option[0] >= grid.x_dim or current_option[1] >= grid.y_dim:
+                if min(current_option) < 0 or current_option[0] >= grid.x_dim or current_option[1] >= grid.y_dim or current_option[2] >= grid.z_dim:
                     print("not a valid option, next option")
                     continue
                 

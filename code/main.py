@@ -29,7 +29,9 @@ grid = Grid(gates)
 
 # TODO: keuzemenu voor verschillende algoritmes die ook de resultaten ervan in de goede map weergeeft
 # Algorithm/heuristics, create wires and save them in the nets and matrix
-run = random_algo(grid, gates, nets)
+run = random(grid, gates, nets)
+
+print(grid.show_matrix())
 
 # TODO: maak de map voor resultaten anders per ander algoritme door keuzemenu
 # Get results and create csv file
