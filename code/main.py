@@ -18,8 +18,8 @@ from algorithms.random import *
 # TODO: dit allemaal in if main = main gebeuren?
 
 # Specify what gate and what nets csv file to take
-gate_coordinates_csv_path = "Docs/example/print_0.csv"
-gate_connections_csv_path = "Docs/example/netlist_1.csv"
+gate_coordinates_csv_path = "docs/example/print_0.csv"
+gate_connections_csv_path = "docs/example/netlist_1.csv"
 
 # Get gates and nets list with all the gates and nets
 gates, nets = get_gates_and_nets(gate_coordinates_csv_path, gate_connections_csv_path)
@@ -33,7 +33,7 @@ run = random(grid, gates, nets)
 
 # TODO: maak de map voor resultaten anders per ander algoritme door keuzemenu
 # Get results and create csv file
-save_folder = "Docs/Results/Random/"
+save_folder = "docs/Results/Random/"
 # TODO: de chipnaam moet veranderd worden aan de variabele die bij de gate en nets geimporteerd wordden
 chip_name = "chip_0_net_1"
 print(get_results(save_folder, chip_name, nets, grid))

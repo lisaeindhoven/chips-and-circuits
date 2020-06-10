@@ -41,8 +41,9 @@ def get_results(save_folder, chip_name, nets, grid):
         writer = csv.writer(f)
         writer.writerow(["net", "wires"])
         # TODO: coordinaten worden nu met spaties gegeven, check50 vind dit niet okay
+        # TODO: verwijder net.completed uit de csv
         for net in nets:
-            writer.writerow([net.get_connection(), net.wires])
+            writer.writerow([net.completed, net.get_connection(), net.wires])
         writer.writerow([chip_name, total_costs])
 
     return f"Total costs: {total_costs}. Total conflicts: {conflict_count}"

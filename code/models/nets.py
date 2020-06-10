@@ -12,6 +12,7 @@ class Nets():
         self.begin_gate = begin_gate
         self.end_gate = end_gate
         self.wires = []
+        self.completed = False
 
         self.wires.append(begin_gate.coordinate())
 
