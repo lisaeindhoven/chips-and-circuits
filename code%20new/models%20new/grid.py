@@ -10,6 +10,9 @@ class Grid():
     def __init__(self, gate_list):
         self.matrix = self.make_matrix(gate_list)
         self.fill_matrix(gate_list)
+        self.x_dim = 0
+        self.y_dim = 0
+        self.z_dim = 0
 
 
     def make_matrix(self, gate_list):
@@ -33,7 +36,7 @@ class Grid():
             location on the grid-matrix"""
         # Add every gate into the matrix
         for gate in gate_list:
-            self.matrix[gate.x][gate.y] = gate
+            self.matrix[gate.x][gate.y][gate.z] = gate
 
         # Add list to every open space for possible wire.
         for index, obj in np.ndenumerate(self.matrix):

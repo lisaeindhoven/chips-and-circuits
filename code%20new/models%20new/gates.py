@@ -11,6 +11,7 @@ class Gate():
         self.id = int(id)
         self.x = int(x)
         self.y = int(y)
+        self.z = 0
         self.nets = []
         self.connections = []
 
@@ -28,6 +29,6 @@ class Gate():
         self.nets.append(net)
 
     def coordinate(self):
-        """returns the (x,y) from this gate"""
-        coordinate = (self.x, self.y)
+        """returns the (x,y, z) from this gate"""
+        coordinate = (self.x, self.y, self.z)
         return coordinate
