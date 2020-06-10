@@ -55,6 +55,8 @@ def random(grid, gates, nets):
                     continue
                 
                 item = grid.item(current_option)
+
+                if 
         
                 # In this algorithm, we only add a wire if there isnt one already
                 if item == []:

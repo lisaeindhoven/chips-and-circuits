@@ -31,8 +31,6 @@ grid = Grid(gates)
 # Algorithm/heuristics, create wires and save them in the nets and matrix
 run = random(grid, gates, nets)
 
-print(grid.show_matrix())
-
 # TODO: maak de map voor resultaten anders per ander algoritme door keuzemenu
 # Get results and create csv file
 save_folder = "Docs/Results/Random/"
