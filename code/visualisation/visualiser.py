@@ -1,10 +1,9 @@
-import IPython
 import matplotlib.pyplot as plt
 import numpy as np
 from mpl_toolkits import mplot3d
-from helpers import *
+from code.helpers import  *
 
-def visualizer(grid, gates, paths):
+def visualiser(grid, gates, paths):
     """ Create a plot, showing the grid with placed gates and formed paths.
     """
     x_dim, y_dim, z_dim = [grid.x_dim, grid.y_dim, grid.z_dim]
@@ -17,7 +16,7 @@ def visualizer(grid, gates, paths):
 
     # Create and plot grid structure
     x = np.arange(0, x_dim, 1)
-    y = np.arange(0, x_dim, 1)
+    y = np.arange(0, y_dim, 1)
     xx, yy = np.meshgrid(x, y, sparse=False)
     for z in np.arange(start=0, stop=z_dim):
         plt.plot(xx, yy, z, 'gray')
@@ -42,10 +41,5 @@ def visualizer(grid, gates, paths):
     #     ax.view_init(30, angle)
     #     plt.draw()
     #     plt.pause(0.05)
-    ax.view_init(20, 30)
+    #     ax.view_init(20, 30)
     plt.show()
-
-if __name__ == '__main__':
-    visualizer(grid, gates, paths)
-
-# %%

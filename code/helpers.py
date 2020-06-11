@@ -8,9 +8,9 @@ This file contains the helper function for main.py
 """
 import csv
 
-from models.gates import *
-from models.grid import *
-from models.nets import *
+from .models.gates import *
+from .models.grid import *
+from .models.nets import *
 
 def get_gates_and_nets(gate_coordinates_csv_path, gate_connections_csv_path):
     """returns a dictionary with the gate number, coordinate and connected gates"""
