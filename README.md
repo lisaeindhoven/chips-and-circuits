@@ -27,7 +27,7 @@ TODO
 # heuristics
 TODO
 
-# visualization
+# visualisation
 TODO
 
 # team Misbaksels
