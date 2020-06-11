@@ -15,7 +15,7 @@ The most important files and folders of this project are:
         main.py --- main file
         /algorithms --- contains task selection and pathfinding algorithms
         /models --- contains TODO hernoemen naar classes?
-        /visualization ---
+        /visualisation ---
     /data # TODO
         /input --- contains all gates and their coordinates, and in some cases the netlist.
         /results --- results are generated here (in the prescribed format).
