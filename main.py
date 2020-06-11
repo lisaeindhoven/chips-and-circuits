@@ -12,17 +12,17 @@ import random
 import csv
 import numpy as np
 
-#from helpers import *
 from code.save_results import *
 from code.algorithms.random import *
 from code.helpers import *
-# from code.visualisation.visualiser import *
+from code.visualisation.visualiser import *
 
 if __name__ == "__main__":
 
     # Specify what gate and what nets csv file to take
     gate_coordinates_csv_path = "data/input/gates&netlists/chip_0/print_0.csv"
     gate_connections_csv_path = "data/input/gates&netlists/chip_0/netlist_1.csv"
+    paths_csv = "data/highlighted_results/random/chip_0_net_1/output_06.11.2020_10.44.27.csv"
 
     # Get gates and nets list with all the gates and nets
     gates, nets = get_gates_and_nets(gate_coordinates_csv_path, gate_connections_csv_path)
@@ -41,9 +41,9 @@ if __name__ == "__main__":
     chip_name = "chip_0_net_1"
     print(get_results(save_folder, chip_name, nets, grid))
 
-    # # Visualisation
-    # paths = []
-    # paths.append([(1,5,0),(2,5,0),(3,5,0),(3,5,1),(4,5,1),(4,5,0),(5,5,0),(6,5,0)])
-    # paths.append([(6,2,0),(6,3,0),(6,4,0),(6,5,0)])
+    # Visualisation
+    paths = get_paths(paths_csv)
+    visualiser(grid, gates, paths_csv)
+    
 
-    # visualiser(grid, gates, paths)
+

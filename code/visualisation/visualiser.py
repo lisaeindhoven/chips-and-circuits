@@ -3,10 +3,15 @@ import numpy as np
 from mpl_toolkits import mplot3d
 from code.helpers import  *
 
+# TODO implement paths as csv and list
 def visualiser(grid, gates, paths):
     """ Create a plot, showing the grid with placed gates and formed paths.
     """
     x_dim, y_dim, z_dim = [grid.x_dim, grid.y_dim, grid.z_dim]
+
+    # If input was file as string, make paths list
+    if isinstance(paths, str):
+        paths = get_paths(paths)
 
     # Plot 3D axes
     fig = plt.figure(figsize=(x_dim, z_dim))
@@ -14,7 +19,7 @@ def visualiser(grid, gates, paths):
     ax.set_zlim(0, z_dim*0.5)
     plt.axis('off')
     
-    #Create and plot grid structure
+    # Create and plot grid structure  ##TODO Wel of geen Grid?
     x = np.arange(0, x_dim+1, 1)
     y = np.arange(0, y_dim+2, 1)
     xx, yy = np.meshgrid(x, y)
@@ -24,7 +29,6 @@ def visualiser(grid, gates, paths):
 
     # Place gates
     x_scat, y_scat, z_scat = [[], [], []]
-
     for gate in gates:
         x_scat.append(gate.x)
         y_scat.append(gate.y)
@@ -32,9 +36,12 @@ def visualiser(grid, gates, paths):
     ax.scatter3D(x_scat, y_scat, z_scat, s=100, marker='s', c='red')
 
     # Place paths
+    colors = iter(plt.cm.rainbow(np.linspace(0,1,len(paths))))
     for path in paths:
-        x_val = [xy[0] for xy in path]
-        y_val = [xy[1] for xy in path]
-        plt.plot(x_val, y_val, 'blue')
+        x_val = [xyz[0] for xyz in path]
+        y_val = [xyz[1] for xyz in path]
+        z_val = [xyz[2] for xyz in path]
+        c = next(colors)
+        plt.plot(x_val, y_val, z_val, c=c)
 
     plt.show()    

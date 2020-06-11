@@ -6,7 +6,7 @@ Misbaksels: Mik Schutte, Sebastiaan van der Laan & Lisa Eindhoven
 
 This file contains the helper function for main.py
 """
-import csv
+import csv, ast
 
 from .models.gates import *
 from .models.grid import *
@@ -37,3 +37,13 @@ def get_gates_and_nets(gate_coordinates_csv_path, gate_connections_csv_path):
                 count += 1
 
     return gates, nets
+
+def get_paths(path_csv):
+    """gets the path coordinates from an output.csv file"""
+    with open(path_csv, mode='r') as f:
+        reader = csv.reader(f)
+        paths = []
+        for row in reader:
+             if 'True' in row:
+                paths.append(ast.literal_eval(row[2]))
+    return paths
