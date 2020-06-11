@@ -7,6 +7,7 @@ Misbaksels: Mik Schutte, Sebastiaan van der Laan & Lisa Eindhoven
 This file contains the class gates and all the functions of the class
 """
 class Gate():
+    # header
     def __init__(self, id, x, y):
         self.id = int(id)
         self.x = int(x)
@@ -16,9 +17,6 @@ class Gate():
         self.connections = []
 
         # TODO variabele om verbindingen op te slaan en voltooid weer te geven en bij te houden
-
-    def __str__(self):
-        return "Gate" + self.id
 
     def add_connection(self, connection):
         """add a gate object to connections"""

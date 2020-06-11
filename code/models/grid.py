@@ -8,6 +8,9 @@ import numpy as np
 
 class Grid():
     def __init__(self, gate_list):
+        self.x_dim = 0
+        self.y_dim = 0
+        self.z_dim = 8
         self.matrix = self.make_matrix(gate_list)
         self.fill_matrix(gate_list)
 
@@ -25,7 +28,6 @@ class Grid():
 
         self.x_dim = max(x_list) + 1
         self.y_dim = max(y_list) + 1
-        self.z_dim = 8
         return np.empty(shape=(self.x_dim, self.y_dim, self.z_dim), dtype=object)
     
 
