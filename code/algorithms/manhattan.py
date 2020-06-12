@@ -44,6 +44,8 @@ def max_net(nets):
         of the longest manhattan distance in the provided netlist """
     manh_netlist = measurement_list(nets)
     max_net = max(manh_netlist, key=lambda k: manh_netlist[k])
+    max_distance = manh_netlist[max_net]
+    return {max_net: max_distance}
 
 def max_nets(nets):
     """ returns the net.id and distance of the (equally) 
