@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 from mpl_toolkits import mplot3d
-from code.helpers import  *
+from code.helpers import  get_paths
 
 # TODO implement paths as csv and list
 def visualiser(grid, gates, paths):
@@ -36,12 +36,10 @@ def visualiser(grid, gates, paths):
     ax.scatter3D(x_scat, y_scat, z_scat, s=100, marker='s', c='red')
 
     # Place paths
-    colors = iter(plt.cm.rainbow(np.linspace(0,1,len(paths))))
     for path in paths:
         x_val = [xyz[0] for xyz in path]
         y_val = [xyz[1] for xyz in path]
         z_val = [xyz[2] for xyz in path]
-        c = next(colors)
-        plt.plot(x_val, y_val, z_val, c=c)
+        plt.plot(x_val, y_val, z_val)
 
     plt.show()    

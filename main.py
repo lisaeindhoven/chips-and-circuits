@@ -12,10 +12,11 @@ import random
 import csv
 import numpy as np
 
-from code.save_results import *
+from code.models.grid import Grid
+from code.save_results import get_results
 from code.algorithms.random import *
-from code.helpers import *
-from code.visualisation.visualiser import *
+from code.helpers import get_gates_and_nets, get_paths
+from code.visualisation.visualiser import visualiser 
 
 if __name__ == "__main__":
 
@@ -43,7 +44,7 @@ if __name__ == "__main__":
 
     # Visualisation
     paths = get_paths(paths_csv)
-    visualiser(grid, gates, paths_csv)
+    #visualiser(grid, gates, paths_csv)
     
 
 
