@@ -14,7 +14,8 @@ import numpy as np
 
 from code.models.grid import Grid
 from code.save_results import get_results
-from code.algorithms.random import *
+from code.algorithms.random_algo import *
+from code.algorithms.dijkstra import Dijkstra
 from code.helpers import get_gates_and_nets, get_paths
 from code.visualisation.visualiser import visualiser 
 
@@ -42,9 +43,18 @@ if __name__ == "__main__":
     chip_name = "chip_0_net_1"
     print(get_results(save_folder, chip_name, nets, grid))
 
+    # Dijkstra
+    bigpath =[]
+    for net in nets:
+        dijk = Dijkstra(grid, net)
+        dijk.make_path()
+        bigpath.append(dijk.path)
+    print(bigpath)
+
     # Visualisation
-    paths = get_paths(paths_csv)
-    #visualiser(grid, gates, paths_csv)
+    #paths = get_paths(paths_csv)
+    visualiser(grid, gates, bigpath)
+    
     
 
 
