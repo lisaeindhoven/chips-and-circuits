@@ -114,5 +114,5 @@ def reached_end(current_option, grid, current_net):
 def lay_wire(current_net, current_option, grid):
     """ Lay wire on grid, add it to net and change current coordinates """
     current_net.add_wire(current_option)
-    grid.add_wire(current_option, current_net.id)
+    grid.add_wire(current_option, current_net)
     return copy.deepcopy(current_option)
