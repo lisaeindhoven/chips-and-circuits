@@ -23,7 +23,7 @@ if __name__ == "__main__":
 
     # Specify what gate and what nets csv file to take
     gate_coordinates_csv_path = "data/input/gates&netlists/chip_0/print_0.csv"
-    gate_connections_csv_path = "data/input/gates&netlists/chip_0/netlist_1.csv"
+    gate_connections_csv_path = "data/input/gates&netlists/chip_0/netlist_2.csv"
     paths_csv = "data/highlighted_results/random/chip_0_net_1/output_06.11.2020_10.44.27.csv"
 
     # Get gates and nets list with all the gates and nets
@@ -34,27 +34,24 @@ if __name__ == "__main__":
 
     # TODO: keuzemenu voor verschillende algoritmes die ook de resultaten ervan in de goede map weergeeft
     # Algorithm/heuristics, create wires and save them in the nets and matrix
-    random(grid, gates, nets)
+    #random(grid, gates, nets)
 
     # TODO: maak de map voor resultaten anders per ander algoritme door keuzemenu
     # Get results and create csv file
     save_folder = "data/results/random/chip_0_net_1/"
-    # TODO: de chipnaam moet veranderd worden aan de variabele die bij de gate en nets geimporteerd wordden
+    # TODO: de chipnaam moet veranderd worden aan de variabele die bij de gate en nets geimporteerd worden
     chip_name = "chip_0_net_1"
     print(get_results(save_folder, chip_name, nets, grid))
 
-    # Dijkstra
+    #Dijkstra
     bigpath =[]
     for net in nets:
         dijk = Dijkstra(grid, net)
         dijk.make_path()
         bigpath.append(dijk.path)
-    print(bigpath)
 
     # Visualisation
     #paths = get_paths(paths_csv)
+    #print(bigpath)
     visualiser(grid, gates, bigpath)
     
-    
-
-
