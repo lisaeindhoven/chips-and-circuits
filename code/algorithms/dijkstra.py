@@ -10,7 +10,7 @@ This file contains the dijkstra class which uses heuristics to be awesome.
 from code.models.gates import Gate
 from code.algorithms.random_algo import *
 from code.algorithms.manhattan import measure
-import queue 
+import queue, math
 
 class Dijkstra():
     """ Class containing dijkstra's shortes path algorithm, which is improved upon using
@@ -45,21 +45,19 @@ class Dijkstra():
             if (isinstance(self.grid.matrix[current], Gate) and current != self.begin_coordinate):
                 continue
             
-            #print(self.grid.x_dim)
             options = filter_options(find_options(current), self.grid)
             for neighbour in options:
-             #   print(neighbour)
-
-                # Code was here again
+    
+                # Determine move's cost.
                 cost = self.check_neighbour(neighbour, current)
-                if cost:
-                    new_cost = self.current_cost[current] + cost 
+                new_cost = self.current_cost[current] + cost 
 
-                    if (neighbour not in self.archive or new_cost < self.current_cost[neighbour]):
-                        self.current_cost[neighbour] = new_cost
-                        priority = new_cost + measure(current, neighbour)
-                        self.frontier.put(neighbour, priority)
-                        self.archive[neighbour] = current
+                # Create archive shortest routes.
+                if (neighbour not in self.archive or new_cost < self.current_cost[neighbour]):
+                    self.current_cost[neighbour] = new_cost
+                    priority = new_cost + measure(current, neighbour)
+                    self.frontier.put(neighbour, priority)
+                    self.archive[neighbour] = current
 
 
     def make_path(self):
@@ -93,16 +91,23 @@ class Dijkstra():
         return self.path
 
     def check_neighbour(self, neighbour, current):
-        """ Head
+        """ Takes in neighbour and current coordinate and returns 
+            it's costs.
         """
-        # Check if intersection and adjust cost.
+        # Check if intersection or collision and adjust cost.
         cost = 1
-        if (isinstance(self.grid.matrix[neighbour], list) and len(self.grid.matrix[neighbour]) == 1):
+        if (isinstance(self.grid.matrix[neighbour], list) and len(self.grid.matrix[neighbour]) > 0):
             cost = 301
 
+            # Check for collision near gate
             if (self.end_coordinate in self.grid.matrix[neighbour][0].wires):
-                return False
+                return math.inf
         
-        #TODO collisions not near gate
+        # Check for collision not near gate TODO: Check all neighbours in list
+            if current in self.grid.matrix[neighbour][0].wires:
+                idx = self.grid.matrix[neighbour][0].wires.index(neighbour)
+                if (self.grid.matrix[neighbour][0].wires[idx+1] == current or 
+                    self.grid.matrix[neighbour][0].wires[idx-1] == current):
+                    return math.inf
 
         return cost
