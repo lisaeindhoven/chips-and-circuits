@@ -47,3 +47,9 @@ def get_paths(path_csv):
              if 'True' in row:
                 paths.append(ast.literal_eval(row[2]))
     return paths
+
+def all_nets_completed(nets):
+    for net in nets:
+        if net.completed == False:
+            return False
+    return True
