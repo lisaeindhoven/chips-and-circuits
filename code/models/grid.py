@@ -26,8 +26,10 @@ class Grid():
             x_list.append(gate.x)
             y_list.append(gate.y)
 
-        self.x_dim = max(x_list) + 1
-        self.y_dim = max(y_list) + 1
+        # Dimensions increased by 2 to excede gate by one and adjust
+        # adjust for indexing.
+        self.x_dim = max(x_list) + 2
+        self.y_dim = max(y_list) + 2
         return np.empty(shape=(self.x_dim, self.y_dim, self.z_dim), dtype=object)
     
 
