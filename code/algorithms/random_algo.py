@@ -96,7 +96,7 @@ def filter_options(options, grid):
     """ Check if options are within grid parameters """
     valid_options = []
     for option in options:
-        if not (min(option) < 0 or option[0] >= grid.x_dim or option[1] >= grid.y_dim or option[2] >= grid.z_dim):
+        if not (min(option) <= -1 or option[0] >= grid.x_dim or option[1] >= grid.y_dim or option[2] >= grid.z_dim):
             valid_options.append(option)
     return valid_options
                     
