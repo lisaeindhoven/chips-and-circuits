@@ -47,7 +47,7 @@ class Dijkstra():
             
             options = filter_options(find_options(current), self.grid)
             for neighbour in options:
-    
+
                 # Determine move's cost.
                 cost = self.check_neighbour(neighbour, current)
                 new_cost = self.current_cost[current] + cost 
@@ -99,15 +99,34 @@ class Dijkstra():
         if (isinstance(self.grid.matrix[neighbour], list) and len(self.grid.matrix[neighbour]) > 0):
             cost = 301
 
+            #TODO GEEFT GATES EEN LIJST OM NETS IN TE GOUDEN
+
             # Check for collision near gate
-            if (self.end_coordinate in self.grid.matrix[neighbour][0].wires):
-                return math.inf
+            # if (self.end_coordinate in self.grid.matrix[neighbour][0].wires):
+            #     return math.inf
+
+            # if (self.begin_coordinate in self.grid.matrix[neighbour][0].wires):
+            #     return math.inf
         
         # Check for collision not near gate TODO: Check all neighbours in list
             if current in self.grid.matrix[neighbour][0].wires:
                 idx = self.grid.matrix[neighbour][0].wires.index(neighbour)
-                if (self.grid.matrix[neighbour][0].wires[idx+1] == current or 
+
+                if(self.begin_coordinate == (6,2,0)):
+                    print(self.grid.matrix[neighbour][0].wires[idx+1] == current) 
+                    print(self.grid.matrix[neighbour][0].wires[idx-1] == current)
+
+                if not (self.grid.matrix[neighbour][0].wires[idx+1] == current or 
                     self.grid.matrix[neighbour][0].wires[idx-1] == current):
                     return math.inf
 
+        # if not isinstance(self.grid.matrix[neighbour], list):
+        #     idx = self.grid.matrix[current][0].wires.index(current)
+            
+        #     # if eindpunt
+        #     if not self.grid.matrix[current][0].wires[idx+1] == neighbour:
+        #         return math.inf
+        #     # if beginpunt
+        #     if not self.grid.matrix[current][0].wires[idx-1] == neighbour:
+        #         return math.inf
         return cost
