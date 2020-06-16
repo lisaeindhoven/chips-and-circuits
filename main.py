@@ -23,7 +23,7 @@ if __name__ == "__main__":
 
     # Specify what gate and what nets csv file to take
     gate_coordinates_csv_path = "data/input/gates&netlists/chip_0/print_0.csv"
-    gate_connections_csv_path = "data/input/gates&netlists/chip_0/netlist_2.csv"
+    gate_connections_csv_path = "data/input/gates&netlists/chip_0/netlist_3.csv"
     paths_csv = "data/highlighted_results/random/chip_0_net_1/output_06.11.2020_10.44.27.csv"
 
     # Get gates and nets list with all the gates and nets
@@ -47,6 +47,7 @@ if __name__ == "__main__":
     bigpath =[]
     for net in nets:
         dijk = Dijkstra(grid, net)
+        dijk.expand_frontier()
         dijk.make_path()
         bigpath.append(dijk.path)
 
