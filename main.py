@@ -24,8 +24,8 @@ from code.algorithms.select_net import get_min_freedom_net
 if __name__ == "__main__":
 
     # Specify what gate and what nets csv file to take
-    gate_coordinates_csv_path = "data/input/gates&netlists/chip_1/print_1.csv"
-    gate_connections_csv_path = "data/input/gates&netlists/chip_1/netlist_6.csv"
+    gate_coordinates_csv_path = "data/input/gates&netlists/chip_0/print_0.csv"
+    gate_connections_csv_path = "data/input/gates&netlists/chip_0/netlist_1.csv"
 
     # Get gates and nets list with all the gates and nets
     gates, nets = get_gates_and_nets(gate_coordinates_csv_path, gate_connections_csv_path)
@@ -37,7 +37,7 @@ if __name__ == "__main__":
     # Algorithm/heuristics, create wires and save them in the nets and matrix
     #random(grid, gates, nets)
 
-    # Dijkstra
+    # Dijkstra```
     bigpath =[]
     uncompleted = True
     # Kies de net met minste extra freedom
@@ -46,7 +46,7 @@ if __name__ == "__main__":
         net = nets[net_id]
         dijk = Dijkstra(grid, net)
         dijk.expand_frontier()
-        dijk.make_path(nets)
+        dijk.make_path()
         bigpath.append(dijk.path)
         uncompleted = uncompleted_nets(nets)
 
