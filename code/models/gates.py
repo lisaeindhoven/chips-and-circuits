@@ -15,6 +15,7 @@ class Gate():
         self.z = 0
         self.nets = []
         self.connections = []
+        self.wires = {}
 
         # TODO variabele om verbindingen op te slaan en voltooid weer te geven en bij te houden
 
