@@ -49,8 +49,11 @@ def menu():
         algorithm = int(input("Kies het nummer van de algorithme (1, 2 of 3): "))
         
     if algorithm == 1:
+        # TODO: optie geven om te loopen tot er een goede oplossing is gevonden
         random_net_ids = get_random_nets(nets)
         random(grid, gates, random_net_ids, nets)
+
+        # Great bigpath for the visualisation
         bigpath = create_bigpath(nets)
 
     elif algorithm == 2:

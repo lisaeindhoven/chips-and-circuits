@@ -21,6 +21,7 @@ def random(grid, gates, random_net_ids, nets):
         create_net(random_net, nets, grid)
         if nets[random_net].completed == False:
             conflicts += 1
+            
     nets_count = len(nets)
     solved_nets = nets_count - conflicts
     print(f"Total nets: {nets_count}, solved: {solved_nets}, conflicts: {conflicts}.")
@@ -45,6 +46,8 @@ def create_net(random_net, nets, grid):
         # check if one of the option is already the end gate
         for current_option in options:
             found_path, current_coordinates = reached_end(current_option, grid, current_net)
+            if found_path:
+                break
 
         if not found_path:
             # create valid path if possible
@@ -100,10 +103,6 @@ def reached_end(current_option, grid, current_net):
 
 def lay_wire(current_net, current_option, grid):
     """ Lay wire on grid, add it to net and change current coordinates """
-
-    nu = current_net.wires[-1]
-    if abs(nu[0]-current_option[0]) + abs(nu[1]-current_option[1]) + abs(nu[2]-current_option[2]) != 1:
-        print(f"FOUTTTT NU{nu}, WIL LEGGEn {current_option} MOET EIGENLIJK VAN NAAr {current_net.get_coordinates()}")
     current_net.add_wire(current_option)
     grid.add_wire(current_option, current_net)
     return copy.deepcopy(current_option)
