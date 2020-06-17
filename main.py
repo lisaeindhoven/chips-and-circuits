@@ -10,6 +10,7 @@ This file is the main python file
 import os
 import random
 import csv
+import math
 import numpy as np
 
 from code.models.grid import Grid

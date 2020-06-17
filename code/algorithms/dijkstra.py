@@ -89,11 +89,10 @@ class Dijkstra():
             if len(self.grid.matrix[coordinate]) > 1:
                 self.intersection_count += 1
 
-        # nets to gate
+        # Add the wirepath to the gate object
         self.grid.matrix[self.begin_coordinate].wires[self.net.id] = self.path
         self.grid.matrix[self.end_coordinate].wires[self.net.id] = self.path
 
-     
         return self.path
 
     def check_neighbour(self, neighbour, current):
@@ -105,52 +104,28 @@ class Dijkstra():
         if (isinstance(self.grid.matrix[neighbour], list) and len(self.grid.matrix[neighbour]) >= 1):
             cost = 301
 
-            # Out of gate
+            # From gate to neighbour collision
             for neighbournet in self.grid.matrix[neighbour]:
-                if (self.end_coordinate is neighbournet.wires[-1] or self.end_coordinate is neighbournet.wires[0]):
-                    return math.inf
-                    print(current, neighbour)
-                if (self.begin_coordinate is neighbournet.wires[-1] or self.begin_coordinate is neighbournet.wires[0]):
+                if (self.begin_coordinate == neighbournet.wires[-1] 
+                    or self.begin_coordinate == neighbournet.wires[0]):
                     return math.inf 
+            
+                # Double intersection collision
+                idx = neighbournet.wires.index(neighbour)
+                if (neighbournet.wires[idx+1] == current
+                    or neighbournet.wires[idx-1] == current):
+                    return math.inf
 
-            # To gate
+        # From current to gate collision
         elif isinstance(self.grid.matrix[neighbour], Gate):
             for net in self.grid.matrix[neighbour].wires:
-                if (self.end_coordinate is self.grid.matrix[neighbour].wires[net][-1]
-                    or self.end_coordinate is self.grid.matrix[neighbour].wires[net][0]):
+
+                if (self.end_coordinate == self.grid.matrix[neighbour].wires[net][0]
+                    and current == self.grid.matrix[neighbour].wires[net][1]):
                     return math.inf
-                if (self.begin_coordinate is self.grid.matrix[neighbour].wires[net][-1]
-                    or self.begin_coordinate is self.grid.matrix[neighbour].wires[net][0]):
+
+                elif (self.end_coordinate == self.grid.matrix[neighbour].wires[net][-1]
+                    and current == self.grid.matrix[neighbour].wires[net][-2]):
                     return math.inf
-                
-        return cost
-
-
-
-        #     #TODO GEEFT GATES EEN LIJST OM NETS IN TE GOUDEN
-
-        #     # Check for collision near gate
-        #     # if (self.end_coordinate in self.grid.matrix[neighbour][0].wires):
-        #     #     return math.inf
-
-        #     # if (self.begin_coordinate in self.grid.matrix[neighbour][0].wires):
-        #     #     return math.inf
-        
-        # # Check for collision not near gate TODO: Check all neighbours in list
-        #     if current in self.grid.matrix[neighbour][0].wires:
-        #         idx = self.grid.matrix[neighbour][0].wires.index(neighbour)
-
-        #         if not (self.grid.matrix[neighbour][0].wires[idx+1] == current or 
-        #             self.grid.matrix[neighbour][0].wires[idx-1] == current):
-        #             return math.inf
-
-        # # if not isinstance(self.grid.matrix[neighbour], list):
-        # #     idx = self.grid.matrix[current][0].wires.index(current)
-            
-        # #     # if eindpunt
-        # #     if not self.grid.matrix[current][0].wires[idx+1] == neighbour:
-        # #         return math.inf
-        # #     # if beginpunt
-        # #     if not self.grid.matrix[current][0].wires[idx-1] == neighbour:
-        # #         return math.inf
-       
+      
+        return cost 
