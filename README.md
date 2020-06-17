@@ -11,7 +11,7 @@ The following packages have been used to run the code and determine chip layout.
 * matplotlib
 
 ## Usage
-Run "python main.py", to generate results (with the newest version installed as per requirements.txt). This will prompt the user for specifics on which algorithm to run and what heuristics to use. After the option is selected the algorithm will run and conclude with a matplotlib visualisation
+Run "python main.py", to generate results (with the newest version installed as per requirements.txt). This will prompt the user for specifics on which algorithm to run and what heuristics to use. After the option is selected the algorithm will run and conclude with a matplotlib visualisation.
 ![matplotlib visualisation](/docs/visualised_chip.png).
 
 ## Files

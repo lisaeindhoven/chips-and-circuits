@@ -24,8 +24,8 @@ from code.algorithms.select_net import get_min_freedom_net
 if __name__ == "__main__":
 
     # Specify what gate and what nets csv file to take
-    gate_coordinates_csv_path = "data/input/gates&netlists/chip_0/print_0.csv"
-    gate_connections_csv_path = "data/input/gates&netlists/chip_0/netlist_1.csv"
+    gate_coordinates_csv_path = "data/input/gates&netlists/chip_1/print_1.csv"
+    gate_connections_csv_path = "data/input/gates&netlists/chip_1/netlist_4.csv"
 
     # Get gates and nets list with all the gates and nets
     gates, nets = get_gates_and_nets(gate_coordinates_csv_path, gate_connections_csv_path)
@@ -37,26 +37,34 @@ if __name__ == "__main__":
     # Algorithm/heuristics, create wires and save them in the nets and matrix
     #random(grid, gates, nets)
 
-    # Dijkstra```
+    # Dijkstra`
     bigpath =[]
     uncompleted = True
-    # Kies de net met minste extra freedom
-    while uncompleted:
-        net_id = get_min_freedom_net(gates, grid)
-        net = nets[net_id]
-        dijk = Dijkstra(grid, net)
-        dijk.expand_frontier()
-        dijk.make_path()
-        bigpath.append(dijk.path)
-        uncompleted = uncompleted_nets(nets)
-
-    # TODO: maak de map voor resultaten anders per ander algoritme door keuzemenu
-    # Get results and create csv file
-    save_folder = "data/results/random/chip_0_net_1/"
-    # TODO: de chipnaam moet veranderd worden aan de variabele die bij de gate en nets geimporteerd worden
-    chip_name = "chip_0_net_1"
-    print(get_results(save_folder, chip_name, nets, grid))
+    for net in nets:
+        dijkstra = Dijkstra(grid, net)
+        dijkstra.expand_frontier()
+        dijkstra.make_path()
+        bigpath.append(dijkstra.path)
 
     # Visualisation
     visualiser(grid, gates, bigpath)
+
+    # Kies de net met minste extra freedom
+    # while uncompleted:
+    #     net_id = get_min_freedom_net(gates, grid)
+    #     net = nets[net_id]
+    #     dijk = Dijkstra(grid, net)
+    #     dijk.expand_frontier()
+    #     dijk.make_path()
+    #     bigpath.append(dijk.path)
+    #     uncompleted = uncompleted_nets(nets)
+
+    # TODO: maak de map voor resultaten anders per ander algoritme door keuzemenu
+    # Get results and create csv file
+    # save_folder = "data/results/random/chip_0_net_1/"
+    # # TODO: de chipnaam moet veranderd worden aan de variabele die bij de gate en nets geimporteerd worden
+    # chip_name = "chip_0_net_1"
+    # print(get_results(save_folder, chip_name, nets, grid))
+
+    
     
