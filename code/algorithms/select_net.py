@@ -13,9 +13,9 @@ def get_random_nets(nets):
     """Returns a list of net ids in random order from the not completed nets"""
     random_net_ids = []
     for net in nets:
-        if not net.completed:
-            random_net_ids.append(net.id - 1)
+        random_net_ids.append(net.id - 1)
     rnd.shuffle(random_net_ids)
+    return random_net_ids
 
 def get_min_freedom_net(gates, grid):
     """Returns the net id for the algorithm
@@ -47,8 +47,6 @@ def get_min_freedom_net(gates, grid):
         if gate_info[1] != 0:
             calculate[index + 1] = gate_info[0] - gate_info[1]
     
-
-
     # Get the gate with the min value
     minimum =  [key for key in calculate if 
         all(calculate[temp] >= calculate[key] 

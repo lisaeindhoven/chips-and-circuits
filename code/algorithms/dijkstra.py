@@ -8,6 +8,7 @@ This file contains the dijkstra class which uses heuristics to be awesome.
 """
 
 from code.models.gates import Gate
+# TODO: schrijf precies wat je van random algo nodig heb
 from code.algorithms.random_algo import *
 from code.algorithms.manhattan import measure
 import queue, math

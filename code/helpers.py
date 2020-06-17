@@ -49,7 +49,15 @@ def get_paths(path_csv):
     return paths
 
 def uncompleted_nets(nets):
+    """Check if there are uncompleted nets, return True if there are, otherwise False"""
     for net in nets:
         if net.completed == False:
             return True
     return False
+
+def create_bigpath(nets):
+    """Return a list with lists of wires from every net"""
+    bigpath = []
+    for net in nets:
+        bigpath.append(net.wires)
+    return bigpath

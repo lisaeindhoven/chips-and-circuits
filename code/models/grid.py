@@ -4,8 +4,6 @@ File containing the Grid class, used to create a grid-matrix and
 to place gates'''
 import numpy as np
 
-#TODO name class Grid(), or Matrix()?
-
 class Grid():
     def __init__(self, gate_list):
         self.x_dim = 0

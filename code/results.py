@@ -64,8 +64,8 @@ def save_results(save_folder, chip_name, nets, total_costs):
 
     with open(result_doc, mode='w', newline='') as f:
         writer = csv.writer(f)
-        writer.writerow(["connected","net","wires"])
-        # TODO: verwijder net.completed uit de csv
+        writer.writerow(["net","wires"])
+        # TODO: verwijder net.completed uit de csv voor check50
         for net in nets:
             # TODO: kan dit makkelijker zonder spaties?
             net.wires = str(net.wires)

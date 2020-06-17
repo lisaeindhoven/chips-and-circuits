@@ -17,8 +17,6 @@ class Gate():
         self.connections = []
         self.wires = {}
 
-        # TODO variabele om verbindingen op te slaan en voltooid weer te geven en bij te houden
-
     def add_connection(self, connection):
         """add a gate object to connections"""
         self.connections.append(connection)

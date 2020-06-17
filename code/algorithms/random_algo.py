@@ -10,14 +10,9 @@ you should use the function random. But you can also use parts.
 import random as rnd
 import copy
 
-def random(grid, gates, nets):
+def random(grid, gates, random_net_ids, nets):
     """ This algorithm attempts to connect all the gates in random order,
         randomly proceeding until it either reaches the connectable gate or is stuck """
-    # TODO: conflicts weghalen, het is nu voor ons om te kijken hoeveel paden niet volledig gemaakt zijn
-
-    # randomizes the provided netlist
-    random_net_ids = randomize_netlist(nets)
-
     # we count whenever an attempt to connect two gates fails
     conflicts = 0
 
@@ -29,14 +24,6 @@ def random(grid, gates, nets):
     nets_count = len(nets)
     solved_nets = nets_count - conflicts
     print(f"Total nets: {nets_count}, solved: {solved_nets}, conflicts: {conflicts}.")
-
-def randomize_netlist(nets):
-    """ Return shuffled list of net ids """
-    random_net_ids = []
-    for net in nets:
-        random_net_ids.append(net.id - 1)
-    rnd.shuffle(random_net_ids)
-    return random_net_ids
 
 def create_net(random_net, nets, grid):
     """ Attempt to connect two gates via a net """
@@ -113,6 +100,10 @@ def reached_end(current_option, grid, current_net):
 
 def lay_wire(current_net, current_option, grid):
     """ Lay wire on grid, add it to net and change current coordinates """
+
+    nu = current_net.wires[-1]
+    if abs(nu[0]-current_option[0]) + abs(nu[1]-current_option[1]) + abs(nu[2]-current_option[2]) != 1:
+        print(f"FOUTTTT NU{nu}, WIL LEGGEn {current_option} MOET EIGENLIJK VAN NAAr {current_net.get_coordinates()}")
     current_net.add_wire(current_option)
     grid.add_wire(current_option, current_net)
     return copy.deepcopy(current_option)
