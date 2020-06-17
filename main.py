@@ -10,6 +10,7 @@ This file is the main python file
 import os
 import random
 import csv
+import math
 import numpy as np
 
 from code.models.grid import Grid
@@ -22,8 +23,8 @@ from code.visualisation.visualiser import visualiser
 if __name__ == "__main__":
 
     # Specify what gate and what nets csv file to take
-    gate_coordinates_csv_path = "data/input/gates&netlists/chip_0/print_0.csv"
-    gate_connections_csv_path = "data/input/gates&netlists/chip_0/netlist_2.csv"
+    gate_coordinates_csv_path = "data/input/gates&netlists/chip_1/print_1.csv"
+    gate_connections_csv_path = "data/input/gates&netlists/chip_1/netlist_4.csv"
     paths_csv = "data/highlighted_results/random/chip_0_net_1/output_06.11.2020_10.44.27.csv"
 
     # Get gates and nets list with all the gates and nets
@@ -36,13 +37,6 @@ if __name__ == "__main__":
     # Algorithm/heuristics, create wires and save them in the nets and matrix
     #random(grid, gates, nets)
 
-    # TODO: maak de map voor resultaten anders per ander algoritme door keuzemenu
-    # Get results and create csv file
-    save_folder = "data/results/random/chip_0_net_1/"
-    # TODO: de chipnaam moet veranderd worden aan de variabele die bij de gate en nets geimporteerd worden
-    chip_name = "chip_0_net_1"
-    print(get_results(save_folder, chip_name, nets, grid))
-
     # Dijkstra
     bigpath =[]
     for net in nets:
@@ -50,6 +44,15 @@ if __name__ == "__main__":
         dijk.expand_frontier()
         dijk.make_path()
         bigpath.append(dijk.path)
+
+    # TODO: maak de map voor resultaten anders per ander algoritme door keuzemenu
+    # Get results and create csv file
+    save_folder = "data/results/random/chip_1_net_4/"
+    # TODO: de chipnaam moet veranderd worden aan de variabele die bij de gate en nets geimporteerd worden
+    chip_name = "chip_0_net_1"
+    print(get_results(save_folder, chip_name, nets, grid))
+
+
 
     # Visualisation
     visualiser(grid, gates, bigpath)

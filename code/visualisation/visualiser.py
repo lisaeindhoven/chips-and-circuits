@@ -31,8 +31,10 @@ def visualiser(grid, gates, paths):
     ax.set_ylim(0, y_dim-1)
 
     # Disable x and y ticks and set correct z ticks.
-    ax.set_xticklabels([])
-    ax.set_yticklabels([])
+    # ax.set_xticklabels([])
+    # ax.set_yticklabels([])
+    ax.set_xticks(np.arange(0, x_dim, 1))
+    ax.set_yticks(np.arange(0, y_dim, 1))
     ax.set_zticks(np.arange(0, z_dim, 1))
 
     # Place gates
