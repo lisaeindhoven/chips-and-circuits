@@ -11,7 +11,8 @@ The following packages have been used to run the code and determine chip layout.
 * matplotlib
 
 ## Usage
-Run "python main.py", to generate results (with the newest version installed as per requirements.txt). This will prompt the user for specifics on which algorithm to run and what heuristics to use. After the option is selected the algorithm will run and conclude with a ![matplotlib visualisation](/docs/visualised_chip.png).
+Run "python main.py", to generate results (with the newest version installed as per requirements.txt). This will prompt the user for specifics on which algorithm to run and what heuristics to use. After the option is selected the algorithm will run and conclude with a matplotlib visualisation
+![matplotlib visualisation](/docs/visualised_chip.png).
 
 ## Files
 The repository is organised into three main folders: code, data and docs. The root additionally contains the main.py file, used to run the program.
@@ -42,7 +43,7 @@ A matplotlib 3D plot will be shown at the end of a main.py run. This visualisati
 Lisa Eindhoven, Sebastiaan van der Laan and Mik Schutte - as part of Programmeertheorie, Minor Programmeren aan de UvA. A special tip of the fedora to TA Quinten for challenging and helping us.
 
 ## License 
-This repository has been licensed under the MIT licence. Read ![LICENCE.txt](LICENCE.txt) for the full terms and conditions.
+This repository has been licensed under the MIT licence. Read [LICENCE.txt](https://github.com/lisaeindhoven/chips-and-circuits/blob/master/LICENSE.txt) for the full terms and conditions.
 
 ## Project Status
 As of 23-06-2020 work on this project has ended.
