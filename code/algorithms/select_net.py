@@ -48,12 +48,11 @@ def get_min_freedom_net(gates, grid):
             calculate[index + 1] = gate_info[0] - gate_info[1]
     
 
+
+    # Get the gate with the min value
     minimum =  [key for key in calculate if 
         all(calculate[temp] >= calculate[key] 
         for temp in calculate)]
-
-    # Get the gate with the min value
-    # minimum = min(calculate.keys(), key=(lambda k: calculate[k]))
     gate = gates[rnd.choice(minimum) - 1]
 
     # Return the net id from an uncompleted net
