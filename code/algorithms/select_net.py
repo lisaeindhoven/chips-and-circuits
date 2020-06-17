@@ -7,6 +7,7 @@ Misbaksels: Mik Schutte, Sebastiaan van der Laan & Lisa Eindhoven
 This file contains every function to get nets in different orders.
 """
 import random as rnd
+from code.algorithms.random_algo import filter_options, find_options
 
 def get_random_nets(nets):
     """Returns a list of net ids in random order from the not completed nets"""
@@ -17,56 +18,41 @@ def get_random_nets(nets):
     rnd.shuffle(random_net_ids)
 
 def get_min_freedom_net(gates, grid):
-    """Returns a net id based on the freedom around the gate"""
+    """Returns the net id for the algorithm
+    Based on freedom around the gate and uncompleted nets from the gate"""
     count_freedom_and_uncompleted = []
 
-    # Go through every gate and count the neighbour freedom
+    # Go through every gate to find the information needed
     for gate in gates:
-        # first item is the available freedom and the second is the not nr not completed nets of the gate
         count_freedom_and_uncompleted.append([0, 0])
-
-        # Check if there is a net uncompleted in this gate
-        not_completed = False
+        completed = True
+        # Count uncompleted nets
         for net in gate.nets:
             if net.completed == False:
-                not_completed = True
-                break
-            else:
+                completed = False
                 count_freedom_and_uncompleted[gate.id - 1][1] += 1
         
-        # Count number of free spots
-        if not_completed:
+        # Count the freedom around the gate
+        if not completed:
             coordinates = gate.coordinate()
-
-            # TODO: is kopie van random_algo
-            north = (coordinates[0], coordinates[1]+1, coordinates[2])
-            south = (coordinates[0], coordinates[1]-1, coordinates[2])
-            west = (coordinates[0]-1, coordinates[1], coordinates[2])
-            east = (coordinates[0]+1, coordinates[1], coordinates[2])
-            up = (coordinates[0], coordinates[1], coordinates[2]+1)
-            down = (coordinates[0], coordinates[1], coordinates[2]-1)
-
-            options = [north, south, west, east, up, down]
-
+            options = filter_options(find_options(coordinates), grid)
             for option in options:
-                if not (min(option) < 0 or option[0] >= grid.x_dim or option[1] >= grid.y_dim or option[2] >= grid.z_dim):
-                    if grid.item(option) == []:
-                        count_freedom_and_uncompleted[gate.id - 1][0] += 1
+                if grid.item(option) == []:
+                    count_freedom_and_uncompleted[gate.id - 1][0] += 1
+    
+    # Create a dictionary of the uncompleted gates with their values
+    calculate = {}
+    for index in range(len(count_freedom_and_uncompleted)):
+        gate_info = count_freedom_and_uncompleted[index]
+        if gate_info[1] != 0:
+            calculate[index + 1] = gate_info[0] - gate_info[1]
+    
+    # Get the gate with the min value
+    minimum = min(calculate.keys(), key=(lambda k: calculate[k]))
+    gate = gates[minimum - 1]
 
-    for gate in count_freedom_and_uncompleted:
-        if gate[1] != 0:
-            gate = gate[0] / gate[1]
-
-    # Get the gate with min freedom and return the first uncompleted net
-    gate_index = count_freedom_and_uncompleted.index(min(count_freedom_and_uncompleted))
-    for net in gates[gate_index
-    ].nets:
+    # Return the net id from an uncompleted net
+    for net in gate.nets:
         if net.completed == False:
-            return net.id
-
-    # TODO afwegen tegen hoeveel open connecties
-
-
-
-        
+            return net.id - 1
 

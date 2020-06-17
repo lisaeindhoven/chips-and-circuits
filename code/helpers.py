@@ -48,8 +48,8 @@ def get_paths(path_csv):
                 paths.append(ast.literal_eval(row[2]))
     return paths
 
-def all_nets_completed(nets):
+def uncompleted_nets(nets):
     for net in nets:
         if net.completed == False:
-            return False
-    return True
+            return True
+    return False
