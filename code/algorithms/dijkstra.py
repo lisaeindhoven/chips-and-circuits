@@ -19,23 +19,23 @@ class Dijkstra():
     def __init__(self, grid, net):
         self.net = net
         self.begin_coordinate, self.end_coordinate = self.net.get_coordinates()
-        self.frontier = queue.PriorityQueue()
-        self.archive = {}
         self.grid = grid
 
     def expand_frontier(self):
         """ Picks and removes a location from the frontier and expands it by looking at
-            it's neighbours. Any neighbours no visited will be added to the frontier.
+            it's neighbours. Any neighbours not visited will be added to the frontier.
         """
-        self.frontier.put(self.begin_coordinate, 0)
+        frontier = queue.PriorityQueue()
+        frontier.put(self.begin_coordinate, 0)
+        self.archive = {}
         self.archive[self.begin_coordinate] = None
-        self.current_cost = {}
-        self.current_cost[self.begin_coordinate] = 0
+        current_cost = {}
+        current_cost[self.begin_coordinate] = 0
 
         # Pick neighbour from the frontier and expand it by adding its
         # own neighbours to the frontier.
-        while not self.frontier.empty():
-            current = self.frontier.get()
+        while not frontier.empty():
+            current = frontier.get()
 
             # Stop expanding frontier when end-coordinate is reached.
             if current is self.end_coordinate:
@@ -51,13 +51,15 @@ class Dijkstra():
 
                 # Determine move's cost.
                 cost = self.check_neighbour(neighbour, current)
-                new_cost = self.current_cost[current] + cost 
+                new_cost = current_cost[current] + cost 
+                
+                #TODO Add pathlist to frontier
 
                 # Create archive shortest routes.
-                if (neighbour not in self.archive or new_cost < self.current_cost[neighbour]):
-                    self.current_cost[neighbour] = new_cost
-                    priority = new_cost + measure(current, neighbour)
-                    self.frontier.put(neighbour, priority)
+                if (neighbour not in current_cost or new_cost < current_cost[neighbour]):
+                    current_cost[neighbour] = new_cost
+                    priority = new_cost + measure(neighbour, self.end_coordinate)
+                    frontier.put(neighbour, priority)
                     self.archive[neighbour] = current
 
 
@@ -66,23 +68,23 @@ class Dijkstra():
         """
         # Start at the goal and reverse to start position.
         current = self.end_coordinate
-        self.path = []
+        path = []
 
         # Reconstruct the path by checking where the current point came 
         # from.
         while current != self.begin_coordinate:
-            self.path.append(current)
+            path.append(current)
             current = self.archive[current]
-        self.path.append(self.begin_coordinate)
-        self.path.reverse()
+        path.append(self.begin_coordinate)
+        path.reverse()
 
         # Add the wire path to the net. 
-        self.net.wires = self.path
+        self.net.wires = path
         self.net.completed = True
         
         # Place the nets along the path in the grid.
         self.intersection_count = 0
-        for coordinate in self.path[1:-1]:
+        for coordinate in path[1:-1]:
             self.grid.matrix[coordinate].append(self.net)
 
             # Keep track of the intersections
@@ -90,10 +92,10 @@ class Dijkstra():
                 self.intersection_count += 1
 
         # Add the wirepath to the gate object
-        self.grid.matrix[self.begin_coordinate].wires[self.net.id] = self.path
-        self.grid.matrix[self.end_coordinate].wires[self.net.id] = self.path
-
-        return self.path
+        self.grid.matrix[self.begin_coordinate].wires[self.net.id] = path
+        self.grid.matrix[self.end_coordinate].wires[self.net.id] = path
+        	
+        return path
 
     def check_neighbour(self, neighbour, current):
         """ Takes in neighbour and current coordinate and returns 
