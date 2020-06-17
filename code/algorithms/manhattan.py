@@ -52,8 +52,3 @@ def max_nets(nets):
         longest distances in a netlist """
         #TODO return all options in case of tie
     pass
-
-
-
-
-
