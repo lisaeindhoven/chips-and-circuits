@@ -34,36 +34,48 @@ INTRODUCTIE VAN DE CASUS
     - Dan met een geldige oplossing.
     - Dan met een optimale oplossing.
 
-    - State space formuleren aan de hand van vertakkingen van beslissingsmogelijkheden. 
+    State space formuleren aan de hand van vertakkingen van beslissingsmogelijkheden. 
+    Aantal draden dat we leggen * eenheden pad * aantal opties om dat pad te leggen = 
+    k * n * O (5 *  5 * 4-5 * 4-5 * 3-5 * 2-5 * 1-5 * 0-5)
         - visual van opties om te vertakken op een willekeurige plek?
         - visuals van een vermenigvuldiging van de opties?
-        
+    
+    Lower bound =  manhattan distance stukjes draad n * aantal draden k
+
+    Upper bound = aantal slimme opties * stukjes draad * aantal draden
 
 METHODE VAN PROBLEEMOPLOSSING # eventueel al met de resultaten?
 
-    Idealiter leggen we een draad / terwijl we rekening houden met de consequenties voor het leggen van alle andere draden maar vanwege de grootte van ons probleem / de state space is dit niet mogelijk. Het zal ook onmogelijk blijken om consistent tot een goede, geldige oplossing te komen zonder gebruik te maken van inadmissible heuristics.
+    We willen in beperkte tijd goede, geldige oplossingen vinden zonder inadmissible heuristics die mogelijk goede oplossingen uitsluiten.
 
-    Om dit op te lossen splitsen we het probleem op in twee niveaus:
+    Idealiter leggen we een draad / terwijl we rekening houden met de consequenties voor het leggen van alle andere draden maar vanwege de complexiteit van ons probleem is dit niet mogelijk. Het zal ook onmogelijk blijken om snel, consistent tot een goede oplossing te komen zonder gebruik te maken van inadmissible heuristics.
 
-        - Laag niveau: pathfiding per net. 
+    Om dit op te lossen splitsen we het probleem op in twee niveaus: op laag niveau willen we een zo kort mogelijk pad leggen tussen twee gates. Op hoog niveau beslissen we onder andere welk pad dat is. De beste resultaten hopen we te bereiken door een goede wisselwerking van deze niveaus.
 
-            - Random
-            - Greedy (even noemen ook als we die niet gemaakt hebben)
+        - Laag niveau: pathfiding per net met de volgende algoritmes:
+            - Random --- willekeurig pad eerst, willekeurige stapjes, tot een oplossing of vastgelopen.
+            - Greedy (manhattan distance) ---  
             - Dijkstra (breadth first met early exit?)
-            - A* (Dijkstra + greedy lookahead dmv heuristiek manhattan distance)
-            
-            Benoemen wat we verwachten dat het voordeel is van een algoritme ten opzichte van bovenstaande. 
-            Maatstaven: geldige oplossingen vinden. Goede oplossingen vinden. Geen oplossingen uitsluiten (alleen admissible heuristics (onmogelijk bij ons want optimale pad A sluit mogelijk al opties pad B uit etc)). Sneller door te prunen (eventueel zelfs met inadmissible heuristics).
+            - A* (Dijkstra + greedy lookahead dmv heuristiek, in ons geval manhattan distance). Sowieso superieur en de kostenfunctie leent zich goed voor de constraints van onze casus, (en komt later nog van pas voor bepaalde heuristieken.)
 
         - Hoog niveau: 
+            - Welke nets (her)leggen we? Een (redelijke) oplossing analyseren en bepalen welke nets het meest problematisch zijn. Dat kunnen (onnodig) lange paden zijn of de paden die de meeste conflicten met andere paden veroorzaken.
 
-            - Simpelweg de volgorde waarin we op laag niveau de nets leggen.
-            - Ingewikkelder: 
-                Hill descent toepassen om sommige draden te verkorten. We kiezen de draden die we schrappen en herleggen aan de hand van bepaalde heuristieken.
+    Om de beste oplossingen te generen hebben we een algoritme geschreven dat wisselt tussen de niveaus. 
+    Tot we een bepaalde kwaliteit oplossing**TODO** bereikt hebben herhalen we de volgende twee stappen:
 
-                Eerst op laag niveau nets leggen zonder rekening te houden met soft constraints of zelfs hard constraints en daarna op hoog niveau bekijken welke conflicten zijn ontstaan, voordat we die op laag niveau oplossen door sommige paden te herleggen, nu wel rekening houdend met de constraints.
+        Stap 1) Leg alle (overgebleven) paden 
+                (met afnemend versoepelde constraints)
+        Stap 2) Verwijder problematisch pad 
+                (dat meeste andere paden in de weg zit, dat het langst is, dat het duurst is)
 
-CONCLUSIE TODO resultaten eventueel al verweven in methode?
-    Resultaten tonen per algoritme als we dat nog niet gedaan hebben. Algoritmes vergelijken. Eventueel benoemen dat de algoritmes werken zoals we verwachten. Zeker benoemen als dat niet zo is.
+    Een voor de hand liggende aanpak, waarbij het kiezen van de juiste heuristieken cruciaal is. 
+    Wij hebben geprobeerd verschillende parameters van a) b) c) ***TODO***
+       
+CONCLUSIE ***TODO*** resultaten eventueel al verweven in methode?
 
-    Toekomstige verbeteringen zouden kunnen liggen in het toepassen van heuristiek x of y. Natuurlijk zonder te zeggen dat we daar niet aan toe zijn gekomen o.i.d.
+    Onze meest succesvolle strategie bleek ***TODO***. Hier visual met behaalde kosten per 1000 runs of whatever. 
+    
+    Dit is wel/niet wat we verwacht hadden. Toekomstige verbeteringen zouden kunnen liggen in het nader onderzoeken van algoritme x of y en heuristiek x of y. Natuurlijk zonder te zeggen dat we daar niet aan toe zijn gekomen o.i.d.
+
+    Bedankt voor jullie aandacht.
