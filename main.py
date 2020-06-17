@@ -14,7 +14,7 @@ import math
 import numpy as np
 
 from code.models.grid import Grid
-from code.save_results import get_results
+from code.results import get_results
 from code.algorithms.random_algo import *
 from code.algorithms.dijkstra import Dijkstra
 from code.helpers import get_gates_and_nets, get_paths, uncompleted_nets
@@ -59,12 +59,10 @@ if __name__ == "__main__":
     #     bigpath.append(dijk.path)
     #     uncompleted = uncompleted_nets(nets)
 
-    # TODO: maak de map voor resultaten anders per ander algoritme door keuzemenu
-    # Get results and create csv file
+    # # TODO: maak de map voor resultaten anders per ander algoritme door keuzemenu
+    # # Get results and create csv file
     # save_folder = "data/results/random/chip_0_net_1/"
     # # TODO: de chipnaam moet veranderd worden aan de variabele die bij de gate en nets geimporteerd worden
     # chip_name = "chip_0_net_1"
-    # print(get_results(save_folder, chip_name, nets, grid))
-
-    
+    print(get_results(save_folder, chip_name, nets, grid)) 
     
