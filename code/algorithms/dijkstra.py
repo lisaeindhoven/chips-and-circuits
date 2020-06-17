@@ -42,7 +42,8 @@ class Dijkstra():
                 break
 
             # Don't allow a path to go through a gate.
-            if (isinstance(self.grid.matrix[current], Gate) and current != self.begin_coordinate):
+            if (isinstance(self.grid.matrix[current], Gate) and current != self.begin_coordinate
+                and current != self.end_coordinate):
                 continue
             
             options = filter_options(find_options(current), self.grid)
@@ -87,6 +88,11 @@ class Dijkstra():
             # Keep track of the intersections
             if len(self.grid.matrix[coordinate]) > 1:
                 self.intersection_count += 1
+
+        # nets to gate
+        self.grid.matrix[self.begin_coordinate].wires[self.net.id] = self.path
+        self.grid.matrix[self.end_coordinate].wires[self.net.id] = self.path
+
      
         return self.path
 
@@ -96,37 +102,59 @@ class Dijkstra():
         """
         # Check if intersection or collision and adjust cost.
         cost = 1
-        if (isinstance(self.grid.matrix[neighbour], list) and len(self.grid.matrix[neighbour]) > 0):
+        if (isinstance(self.grid.matrix[neighbour], list) and len(self.grid.matrix[neighbour]) >= 1):
             cost = 301
 
-            #TODO GEEFT GATES EEN LIJST OM NETS IN TE GOUDEN
-
-            # Check for collision near gate
-            # if (self.end_coordinate in self.grid.matrix[neighbour][0].wires):
-            #     return math.inf
-
-            # if (self.begin_coordinate in self.grid.matrix[neighbour][0].wires):
-            #     return math.inf
-        
-        # Check for collision not near gate TODO: Check all neighbours in list
-            if current in self.grid.matrix[neighbour][0].wires:
-                idx = self.grid.matrix[neighbour][0].wires.index(neighbour)
-
-                if(self.begin_coordinate == (6,2,0)):
-                    print(self.grid.matrix[neighbour][0].wires[idx+1] == current) 
-                    print(self.grid.matrix[neighbour][0].wires[idx-1] == current)
-
-                if not (self.grid.matrix[neighbour][0].wires[idx+1] == current or 
-                    self.grid.matrix[neighbour][0].wires[idx-1] == current):
+            # Out of gate
+            for neighbournet in self.grid.matrix[neighbour]:
+                if (self.end_coordinate is neighbournet.wires[-1] or self.end_coordinate is neighbournet.wires[0]):
                     return math.inf
+                    print(current, neighbour)
+                if (self.begin_coordinate is neighbournet.wires[-1] or self.begin_coordinate is neighbournet.wires[0]):
+                    return math.inf 
 
-        # if not isinstance(self.grid.matrix[neighbour], list):
-        #     idx = self.grid.matrix[current][0].wires.index(current)
-            
-        #     # if eindpunt
-        #     if not self.grid.matrix[current][0].wires[idx+1] == neighbour:
-        #         return math.inf
-        #     # if beginpunt
-        #     if not self.grid.matrix[current][0].wires[idx-1] == neighbour:
-        #         return math.inf
+            # To gate
+        elif isinstance(self.grid.matrix[neighbour], Gate):
+            for net in self.grid.matrix[neighbour].wires:
+                if (self.end_coordinate is self.grid.matrix[neighbour].wires[net][-1]
+                    or self.end_coordinate is self.grid.matrix[neighbour].wires[net][0]):
+                    return math.inf
+                if (self.begin_coordinate is self.grid.matrix[neighbour].wires[net][-1]
+                    or self.begin_coordinate is self.grid.matrix[neighbour].wires[net][0]):
+                    return math.inf
+                
         return cost
+
+
+
+        #     #TODO GEEFT GATES EEN LIJST OM NETS IN TE GOUDEN
+
+        #     # Check for collision near gate
+        #     # if (self.end_coordinate in self.grid.matrix[neighbour][0].wires):
+        #     #     return math.inf
+
+        #     # if (self.begin_coordinate in self.grid.matrix[neighbour][0].wires):
+        #     #     return math.inf
+        
+        # # Check for collision not near gate TODO: Check all neighbours in list
+        #     if current in self.grid.matrix[neighbour][0].wires:
+        #         idx = self.grid.matrix[neighbour][0].wires.index(neighbour)
+
+        #         if(self.begin_coordinate == (6,2,0)):
+        #             print(self.grid.matrix[neighbour][0].wires[idx+1] == current) 
+        #             print(self.grid.matrix[neighbour][0].wires[idx-1] == current)
+
+        #         if not (self.grid.matrix[neighbour][0].wires[idx+1] == current or 
+        #             self.grid.matrix[neighbour][0].wires[idx-1] == current):
+        #             return math.inf
+
+        # # if not isinstance(self.grid.matrix[neighbour], list):
+        # #     idx = self.grid.matrix[current][0].wires.index(current)
+            
+        # #     # if eindpunt
+        # #     if not self.grid.matrix[current][0].wires[idx+1] == neighbour:
+        # #         return math.inf
+        # #     # if beginpunt
+        # #     if not self.grid.matrix[current][0].wires[idx-1] == neighbour:
+        # #         return math.inf
+       
