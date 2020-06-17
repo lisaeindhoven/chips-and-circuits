@@ -6,12 +6,12 @@ In this assignment, the chips are all but finished: a circuit is provided with g
 Our mission is to arrange the totality of nets between all connectable gates in the shortest manner possible. This results in cheap and fast chips!
 
 ## Setup
-The following packages have been used to run the code and determine chip layout. For a more detailed guide on how to install these see requirements.txt.
+The following packages have been used to run the code and determine chip layout. For a more detailed guide on how to install these see requirements.md.
 * numpy
 * matplotlib
 
 ## Usage
-Run "python main.py", to generate results (with the newest version installed as per requirements.txt). This will prompt the user for specifics on which algorithm to run and what heuristics to use. After the option is selected the algorithm will run and conclude with a matplotlib visualisation.
+Run "python main.py", to generate results (with the newest version installed as per requirements.md). This will prompt the user for specifics on which algorithm to run and what heuristics to use. After the option is selected the algorithm will run and conclude with a matplotlib visualisation.
 ![matplotlib visualisation](/docs/visualised_chip.png).
 
 ## Files
