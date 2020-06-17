@@ -21,6 +21,7 @@ def get_results(save_folder, chip_name, nets, grid):
         if coordinate_value != []:
             continue
 
+        # TODO: het mag ook 3 zijn voor intersections
         if len(coordinate_value) == 2:
             intersection_count += 1
         # TODO: deze weghalen bij het officieel inleveren, dit is alleen voor onze check dat we zien dat er iets fout gaat

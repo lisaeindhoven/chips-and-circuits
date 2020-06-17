@@ -112,9 +112,9 @@ class Dijkstra():
             if current in self.grid.matrix[neighbour][0].wires:
                 idx = self.grid.matrix[neighbour][0].wires.index(neighbour)
 
-                if(self.begin_coordinate == (6,2,0)):
-                    print(self.grid.matrix[neighbour][0].wires[idx+1] == current) 
-                    print(self.grid.matrix[neighbour][0].wires[idx-1] == current)
+                # if(self.begin_coordinate == (6,2,0)):
+                    # print(self.grid.matrix[neighbour][0].wires[idx+1] == current) 
+                    # print(self.grid.matrix[neighbour][0].wires[idx-1] == current)
 
                 if not (self.grid.matrix[neighbour][0].wires[idx+1] == current or 
                     self.grid.matrix[neighbour][0].wires[idx-1] == current):

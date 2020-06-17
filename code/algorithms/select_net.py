@@ -18,11 +18,12 @@ def get_random_nets(nets):
 
 def get_min_freedom_net(gates, grid):
     """Returns a net id based on the freedom around the gate"""
-    count = []
+    count_freedom_and_uncompleted = []
 
     # Go through every gate and count the neighbour freedom
     for gate in gates:
-        count.append(0)
+        # first item is the available freedom and the second is the not nr not completed nets of the gate
+        count_freedom_and_uncompleted.append([0, 0])
 
         # Check if there is a net uncompleted in this gate
         not_completed = False
@@ -30,6 +31,8 @@ def get_min_freedom_net(gates, grid):
             if net.completed == False:
                 not_completed = True
                 break
+            else:
+                count_freedom_and_uncompleted[gate.id - 1][1] += 1
         
         # Count number of free spots
         if not_completed:
@@ -48,13 +51,20 @@ def get_min_freedom_net(gates, grid):
             for option in options:
                 if not (min(option) < 0 or option[0] >= grid.x_dim or option[1] >= grid.y_dim or option[2] >= grid.z_dim):
                     if grid.item(option) == []:
-                        count[gate.id - 1] += 1
+                        count_freedom_and_uncompleted[gate.id - 1][0] += 1
+
+    for gate in count_freedom_and_uncompleted:
+        if gate[1] != 0:
+            gate = gate[0] / gate[1]
 
     # Get the gate with min freedom and return the first uncompleted net
-    gate = count.index(min(count))
-    for net in gate.nets:
+    gate_index = count_freedom_and_uncompleted.index(min(count_freedom_and_uncompleted))
+    for net in gates[gate_index
+    ].nets:
         if net.completed == False:
-            return net
+            return net.id
+
+    # TODO afwegen tegen hoeveel open connecties
 
 
 
