@@ -91,11 +91,6 @@ def menu():
             bigpath.append(path)
             uncompleted = uncompleted_nets(nets)
 
-<<<<<<< HEAD
-    # A*
-    # elif algorithm == 3:
-    #     A*
-=======
     elif algorithm == 3:
         bigpath =[]
         uncompleted = True
@@ -119,7 +114,6 @@ def menu():
             path = dijk.search()
             bigpath.append(path)
             uncompleted = uncompleted_nets(nets)
->>>>>>> 6cc7fe2308bd109e816edc9b4cee6428415d369b
 
     # Get results and create csv file
     algorithm_name = algorithm_dict[f"{algorithm}"]
