@@ -17,7 +17,9 @@ from code.models.grid import Grid
 from code.results import get_results, costs
 from code.algorithms.random_algo import *
 from code.algorithms.dijkstra import Dijkstra
-from code.helpers import get_gates_and_nets, get_paths, uncompleted_nets, create_bigpath
+from code.algorithms.dijkstra_scary_gates import Dijkstra_scary_gates
+from code.algorithms.a_star import A_star
+from code.helpers import get_gates_and_nets, get_paths, uncompleted_nets, create_bigpath, scary_gates
 from code.visualisation.visualiser import visualiser 
 from code.algorithms.select_net import get_min_freedom_net, get_random_nets, get_min_manhattan_net, get_max_manhattan_net
 
@@ -85,14 +87,39 @@ def menu():
             # Dijkstra
             net = nets[net_id]
             dijk = Dijkstra(grid, net)
-            dijk.expand_frontier()
-            path = dijk.make_path()
+            path = dijk.search()
             bigpath.append(path)
             uncompleted = uncompleted_nets(nets)
 
+<<<<<<< HEAD
     # A*
     # elif algorithm == 3:
     #     A*
+=======
+    elif algorithm == 3:
+        bigpath =[]
+        uncompleted = True
+        while uncompleted:
+            net_id = get_min_freedom_net(gates, grid)
+            net = nets[net_id]
+            a_star = A_star(grid, net)
+            path = a_star.search()
+            bigpath.append(path)
+            uncompleted = uncompleted_nets(nets)
+
+    elif algorithm == 4:
+    #     Dijkstra with scary gates
+        bigpath =[]
+        uncompleted = True
+        scary_dict = scary_gates(gates)
+        while uncompleted:
+            net_id = get_min_freedom_net(gates, grid)
+            net = nets[net_id]
+            dijk = Dijkstra_scary_gates(grid, net, scary_dict)
+            path = dijk.search()
+            bigpath.append(path)
+            uncompleted = uncompleted_nets(nets)
+>>>>>>> 6cc7fe2308bd109e816edc9b4cee6428415d369b
 
     # Get results and create csv file
     algorithm_name = algorithm_dict[f"{algorithm}"]
@@ -113,17 +140,15 @@ def menu():
 if __name__ == "__main__":
     # TODO: dit uitcommenten voor t einde en de menu() alleenstaand wel verwijderen
     menu()
+
     # try:
     #     menu()
     # except:
     #     print("Het lijkt erop dat er iets fout is gegaan. Probeer het nog een keer!")
 
-
-
-
     # # Specify what gate and what nets csv file to take
-    # gate_coordinates_csv_path = "data/input/gates&netlists/chip_1/print_1.csv"
-    # gate_connections_csv_path = "data/input/gates&netlists/chip_1/netlist_4.csv"
+    # gate_coordinates_csv_path = "data/input/gates&netlists/chip_0/print_0.csv"
+    # gate_connections_csv_path = "data/input/gates&netlists/chip_0/netlist_2.csv"
 
     # # Get gates and nets list with all the gates and nets
     # gates, nets = get_gates_and_nets(gate_coordinates_csv_path, gate_connections_csv_path)
