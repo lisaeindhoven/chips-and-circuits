@@ -8,9 +8,7 @@ This file contains the dijkstra class which uses heuristics to be awesome.
 """
 
 from code.models.gates import Gate
-# TODO: schrijf precies wat je van random algo nodig heb
-from code.algorithms.random_algo import *
-from code.algorithms.manhattan import measure
+from code.algorithms.random_algo import find_options, filter_options
 import queue, math
 
 class Dijkstra():
@@ -53,13 +51,11 @@ class Dijkstra():
                 # Determine move's cost.
                 cost = self.check_neighbour(neighbour, current)
                 new_cost = current_cost[current] + cost 
-                
-                #TODO Add pathlist to frontier
 
                 # Create archive shortest routes.
                 if (neighbour not in current_cost or new_cost < current_cost[neighbour]):
                     current_cost[neighbour] = new_cost
-                    priority = new_cost + measure(neighbour, self.end_coordinate)
+                    priority = new_cost
                     frontier.put(neighbour, priority)
                     self.archive[neighbour] = current
 
@@ -111,13 +107,13 @@ class Dijkstra():
             for neighbournet in self.grid.matrix[neighbour]:
                 if (self.begin_coordinate == neighbournet.wires[-1] 
                     or self.begin_coordinate == neighbournet.wires[0]):
-                    return math.inf 
+                    return 100000
             
                 # Double intersection collision
                 idx = neighbournet.wires.index(neighbour)
                 if (neighbournet.wires[idx+1] == current
                     or neighbournet.wires[idx-1] == current):
-                    return math.inf
+                    return 100000
 
         # From current to gate collision
         elif isinstance(self.grid.matrix[neighbour], Gate):
@@ -125,10 +121,16 @@ class Dijkstra():
 
                 if (self.end_coordinate == self.grid.matrix[neighbour].wires[net][0]
                     and current == self.grid.matrix[neighbour].wires[net][1]):
-                    return math.inf
+                    return 100000
 
                 elif (self.end_coordinate == self.grid.matrix[neighbour].wires[net][-1]
                     and current == self.grid.matrix[neighbour].wires[net][-2]):
-                    return math.inf
-      
+                    return 100000
         return cost 
+
+    def search(self):
+        ''' Expands the frontier, determines shortest path and returns the 
+            path that was laid.
+        '''
+        self.expand_frontier()
+        return self.make_path()

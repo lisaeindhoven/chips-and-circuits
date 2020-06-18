@@ -17,6 +17,7 @@ from code.models.grid import Grid
 from code.results import get_results, costs
 from code.algorithms.random_algo import *
 from code.algorithms.dijkstra import Dijkstra
+from code.algorithms.a_star import A_star
 from code.helpers import get_gates_and_nets, get_paths, uncompleted_nets, create_bigpath
 from code.visualisation.visualiser import visualiser 
 from code.algorithms.select_net import get_min_freedom_net, get_random_nets
@@ -64,13 +65,20 @@ def menu():
             net_id = get_min_freedom_net(gates, grid)
             net = nets[net_id]
             dijk = Dijkstra(grid, net)
-            dijk.expand_frontier()
-            path = dijk.make_path()
+            path = dijk.search()
             bigpath.append(path)
             uncompleted = uncompleted_nets(nets)
 
-    # elif algorithm == 3:
-    #     A*
+    elif algorithm == 3:
+        bigpath =[]
+        uncompleted = True
+        while uncompleted:
+            net_id = get_min_freedom_net(gates, grid)
+            net = nets[net_id]
+            a_star = A_star(grid, net)
+            path = a_star.search()
+            bigpath.append(path)
+            uncompleted = uncompleted_nets(nets)
 
     # Get results and create csv file
     algorithm_name = algorithm_dict[f"{algorithm}"]
