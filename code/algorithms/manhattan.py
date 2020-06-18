@@ -6,7 +6,10 @@ Misbaksels: Mik Schutte, Sebastiaan van der Laan & Lisa Eindhoven
 
 These functions calculate the (minimum/maximum) manhattan distance
 between (a multitude of) two sets of coordinates.
+Use min/max_net for the determined shortest distance, 
+use min/max_nets to randomize the result in case of a tie.
 """
+import random
 
 def measure(a_coordinates, b_coordinates):
     """ This function returns the manhattan distance
@@ -26,29 +29,33 @@ def measurement_list(nets):
     return manh_netlist
 
 def min_net(nets):
-    """ This function returns {net.id: distance}
-        of the shortest manhattan distance in the provided netlist """
+    """ Returns {net.id: distance} of the shortest manhattan distance
+        in the provided netlist """
     manh_netlist = measurement_list(nets)
     min_net = min(manh_netlist, key=lambda k: manh_netlist[k])
     min_distance = manh_netlist[min_net]
     return {min_net: min_distance}
 
 def min_nets(nets):
-    """ returns the net.id and distance of the (equally) 
-        shortest distances in a netlist """
-        #TODO return all options in case of tie
-    pass
+    """ returns a random net.id of all the equally shortest distances
+        in a netlist """
+    manh_netlist = measurement_list(nets)
+    min_value = min(manh_netlist.values())
+    min_netlist = [net_id for net_id in manh_netlist if manh_netlist[net_id] == min_value]
+    return random.choice(min_netlist)
 
 def max_net(nets):
-    """ This function returns {net.id: distance}
-        of the longest manhattan distance in the provided netlist """
+    """ Returns {net.id: distance} of the longest manhattan distance
+        in the provided netlist """
     manh_netlist = measurement_list(nets)
     max_net = max(manh_netlist, key=lambda k: manh_netlist[k])
     max_distance = manh_netlist[max_net]
     return {max_net: max_distance}
 
 def max_nets(nets):
-    """ returns the net.id and distance of the (equally) 
-        longest distances in a netlist """
-        #TODO return all options in case of tie
-    pass
+    """ Returns a random net.id of all the equally longest
+        distances in a netlist """
+    manh_netlist = measurement_list(nets)
+    max_value = max(manh_netlist.values())
+    max_netlist = [net_id for net_id in manh_netlist if manh_netlist[net_id] == max_value]
+    return random.choice(max_netlist)
