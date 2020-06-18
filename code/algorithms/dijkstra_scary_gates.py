@@ -1,24 +1,29 @@
 """
-dijkstra.py
+dijkstra_scary_gates.py
 
 Minor Programmeren, Programmeertheorie, Chips & Circuits
 Misbaksels: Mik Schutte, Sebastiaan van der Laan & Lisa Eindhoven
 
-This file contains the dijkstra class which searches for the shortest
-path from gate to gate.
+This file contains the dijkstra_scary_gates class which searches
+for the shortest path from gate to gate with a heuristic that 
+increases the cost for neighbours near gates that are not the net's.
 """
 from code.models.gates import Gate
 from code.algorithms.random_algo import find_options, filter_options
+from code.algorithms.manhattan import measure
+from code.algorithms.dijkstra import Dijkstra
+from code.helpers import scary_gates
 import queue, math
 
-class Dijkstra():
-    """ Class containing dijkstra's shortes path algorithm which 
-        searches for the shortest path from gate to gate.
+class Dijkstra_scary_gates(Dijkstra):
+    """ Class containing dijkstra's shortes path algorithm with a heuristic
+        that increases the cost for neighbours near gates that are not the net's.
     """
-    def __init__(self, grid, net):
+    def __init__(self, grid, net, scary_dict):
         self.net = net
         self.begin_coordinate, self.end_coordinate = self.net.get_coordinates()
         self.grid = grid
+        self.scary_dict = scary_dict
 
     def expand_frontier(self):
         """ Picks and removes a location from the frontier and expands it by looking at
@@ -49,7 +54,7 @@ class Dijkstra():
             for neighbour in options:
 
                 # Determine move's cost.
-                cost = self.check_neighbour(neighbour, current)
+                cost = self.check_neighbour(neighbour, current, self.scary_dict)
                 new_cost = current_cost[current] + cost 
 
                 # Create archive shortest routes.
@@ -59,38 +64,7 @@ class Dijkstra():
                     frontier.put(neighbour, priority)
                     self.archive[neighbour] = current
 
-
-    def make_path(self):
-        """ Follow the archive of neighbours from end to start
-        """
-        # Start at the goal and reverse to start position.
-        current = self.end_coordinate
-        path = []
-
-        # Reconstruct the path by checking where the current point came 
-        # from.
-        while current != self.begin_coordinate:
-            path.append(current)
-            current = self.archive[current]
-        path.append(self.begin_coordinate)
-        path.reverse()
-
-        # Add the wire path to the net. 
-        self.net.wires = path
-        self.net.completed = True
-        
-        # Place the nets along the path in the grid.
-        self.intersection_count = 0
-        for coordinate in path[1:-1]:
-            self.grid.matrix[coordinate].append(self.net)
-
-        # Add the wirepath to the gate object
-        self.grid.matrix[self.begin_coordinate].wires[self.net.id] = path
-        self.grid.matrix[self.end_coordinate].wires[self.net.id] = path
-        	
-        return path
-
-    def check_neighbour(self, neighbour, current):
+    def check_neighbour(self, neighbour, current, scary_dict):
         """ Takes in neighbour and current coordinate and returns 
             it's costs.
         """
@@ -122,11 +96,11 @@ class Dijkstra():
                 elif (self.end_coordinate == self.grid.matrix[neighbour].wires[net][-1]
                     and current == self.grid.matrix[neighbour].wires[net][-2]):
                     return 100000
-        return cost 
 
-    def search(self):
-        ''' Expands the frontier, determines shortest path and returns the 
-            path that was laid.
-        '''
-        self.expand_frontier()
-        return self.make_path()
+        # Gates are scary, set costs if neighbour is near a gate that isn't
+        # from the net itsself. 
+        if (neighbour in self.scary_dict and self.scary_dict[neighbour] != self.end_coordinate
+            and self.scary_dict[neighbour] != self.begin_coordinate):
+            return 10
+
+        return cost 

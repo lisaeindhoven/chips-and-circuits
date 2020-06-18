@@ -11,6 +11,7 @@ import csv, ast
 from .models.gates import Gate
 from .models.grid import Grid
 from .models.nets import Nets
+from .algorithms.random_algo import find_options, filter_options
 
 def get_gates_and_nets(gate_coordinates_csv_path, gate_connections_csv_path):
     """returns a dictionary with the gate number, coordinate and connected gates"""
@@ -61,3 +62,19 @@ def create_bigpath(nets):
     for net in nets:
         bigpath.append(net.wires)
     return bigpath
+
+def scary_gates(gate_list):
+    """ Create dictionary of coordinates that neighbour gates. Dictionary keys are
+        the coordinates and its value is the gate coordinate.
+    """
+    scary_cords = {}
+    for gate in gate_list:
+        gate_coordinate = (gate.x, gate.y, gate.z)
+        options = find_options(gate_coordinate)
+
+        for neighbour in options:
+            scary_cords[neighbour] = gate_coordinate
+    
+    return scary_cords
+
+

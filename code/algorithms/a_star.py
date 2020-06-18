@@ -4,7 +4,8 @@ a_star.py
 Minor Programmeren, Programmeertheorie, Chips & Circuits
 Misbaksels: Mik Schutte, Sebastiaan van der Laan & Lisa Eindhoven
 
-This file contains the A* class which uses heuristics to be awesome.
+This file contains the A* class which uses heuristics to be more awesome
+than the dijkstra shortest path algorithm.
 """
 
 from code.models.gates import Gate
@@ -14,8 +15,8 @@ from code.algorithms.dijkstra import Dijkstra
 import queue, math
 
 class A_star(Dijkstra):
-    """ Class containing dijkstra's shortes path algorithm, which is improved upon using
-        the A* pathfinder.
+    """ Class containing the A* algorithm, which is an improvement upon
+        dijkstra.py due to the added heuristic. 
     """
     def expand_frontier(self):
         """ Picks and removes a location from the frontier and expands it by looking at
