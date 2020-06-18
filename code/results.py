@@ -9,28 +9,30 @@ Use this file to check and save results.
 
 import csv
 import numpy as np
+import functools
+import random
 from datetime import datetime
+from collections import defaultdict
 
 def get_results(save_folder, chip_name, nets, grid):
     """" Saves results in a csv file in the given folder,
         as a file called output with date and time.
-        Returns string of costs and conflicts summary.
-        Conflicts are gridpoints containing 2+ nets.
+        Returns a nice f-string of costs.
         TODO yet to add actual collisions."""
     
-    total_costs, wire_count, intersection_count, conflict_count = costs(nets, grid)
+    total_costs, wire_count, intersection_count = costs(nets, grid)
     
     save_results(save_folder, chip_name, nets, total_costs)
     
-    return f"Costs are {total_costs}, made up of {wire_count} wirepieces and {intersection_count} intersections. Conflicts: {conflict_count}."
+    return f"Costs are {total_costs}, made up of {wire_count} wirepieces and {intersection_count} intersections."
 
 def costs(nets, grid):
-    """ Returns total cost, number of wires, intersections and conflicts.
+    """ Returns total cost, number of wires, intersections
     """
     wire_count = count_wires(nets)
-    intersection_count, conflict_count = count_intersections(grid)
+    intersection_count = count_intersections(grid)
     total_costs = wire_count + 300 * intersection_count
-    return total_costs, wire_count, intersection_count, conflict_count
+    return total_costs, wire_count, intersection_count
 
 def count_wires(nets):
     """ Returns total number of wirepieces in each net """
@@ -40,20 +42,48 @@ def count_wires(nets):
     return wire_count
 
 def count_intersections(grid):
-    """ Returns number of intersections and conflicts
-        by counting gridpoint occupancy """         
+    """ Returns number of intersections by counting gridpoint occupancy.
+        Index denotes grid position, content is either a gate, 
+        an empty list or a list of net(s) """         
     intersection_count = 0
-    conflict_count = 0
-    for index, coordinate_value in np.ndenumerate(grid.matrix):
-        if coordinate_value != []:
-            continue
-        # TODO: het mag ook 3 zijn voor intersections dus conflict is niet per se collision. En lang niet elke collision wordt meegeteld
-        if len(coordinate_value) == 2:
-            intersection_count += 1
-        elif len(coordinate_value) > 2:
-            conflict_count += 1
-        # TODO: echte collision count
-    return intersection_count, conflict_count
+    for index, content in np.ndenumerate(grid.matrix):
+        if (isinstance(content, list) and len(content) > 1):
+            intersection_count +=1
+    return intersection_count
+
+def conflict_analysis(grid, nets):
+    """ Returns two dictionaries and the key with highest problem_nets value.
+        problem_nets: {net: int}
+        rivals: {net: [rival net, rival net]}"""
+    intersections = list_intersections(grid)
+
+    # for each problematic net we track conflicts and their rivals
+    problem_nets = defaultdict(int)
+    rivals = defaultdict(list)
+
+    # we add 1 and the rival net to the dictionaries
+    for intersection in intersections:
+        problem_nets[intersection[0]] += 1
+        problem_nets[intersection[1]] += 1
+        rivals[intersection[0]].append(intersection[1])
+        rivals[intersection[1]].append(intersection[0])
+
+    max_conflicts = max(problem_nets.values())
+    max_problems = [net_id for net_id in problem_nets if problem_nets[net_id] == max_conflicts]
+    return problem_nets, rivals, random.choice(max_problems)
+
+def list_intersections(grid):
+    """ Returns a list with lists of nets that occupy crowded gridpoints.
+        Index denotes grid position, content is either a gate, 
+        an empty list or a list of net(s) """
+    intersections = []
+    for index, content in np.ndenumerate(grid.matrix):
+        if (isinstance(content, list) and len(content) > 1):
+            occupants = []
+            for net in content:
+                occupants.append(net.id)
+            intersections.append(occupants)
+    return intersections
 
 def save_results(save_folder, chip_name, nets, total_costs):
     """ Creates folder name with current date and time
