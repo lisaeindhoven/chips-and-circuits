@@ -8,6 +8,7 @@ This file contains every function to get nets in different orders.
 """
 import random as rnd
 from code.algorithms.random_algo import filter_options, find_options
+from code.algorithms.manhattan import min_nets, max_nets
 
 def get_random_nets(nets):
     """Returns a list of net ids in random order from the not completed nets"""
@@ -58,3 +59,16 @@ def get_min_freedom_net(gates, grid):
         if net.completed == False:
             return net.id - 1
 
+def get_min_manhattan_net(nets):
+    uncompleted_nets = []
+    for net in nets:
+        if net.completed == False:
+            uncompleted_nets.append(net)
+    return (min_nets(uncompleted_nets) - 1)
+
+def get_max_manhattan_net(nets):
+    uncompleted_nets = []
+    for net in nets:
+        if net.completed == False:
+            uncompleted_nets.append(net)
+    return (max_nets(uncompleted_nets) - 1)

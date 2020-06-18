@@ -19,7 +19,7 @@ from code.algorithms.random_algo import *
 from code.algorithms.dijkstra import Dijkstra
 from code.helpers import get_gates_and_nets, get_paths, uncompleted_nets, create_bigpath
 from code.visualisation.visualiser import visualiser 
-from code.algorithms.select_net import get_min_freedom_net, get_random_nets
+from code.algorithms.select_net import get_min_freedom_net, get_random_nets, get_min_manhattan_net, get_max_manhattan_net
 
 def menu():
     print("Welkom")
@@ -40,7 +40,13 @@ def menu():
         "1": "random",
         "2": "dijkstra",
         "3": "astar"
-        }
+    }
+
+    net_select_dict = {
+        "1": "Net met minste extra vrijheid rond de gate",
+        "2": "Net met minste manhattan distance eerst",
+        "3": "Net met meeste manhattan distance eerst"
+    }
 
     # Choose and run algorithm
     algorithm = int(input("Kies het nummer van de algorithme (1, 2 of 3) of 0 voor meer informatie: "))
@@ -48,6 +54,7 @@ def menu():
         print(algorithm_dict)
         algorithm = int(input("Kies het nummer van de algorithme (1, 2 of 3): "))
         
+    # Random
     if algorithm == 1:
         # TODO: optie geven om te loopen tot er een goede oplossing is gevonden
         random_net_ids = get_random_nets(nets)
@@ -56,12 +63,26 @@ def menu():
         # Great bigpath for the visualisation
         bigpath = create_bigpath(nets)
 
+    # Dijkstra
     elif algorithm == 2:
-    #     Dijkstra??
+        # Let the user choose the way the nets are selected
+        select_net = int(input("Kies het nummer van de net keuze (1, 2 of 3) of 0 voor meer informatie: "))
+        if select_net == 0:
+            print(net_select_dict)
+            select_net = int(input("Kies het nummer van de net keuze (1, 2 of 3): "))
+            
         bigpath =[]
         uncompleted = True
         while uncompleted:
-            net_id = get_min_freedom_net(gates, grid)
+            # Get the right net
+            if select_net == 1:
+                net_id = get_min_freedom_net(gates, grid)
+            elif select_net == 2:
+                net_id = get_min_manhattan_net(nets)
+            elif select_net == 3:
+                net_id = get_max_manhattan_net(nets)
+
+            # Dijkstra
             net = nets[net_id]
             dijk = Dijkstra(grid, net)
             dijk.expand_frontier()
@@ -69,6 +90,7 @@ def menu():
             bigpath.append(path)
             uncompleted = uncompleted_nets(nets)
 
+    # A*
     # elif algorithm == 3:
     #     A*
 
@@ -78,6 +100,7 @@ def menu():
     chip_name = f"chip_{chip}_net_{netlist}"
     print(get_results(save_folder, chip_name, nets, grid))
 
+    nets[2].reset_wires(grid)
     # # TODO: weghalen voor final
     # # Alleen kosten printen
     # total_costs, wire_count, intersection_count, conflict_count = costs(nets, grid)
