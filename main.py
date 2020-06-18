@@ -12,6 +12,7 @@ import random
 import csv
 import math
 import numpy as np
+import errno
 
 from code.models.grid import Grid
 from code.results import get_results, costs
@@ -19,7 +20,7 @@ from code.algorithms.random_algo import *
 from code.algorithms.dijkstra import Dijkstra
 from code.algorithms.dijkstra_scary_gates import Dijkstra_scary_gates
 from code.algorithms.a_star import A_star
-from code.helpers import get_gates_and_nets, get_paths, uncompleted_nets, create_bigpath, scary_gates
+from code.helpers import get_gates_and_nets, get_paths, uncompleted_nets, create_bigpath, scary_gates, reset_net
 from code.visualisation.visualiser import visualiser 
 from code.algorithms.select_net import get_min_freedom_net, get_random_nets, get_min_manhattan_net, get_max_manhattan_net
 
@@ -41,7 +42,8 @@ def menu():
     algorithm_dict = {
         "1": "random",
         "2": "dijkstra",
-        "3": "astar"
+        "3": "astar",
+        "4": "scary_astar"
     }
 
     net_select_dict = {
@@ -51,10 +53,10 @@ def menu():
     }
 
     # Choose and run algorithm
-    algorithm = int(input("Kies het nummer van de algorithme (1, 2 of 3) of 0 voor meer informatie: "))
+    algorithm = int(input("Kies het nummer van de algorithme (1, 2, 3 of 4) of 0 voor meer informatie: "))
     if algorithm == 0:
         print(algorithm_dict)
-        algorithm = int(input("Kies het nummer van de algorithme (1, 2 of 3): "))
+        algorithm = int(input("Kies het nummer van de algorithme (1, 2, 3 of 4): "))
         
     # Random
     if algorithm == 1:
@@ -115,17 +117,34 @@ def menu():
             bigpath.append(path)
             uncompleted = uncompleted_nets(nets)
 
+    # Reset the net.wires and delete net from grid
+    # TODO deze example weghalen
+    reset_net(grid, nets[2])
+
+    # TODO: OVERAL BIGPATH WEG HALEN, EN PAS CREEREN MET BEHULP VAN DE FUNCTIE CREATE_BIGPATH VOOR DE VISUALITATIE
+    # Great bigpath for the visualisation
+    bigpath = create_bigpath(nets)
+
     # Get results and create csv file
+    # TODO let op, bigpath maken moet eerder dan dit, omdat anders de visualisatie het op een vage wijze niet doet
     algorithm_name = algorithm_dict[f"{algorithm}"]
     save_folder = f"data/results/{algorithm_name}/chip_{chip}_net_{netlist}/"
+
+    # Create folder if not exist
+    try:
+        os.makedirs(save_folder)
+    except OSError as e:
+        if e.errno != errno.EEXIST:
+            raise
+
     chip_name = f"chip_{chip}_net_{netlist}"
     print(get_results(save_folder, chip_name, nets, grid))
 
-    nets[2].reset_wires(grid)
     # # TODO: weghalen voor final
     # # Alleen kosten printen
     # total_costs, wire_count, intersection_count, conflict_count = costs(nets, grid)
     # print(f"Costs are {total_costs}, made up of {wire_count} wirepieces and {intersection_count} intersections. Conflicts: {conflict_count}.")
+
 
     # Visualisation
     visualiser(grid, gates, bigpath)
@@ -139,6 +158,14 @@ if __name__ == "__main__":
     #     menu()
     # except:
     #     print("Het lijkt erop dat er iets fout is gegaan. Probeer het nog een keer!")
+
+
+
+
+
+
+
+
 
     # # Specify what gate and what nets csv file to take
     # gate_coordinates_csv_path = "data/input/gates&netlists/chip_0/print_0.csv"
