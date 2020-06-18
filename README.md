@@ -6,7 +6,7 @@ In this assignment, the chips are all but finished: a circuit is provided with g
 Our mission is to arrange the totality of nets between all connectable gates in the shortest manner possible. This results in cheap and fast chips!
 
 ## Setup
-The [requirements.txt](https://github.com/lisaeindhoven/chips-and-circuits/blob/master/requiremens.txt) file contains the packages that have been used to run the code and determine chip layout. Install pacages using:
+The [requirements.txt](https://github.com/lisaeindhoven/chips-and-circuits/blob/master/requirements.txt) file contains the packages that have been used to run the code and determine chip layout. Install pacages using:
 `pip install -r requirements.txt`
 
 
