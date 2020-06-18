@@ -29,12 +29,11 @@ def measurement_list(nets):
     return manh_netlist
 
 def min_net(nets):
-    """ Returns {net.id: distance} of the shortest manhattan distance
+    """ Returns net.id of shortest manhattan distance
         in the provided netlist """
     manh_netlist = measurement_list(nets)
     min_net = min(manh_netlist, key=lambda k: manh_netlist[k])
-    min_distance = manh_netlist[min_net]
-    return {min_net: min_distance}
+    return min_net
 
 def min_nets(nets):
     """ returns a random net.id of all the equally shortest distances
@@ -45,12 +44,11 @@ def min_nets(nets):
     return random.choice(min_netlist)
 
 def max_net(nets):
-    """ Returns {net.id: distance} of the longest manhattan distance
+    """ Returns net.id of longest manhattan distance
         in the provided netlist """
     manh_netlist = measurement_list(nets)
     max_net = max(manh_netlist, key=lambda k: manh_netlist[k])
-    max_distance = manh_netlist[max_net]
-    return {max_net: max_distance}
+    return max_net
 
 def max_nets(nets):
     """ Returns a random net.id of all the equally longest
