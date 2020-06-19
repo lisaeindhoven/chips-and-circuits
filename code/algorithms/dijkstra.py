@@ -7,19 +7,15 @@ Misbaksels: Mik Schutte, Sebastiaan van der Laan & Lisa Eindhoven
 This file contains the dijkstra class which searches for the shortest
 path from gate to gate.
 """
-from code.models.gates import Gate
-from code.algorithms.random_algo import find_options, filter_options
 import queue, math
+from code.models.gates import Gate
+from code.algorithms.a_star import A_star
+from code.algorithms.random_algo import find_options, filter_options
 
-class Dijkstra():
+class Dijkstra(A_star):
     """ Class containing dijkstra's shortes path algorithm which 
         searches for the shortest path from gate to gate.
     """
-    def __init__(self, grid, net):
-        self.net = net
-        self.begin_coordinate, self.end_coordinate = self.net.get_coordinates()
-        self.grid = grid
-
     def expand_frontier(self):
         """ Picks and removes a location from the frontier and expands it by looking at
             it's neighbours. Any neighbours not visited will be added to the frontier.
@@ -58,75 +54,4 @@ class Dijkstra():
                     priority = new_cost
                     frontier.put(neighbour, priority)
                     self.archive[neighbour] = current
-
-
-    def make_path(self):
-        """ Follow the archive of neighbours from end to start
-        """
-        # Start at the goal and reverse to start position.
-        current = self.end_coordinate
-        path = []
-
-        # Reconstruct the path by checking where the current point came 
-        # from.
-        while current != self.begin_coordinate:
-            path.append(current)
-            current = self.archive[current]
-        path.append(self.begin_coordinate)
-        path.reverse()
-
-        # Add the wire path to the net. 
-        self.net.wires = path
-        self.net.completed = True
-        
-        # Place the nets along the path in the grid.
-        self.intersection_count = 0
-        for coordinate in path[1:-1]:
-            self.grid.matrix[coordinate].append(self.net)
-
-        # Add the wirepath to the gate object
-        self.grid.matrix[self.begin_coordinate].wires[self.net.id] = path
-        self.grid.matrix[self.end_coordinate].wires[self.net.id] = path
-        	
-        return path
-
-    def check_neighbour(self, neighbour, current):
-        """ Takes in neighbour and current coordinate and returns 
-            it's costs.
-        """
-        # Check if intersection or collision and adjust cost.
-        cost = 1
-        if (isinstance(self.grid.matrix[neighbour], list) and len(self.grid.matrix[neighbour]) >= 1):
-            cost = 301
-
-            # From gate to neighbour collision
-            for neighbournet in self.grid.matrix[neighbour]:
-                if (self.begin_coordinate == neighbournet.wires[-1] 
-                    or self.begin_coordinate == neighbournet.wires[0]):
-                    return 100000
-            
-                # Double intersection collision
-                idx = neighbournet.wires.index(neighbour)
-                if (neighbournet.wires[idx+1] == current
-                    or neighbournet.wires[idx-1] == current):
-                    return 100000
-
-        # From current to gate collision
-        elif isinstance(self.grid.matrix[neighbour], Gate):
-            for net in self.grid.matrix[neighbour].wires:
-
-                if (self.end_coordinate == self.grid.matrix[neighbour].wires[net][0]
-                    and current == self.grid.matrix[neighbour].wires[net][1]):
-                    return 100000
-
-                elif (self.end_coordinate == self.grid.matrix[neighbour].wires[net][-1]
-                    and current == self.grid.matrix[neighbour].wires[net][-2]):
-                    return 100000
-        return cost 
-
-    def search(self):
-        ''' Expands the frontier, determines shortest path and returns the 
-            path that was laid.
-        '''
-        self.expand_frontier()
-        return self.make_path()
+    
