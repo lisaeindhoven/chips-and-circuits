@@ -67,14 +67,12 @@ def scary_gates(gate_list):
     """ Create dictionary of coordinates that neighbour gates. Dictionary keys are
         the coordinates and its value is the gate coordinate.
     """
-    scary_cords = {}
+    scary_dict = {}
     for gate in gate_list:
         gate_coordinate = (gate.x, gate.y, gate.z)
         options = find_options(gate_coordinate)
 
         for neighbour in options:
-            scary_cords[neighbour] = gate_coordinate
+            scary_dict[neighbour] = gate_coordinate
     
-    return scary_cords
-
-
+    return scary_dict
