@@ -54,3 +54,12 @@ class Grid():
     def add_wire(self, coordinate, net):
         """ Add a net to the grid-matrix"""
         self.matrix[coordinate].append(net)
+
+    def reset_net(self, net):
+        """ Remove net from grid-matrix"""
+        for coordinate in net.wires:
+            net_list = self.item(coordinate)
+            if type(net_list) == list:
+                for saved_net in net_list:
+                    if saved_net == net:
+                        net_list.remove(saved_net)

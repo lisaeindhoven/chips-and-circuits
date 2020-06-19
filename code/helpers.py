@@ -61,6 +61,7 @@ def create_bigpath(nets):
     bigpath = []
     for net in nets:
         bigpath.append(net.wires)
+        
     return bigpath
 
 def scary_gates(gate_list):
@@ -76,3 +77,8 @@ def scary_gates(gate_list):
             scary_dict[neighbour] = gate_coordinate
     
     return scary_dict
+
+def reset_net(grid, net):
+    """ Reset wires in grid and net example """
+    grid.reset_net(net)
+    net.reset_wires()
