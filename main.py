@@ -7,12 +7,10 @@ Misbaksels: Mik Schutte, Sebastiaan van der Laan & Lisa Eindhoven
 This file is the main python file
 """
 # TODO: op elke pagina imports goedkrijgen
-import os
 import random
 import csv
 import math
 import numpy as np
-import errno
 
 from code.models.grid import Grid
 from code.results import get_results, costs
@@ -129,13 +127,6 @@ def menu():
     # TODO let op, bigpath maken moet eerder dan dit, omdat anders de visualisatie het op een vage wijze niet doet
     algorithm_name = algorithm_dict[f"{algorithm}"]
     save_folder = f"data/results/{algorithm_name}/chip_{chip}_net_{netlist}/"
-
-    # Create folder if not exist
-    try:
-        os.makedirs(save_folder)
-    except OSError as e:
-        if e.errno != errno.EEXIST:
-            raise
 
     chip_name = f"chip_{chip}_net_{netlist}"
     print(get_results(save_folder, chip_name, nets, grid))
