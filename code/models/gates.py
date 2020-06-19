@@ -7,7 +7,9 @@ Misbaksels: Mik Schutte, Sebastiaan van der Laan & Lisa Eindhoven
 This file contains the class gates and all the functions of the class
 """
 class Gate():
-    # header
+    """ Class containing gate object used to fill a grid and
+        provide information on where gates lie.
+    """
     def __init__(self, id, x, y):
         self.id = int(id)
         self.x = int(x)
@@ -18,14 +20,17 @@ class Gate():
         self.wires = {}
 
     def add_connection(self, connection):
-        """add a gate object to connections"""
+        """ Add a gate object to the connections.
+        """
         self.connections.append(connection)
 
     def add_net(self, net):
-        """add a net object"""
+        """ Add a net object.
+        """
         self.nets.append(net)
 
     def coordinate(self):
-        """returns the (x,y, z) from this gate"""
+        """ Returns the (x,y,z) coordinates from this gate.
+        """
         coordinate = (self.x, self.y, self.z)
         return coordinate

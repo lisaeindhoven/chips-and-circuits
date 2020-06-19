@@ -4,17 +4,17 @@ helpers.py
 Minor Programmeren, Programmeertheorie, Chips & Circuits
 Misbaksels: Mik Schutte, Sebastiaan van der Laan & Lisa Eindhoven
 
-This file contains the helper function for main.py
+This file contains the helper functions used in the code.
 """
 import csv, ast
-
 from .models.gates import Gate
 from .models.grid import Grid
 from .models.nets import Nets
 from .algorithms.random_algo import find_options, filter_options
 
 def get_gates_and_nets(gate_coordinates_csv_path, gate_connections_csv_path):
-    """returns a dictionary with the gate number, coordinate and connected gates"""
+    """ Returns a dictionary with the gate number, coordinate and connected gates.
+    """
     # Get coordinates
     with open(gate_coordinates_csv_path, mode='r') as f:
         reader = csv.reader(f)
@@ -36,11 +36,11 @@ def get_gates_and_nets(gate_coordinates_csv_path, gate_connections_csv_path):
                 gates[int(row[1])-1].add_net(net)
                 nets.append(net)
                 count += 1
-
     return gates, nets
 
 def get_paths(path_csv):
-    """gets the path coordinates from an output.csv file"""
+    """ Gets the path coordinates from an output.csv file.
+    """
     with open(path_csv, mode='r') as f:
         reader = csv.reader(f)
         paths = []
@@ -50,14 +50,16 @@ def get_paths(path_csv):
     return paths
 
 def uncompleted_nets(nets):
-    """Check if there are uncompleted nets, return True if there are, otherwise False"""
+    """ Check if there are uncompleted nets, return True if there are, otherwise False.
+    """
     for net in nets:
         if net.completed == False:
             return True
     return False
 
 def create_bigpath(nets):
-    """Return a list with lists of wires from every net"""
+    """ Return a list with lists of wires from every net.
+    """
     bigpath = []
     for net in nets:
         bigpath.append(net.wires)
@@ -79,6 +81,7 @@ def scary_gates(gate_list):
     return scary_dict
 
 def reset_net(grid, net):
-    """ Reset wires in grid and net example """
+    """ Reset wires in grid and net example.
+    """
     grid.reset_net(net)
     net.reset_wires()

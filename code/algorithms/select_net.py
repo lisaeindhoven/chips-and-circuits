@@ -11,7 +11,9 @@ from code.algorithms.random_algo import filter_options, find_options
 from code.algorithms.manhattan import min_nets, max_nets
 
 def get_random_nets(nets):
-    """Returns a list of net ids in random order from the not completed nets"""
+    """ Returns a list of net ids in random order from the not 
+        completed nets.
+    """
     random_net_ids = []
     for net in nets:
         random_net_ids.append(net.id - 1)
@@ -19,8 +21,9 @@ def get_random_nets(nets):
     return random_net_ids
 
 def get_min_freedom_net(gates, grid):
-    """Returns the net id for the algorithm
-    Based on freedom around the gate and uncompleted nets from the gate"""
+    """ Returns the net id for the algorithm based on freedom 
+        around the gate and the uncompleted nets from the gate.
+    """
     count_freedom_and_uncompleted = []
 
     # Go through every gate to find the information needed
@@ -60,6 +63,9 @@ def get_min_freedom_net(gates, grid):
             return net.id - 1
 
 def get_min_manhattan_net(nets):
+    """ Determines the uncompleded net with the lowest 
+        Manhattan distance. 
+    """
     uncompleted_nets = []
     for net in nets:
         if net.completed == False:
@@ -67,6 +73,9 @@ def get_min_manhattan_net(nets):
     return (min_nets(uncompleted_nets) - 1)
 
 def get_max_manhattan_net(nets):
+    """ Determines the uncompleded net with the highest 
+        Manhattan distance. 
+    """
     uncompleted_nets = []
     for net in nets:
         if net.completed == False:

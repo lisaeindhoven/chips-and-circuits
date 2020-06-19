@@ -4,19 +4,20 @@ random.py
 Minor Programmeren, Programmeertheorie, Chips & Circuits
 Misbaksels: Mik Schutte, Sebastiaan van der Laan & Lisa Eindhoven
 
-This file got the whole random algorithm in it. If you want to user the whole algorithm,
-you should use the function random. But you can also use parts.
+This file got the whole random algorithm in it. If you want to user the whole
+algorithm, you should use the function random. But you can also use parts.
 """
 import random as rnd
 import copy
 
 def random(grid, gates, random_net_ids, nets):
     """ This algorithm attempts to connect all the gates in random order,
-        randomly proceeding until it either reaches the connectable gate or is stuck """
-    # we count whenever an attempt to connect two gates fails
+        randomly proceeding until it either reaches the connectable gate or is stuck.
+    """
+    # Count whenever an attempt to connect two gates fails
     conflicts = 0
 
-    # for every net in random order we attempt to connect the two gates
+    # For every net in random order we attempt to connect the two gates
     for random_net in random_net_ids:
         create_net(random_net, nets, grid)
         if nets[random_net].completed == False:
@@ -27,51 +28,53 @@ def random(grid, gates, random_net_ids, nets):
     print(f"Total nets: {nets_count}, solved: {solved_nets}, conflicts: {conflicts}.")
 
 def create_net(random_net, nets, grid):
-    """ Attempt to connect two gates via a net """
+    """ Attempt to connect two gates via a net. 
+    """
     current_net = nets[random_net]
 
-    # set current -, start -, and end coordinates
+    # Fet current -, start -, and end coordinates
     start_coordinates, end_coordinates, current_coordinates = set_coordinates(current_net)
 
-    # find paths and lay wire until the end is reached or no options remain
+    # Find paths and lay wire until the end is reached or no options remain
     while current_coordinates != end_coordinates:
 
-        # find path options
+        # Find path options
         options = find_options(current_coordinates)
         options = filter_options(options, grid)
 
-        # this boolean will change if there if a path is found and chosen
+        # This boolean will change if there if a path is found and chosen
         found_path = False
 
-        # check if one of the option is already the end gate
+        # Check if one of the option is already the end gate
         for current_option in options:
             found_path, current_coordinates = reached_end(current_option, grid, current_net)
             if found_path:
                 break
 
         if not found_path:
-            # create valid path if possible
+            # Create valid path if possible
             for current_option in options:
 
                 item = grid.item(current_option)
         
-                # in this algorithm, we only add a wire if there isnt one already
+                # In this algorithm; only add a wire if there isnt one already
                 if item == []:
                     current_coordinates = lay_wire(current_net, current_option, grid)
                     found_path = True
-                    # we do not need to try another option
                     break
     
         if not found_path:
             break
 
 def set_coordinates(current_net):
-    """ Get start and end coordinates """
+    """ Get start and end coordinates.
+    """
     coordinate = current_net.get_coordinates()
     return coordinate[0], coordinate[1], copy.deepcopy(coordinate[0])
 
 def find_options(current_coordinates):
-    """ List path options in all six directions, shuffled """
+    """ List path options in all six directions, shuffled.
+    """
     north = (current_coordinates[0], current_coordinates[1]+1, current_coordinates[2])
     south = (current_coordinates[0], current_coordinates[1]-1, current_coordinates[2])
     west = (current_coordinates[0]-1, current_coordinates[1], current_coordinates[2])
@@ -83,7 +86,8 @@ def find_options(current_coordinates):
     return options
 
 def filter_options(options, grid):
-    """ Check if options are within grid parameters """
+    """ Check if options are within grid parameters.
+    """
     valid_options = []
     for option in options:
         if not (min(option) <= -1 or option[0] >= grid.x_dim or option[1] >= grid.y_dim or option[2] >= grid.z_dim):
@@ -91,10 +95,11 @@ def filter_options(options, grid):
     return valid_options
                     
 def reached_end(current_option, grid, current_net):
-    """ Check if option is destination """
+    """ Check if option is destination.
+    """
     item = grid.item(current_option)
 
-    # go to the end gate if it's one of the options
+    # Go to the end gate if it's one of the options
     if item == current_net.end_gate:
         current_net.add_wire(current_option)
         current_net.completed = True
@@ -102,7 +107,8 @@ def reached_end(current_option, grid, current_net):
     return False, current_option
 
 def lay_wire(current_net, current_option, grid):
-    """ Lay wire on grid, add it to net and change current coordinates """
+    """ Lay wire on grid, add it to net and change current coordinates. 
+    """
     current_net.add_wire(current_option)
     grid.add_wire(current_option, current_net)
     return copy.deepcopy(current_option)
