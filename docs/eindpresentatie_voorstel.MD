@@ -11,7 +11,7 @@ Ik stel voor:
     - Chip(s) (behoeft geen uitleg)
     - Gates = de te verbinden punten op de chip, kunnen niet zomaar overal liggen, maar liggen op een grid
     - Grid = het raster waarop de Gates liggen. 
-    - Nets = de verbindingen/nets/draden tussen gates. Lopen langs het raster, Manhattan style, maar dan driedimensionaal omdat ze er in totaal acht lagen zijn, de gates liggen       allemaal op de onderste laag.
+    - Nets = de verbindingen tussen gates. Lopen over het raster in Manhattan style, maar dan driedimensionaal omdat er in totaal acht lagen zijn. De gates liggen wel allemaal op de onderste laag.
     - Intersections = kruisingen van draden, soft constraint want duur.
     - Collisions = de verbindingen/nets/draden mogen niet over dezelfde stukjes tussen de gridpunten lopen/ stukjes tussen twee punten. Kunnen we ook conflicten noemen? Hard constraint. Chip is onbruikbaar, oplossing is ongeldig.
 
@@ -23,7 +23,8 @@ Laten we een stijl kiezen en die van begin tot eind hanteren. Dus in dezelfde st
 
 INTRODUCTIE VAN DE CASUS
 
-    De termen hierboven uitleggen en dat het ons doel is om een zo kort mogelijk pad te leggen voor betere chips.
+    De termen hierboven uitleggen en dat het ons doel is om een zo kort mogelijk pad te leggen voor betere chips. 
+    Kostenfunctie = n + 300 * k
     
     Visueel daarbij:
     - Leeg raster met zichtbare assen (al dan niet met de cijfer ernaast). Tweedimensionaal?
@@ -34,48 +35,70 @@ INTRODUCTIE VAN DE CASUS
     - Dan met een geldige oplossing.
     - Dan met een optimale oplossing.
 
+
+
     State space formuleren aan de hand van vertakkingen van beslissingsmogelijkheden. 
-    Aantal draden dat we leggen * eenheden pad * aantal opties om dat pad te leggen = 
-    k * n * O (5 *  5 * 4-5 * 4-5 * 3-5 * 2-5 * 1-5 * 0-5)
-        - visual van opties om te vertakken op een willekeurige plek?
-        - visuals van een vermenigvuldiging van de opties?
+    Verbindingen * stappen * aantal mogelijkheden voor elke stap = (k * n) ^ 5
+
+        - visual van opties om te vertakken op een willekeurige plek? *** #TODO ***
+        - visuals van een vermenigvuldiging van de opties? #TODO
     
     Lower bound =  manhattan distance stukjes draad n * aantal draden k
 
-    Upper bound = aantal slimme opties * stukjes draad * aantal draden
+    Upper bound = aantal verbindingen * stukjes draad * aantal voorwaartse opties (anders is vrijwel oneindig en dus onzinnig)
 
 METHODE VAN PROBLEEMOPLOSSING # eventueel al met de resultaten?
 
-    We willen in beperkte tijd goede, geldige oplossingen vinden zonder inadmissible heuristics die mogelijk goede oplossingen uitsluiten.
-
-    Idealiter leggen we een draad / terwijl we rekening houden met de consequenties voor het leggen van alle andere draden maar vanwege de complexiteit van ons probleem is dit niet mogelijk. Het zal ook onmogelijk blijken om snel, consistent tot een goede oplossing te komen zonder gebruik te maken van inadmissible heuristics.
+    Idealiter leggen we een draad terwijl we rekening houden met de consequenties voor het leggen van alle andere draden - maar gezien de state space / en de complexiteit van ons probleem kunnen we niet dit alles tegelijk berekenen. 
 
     Om dit op te lossen splitsen we het probleem op in twee niveaus: op laag niveau willen we een zo kort mogelijk pad leggen tussen twee gates. Op hoog niveau beslissen we onder andere welk pad dat is. De beste resultaten hopen we te bereiken door een goede wisselwerking van deze niveaus.
 
         - Laag niveau: pathfiding per net met de volgende algoritmes:
-            - Random --- willekeurig pad eerst, willekeurige stapjes, tot een oplossing of vastgelopen.
-            - Greedy (manhattan distance) ---  
-            - Dijkstra (breadth first met early exit?)
-            - A* (Dijkstra + greedy lookahead dmv heuristiek, in ons geval manhattan distance). Sowieso superieur en de kostenfunctie leent zich goed voor de constraints van onze casus, (en komt later nog van pas voor bepaalde heuristieken.)
+            - Random (willekeurig pad eerst, willekeurige stapjes, tot een oplossing of vastgelopen.)
+            - Greedy (manhattan distance)  
+            - Dijkstra (breadth first met early exit)
+            - A* (Voegt aan Dijkstra een kostenfunctie toe met behulp van de manhattan distance. 
 
         - Hoog niveau: 
-            - Welke nets (her)leggen we? Een (redelijke) oplossing analyseren en bepalen welke nets het meest problematisch zijn. Dat kunnen (onnodig) lange paden zijn of de paden die de meeste conflicten met andere paden veroorzaken.
+            - Welke nets (her)leggen we eerst?
 
-    Om de beste oplossingen te generen hebben we een algoritme geschreven dat wisselt tussen de niveaus. 
-    Tot we een bepaalde kwaliteit oplossing**TODO** bereikt hebben herhalen we de volgende twee stappen:
+    Voor een aantal iteraties of tot we een oplossing genereren die we goed genoeg achten herhalen we de volgende twee stappen:
 
-        Stap 1) Leg alle (overgebleven) paden 
-                (met afnemend versoepelde constraints)
-        Stap 2) Verwijder problematisch pad 
-                (dat meeste andere paden in de weg zit, dat het langst is, dat het duurst is)
+        Stap 1 - Laag Niveau: Leg alle (overgebleven) paden 
+                (eerst met aangepaste constraints)
+        Stap 2 - Hoog Niveau: Verwijder problematisch pad 
+                (dat meeste andere paden in de weg zit, of dat het langst is, of het hoogst gaat)
 
-    Een voor de hand liggende aanpak, waarbij het kiezen van de juiste heuristieken cruciaal is. 
-    Wij hebben geprobeerd verschillende parameters van a) b) c) ***TODO***
+HEURISTIEKEN - Conflictanalyse en aangepaste constraints
+
+    Laag niveau: 
        
-CONCLUSIE ***TODO*** resultaten eventueel al verweven in methode?
+        Scary Gates - locaties rondom gates zijn duurder (constraint intensification)
 
-    Onze meest succesvolle strategie bleek ***TODO***. Hier visual met behaalde kosten per 1000 runs of whatever. 
+        Skyscraper - omhoog bewegen is goedkoper (constraint relaxation)
+
+    Hoog niveau:
     
-    Dit is wel/niet wat we verwacht hadden. Toekomstige verbeteringen zouden kunnen liggen in het nader onderzoeken van algoritme x of y en heuristiek x of y. Natuurlijk zonder te zeggen dat we daar niet aan toe zijn gekomen o.i.d.
+        Netvolgorde: o.a. begin bij de drukste gates
+
+        Conflictanalyse: (van een versoepelde oplossing) problematische verbindingen isoleren en aanpassen
+
+        Efficientieanalyse: (bij een bemoeilijkte oplossing) herleg eerst de draden die onnodig lang lijken
+    
+
+    ***TODO*** Wij hebben geprobeerd verschillende parameters van a) b) c) 
+       
+RESULTATEN
+
+    Onze grootste successen hebben we bereikt met heuristieken x, y en z.
+    Kekke visuals door Mik Schutte.
+
+CONCLUSIE ***TODO*** 
+    
+    Dit is wel/niet wat we verwacht hadden. Toekomstige verbeteringen zouden kunnen liggen in het nader onderzoeken van algoritme x of y en heuristiek x of y. 
 
     Bedankt voor jullie aandacht.
+
+DISCUSSIE
+    ELINE KLIK
+    
