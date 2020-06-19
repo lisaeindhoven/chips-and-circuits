@@ -20,7 +20,7 @@ Ik stel voor:
 Laten we een stijl kiezen en die van begin tot eind hanteren. Dus in dezelfde stijl als onze driedimensionale eindpresentatie ook de casus introduceren.
 
 #### INHOUD
-
+-------------------------- 1:
 INTRODUCTIE VAN DE CASUS
 
     De termen hierboven uitleggen en dat het ons doel is om een zo kort mogelijk pad te leggen voor betere chips. 
@@ -47,20 +47,18 @@ INTRODUCTIE VAN DE CASUS
 
     Upper bound = aantal verbindingen * stukjes draad * aantal voorwaartse opties (anders is vrijwel oneindig en dus onzinnig)
 
-METHODE VAN PROBLEEMOPLOSSING # eventueel al met de resultaten?
+---------------------------- 2:
+
+METHODE VAN PROBLEEMOPLOSSING
+
+    Pathfiding per verbinding met de volgende algoritmes:
+        - Random (willekeurig pad eerst, willekeurige stapjes, tot een oplossing of vastgelopen.)
+        - Dijkstra (breadth first met early exit)
+        - A* (Voegt aan Dijkstra een kostenfunctie toe met behulp van de manhattan distance. 
 
     Idealiter leggen we een draad terwijl we rekening houden met de consequenties voor het leggen van alle andere draden - maar gezien de state space / en de complexiteit van ons probleem kunnen we niet dit alles tegelijk berekenen. 
 
-    Om dit op te lossen splitsen we het probleem op in twee niveaus: op laag niveau willen we een zo kort mogelijk pad leggen tussen twee gates. Op hoog niveau beslissen we onder andere welk pad dat is. De beste resultaten hopen we te bereiken door een goede wisselwerking van deze niveaus.
-
-        - Laag niveau: pathfiding per net met de volgende algoritmes:
-            - Random (willekeurig pad eerst, willekeurige stapjes, tot een oplossing of vastgelopen.)
-            - Greedy (manhattan distance)  
-            - Dijkstra (breadth first met early exit)
-            - A* (Voegt aan Dijkstra een kostenfunctie toe met behulp van de manhattan distance. 
-
-        - Hoog niveau: 
-            - Welke nets (her)leggen we eerst?
+    Om dit op te lossen splitsen we het probleem op in twee niveaus: op laag niveau willen we een zo kort mogelijk pad leggen tussen twee gates. Op hoog niveau beslissen we welke verbindingen we eerst (her)leggen. De beste resultaten hopen we te bereiken door een goede wisselwerking van deze niveaus.
 
     Voor een aantal iteraties of tot we een oplossing genereren die we goed genoeg achten herhalen we de volgende twee stappen:
 
@@ -69,7 +67,9 @@ METHODE VAN PROBLEEMOPLOSSING # eventueel al met de resultaten?
         Stap 2 - Hoog Niveau: Verwijder problematisch pad 
                 (dat meeste andere paden in de weg zit, of dat het langst is, of het hoogst gaat)
 
-HEURISTIEKEN - Conflictanalyse en aangepaste constraints
+--------------------------------------- 3:
+
+HEURISTIEKEN - Conflictanalyse en aangepaste constraints (aangepaste )
 
     Laag niveau: 
        
@@ -85,7 +85,6 @@ HEURISTIEKEN - Conflictanalyse en aangepaste constraints
 
         Efficientieanalyse: (bij een bemoeilijkte oplossing) herleg eerst de draden die onnodig lang lijken
     
-
     ***TODO*** Wij hebben geprobeerd verschillende parameters van a) b) c) 
        
 RESULTATEN
