@@ -34,15 +34,15 @@ class A_star():
         current_cost[self.begin_coordinate] = 0
 
         # Pick neighbour from the frontier and expand it by adding its
-        # own neighbours to the frontier.
+        # own neighbours to the frontier
         while not frontier.empty():
             current = frontier.get()
 
-            # Stop expanding frontier when end-coordinate is reached.
+            # Stop expanding frontier when end-coordinate is reached
             if current is self.end_coordinate:
                 break
 
-            # Don't allow a path to go through a gate.
+            # Don't allow a path to go through a gate
             if (isinstance(self.grid.matrix[current], Gate) and current != self.begin_coordinate
                 and current != self.end_coordinate):
                 continue
@@ -50,26 +50,25 @@ class A_star():
             options = filter_options(find_options(current), self.grid)
             for neighbour in options:
 
-                # Determine move's cost.
+                # Determine move's cost
                 cost = self.check_neighbour(neighbour, current)
                 new_cost = current_cost[current] + cost 
 
-                # Create archive shortest routes.
+                # Create archive of shortest routes
                 if (neighbour not in current_cost or new_cost < current_cost[neighbour]):
                     current_cost[neighbour] = new_cost
                     priority = new_cost + measure(neighbour, self.end_coordinate)
                     frontier.put(neighbour, priority)
                     self.archive[neighbour] = current
 
-
     def make_path(self):
         """ Follow the archive of neighbours from end to start
         """
-        # Start at the goal and reverse to start position.
+        # Start at the goal and reverse to start position
         current = self.end_coordinate
         path = []
 
-        # Reconstruct the path by checking where the current point came 
+        # Reconstruct the path by checking where the current point came
         # from.
         while current != self.begin_coordinate:
             path.append(current)
@@ -77,26 +76,24 @@ class A_star():
         path.append(self.begin_coordinate)
         path.reverse()
 
-        # Add the wire path to the net. 
+        # Add the wire path to the net
         self.net.wires = path
         self.net.completed = True
         
-        # Place the nets along the path in the grid.
+        # Place the nets along the path in the grid
         self.intersection_count = 0
         for coordinate in path[1:-1]:
             self.grid.matrix[coordinate].append(self.net)
 
-        # Add the wirepath to the gate object
+        # Add the wirepath to the gate object.
         self.grid.matrix[self.begin_coordinate].wires[self.net.id] = path
         self.grid.matrix[self.end_coordinate].wires[self.net.id] = path
-        	
-        return path
 
     def check_neighbour(self, neighbour, current):
         """ Takes in neighbour and current coordinate and returns 
             it's costs.
         """
-        # Check if intersection or collision and adjust cost.
+        # Check if intersection or collision and adjust cost
         cost = 1
         if (isinstance(self.grid.matrix[neighbour], list) and len(self.grid.matrix[neighbour]) >= 1):
             cost = 301
