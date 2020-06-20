@@ -10,8 +10,10 @@ contains intelligent hillclimbing tools
 
 import copy
 
+from code.algorithms.a_star import A_star
 from code.helpers import reset_net
 from code.results import costs, list_intersections, conflict_analysis, count_intersections
+from code.algorithms.select_net import get_min_freedom_net
 
 # METACLIMBER WORDT AANGESTUURD VANUIT MAIN
 # MAIN HEEFT DE INTERFACE EN ROEPT METACLIMBER AAN MET BEPAALDE INPUT
@@ -32,24 +34,26 @@ class Metaclimber:
     by generating suboptimal results and gradually improving upon them.
     """
     # load input data and keep track of best value
-    def __init__(self):
-        self.best_value = 100000 # ziek hoog beginpunt
-        self.initialize_variables()
+    def __init__(self, grid, nets):
+        self.grid = grid
+        self.nets = nets
+        self.best_value =  costs(nets, grid)
+        # self.initialize_variables()
 
-    def initialize_variables(self):
-        print("Welkom")
+    # def initialize_variables(self):
+    #     print("Welkom")
 
-        # Specify what gate and what nets csv file to take
-        self.chip = int(input("Kies de chip (0, 1 of 2): "))
-        gate_coordinates_csv_path = f"data/input/gates&netlists/chip_{self.chip}/print_{self.chip}.csv"
-        self.netlist = int(input("Kies de netlist(1, 2 of 3): ")) + 3 * self.chip
-        gate_connections_csv_path = f"data/input/gates&netlists/chip_{self.chip}/netlist_{str(self.netlist)}.csv"
+    #     # Specify what gate and what nets csv file to take
+    #     self.chip = int(input("Kies de chip (0, 1 of 2): "))
+    #     gate_coordinates_csv_path = f"data/input/gates&netlists/chip_{self.chip}/print_{self.chip}.csv"
+    #     self.netlist = int(input("Kies de netlist(1, 2 of 3): ")) + 3 * self.chip
+    #     gate_connections_csv_path = f"data/input/gates&netlists/chip_{self.chip}/netlist_{str(self.netlist)}.csv"
         
-        # Get gates and nets list with all the gates and nets
-        self.gates, self.nets = get_gates_and_nets(gate_coordinates_csv_path, gate_connections_csv_path)
+    #     # Get gates and nets list with all the gates and nets
+    #     self.gates, self.nets = get_gates_and_nets(gate_coordinates_csv_path, gate_connections_csv_path)
 
-        # Create a matrix of the grid with all the gates
-        self.grid = Grid(self.gates)
+    #     # Create a matrix of the grid with all the gates
+    #     self.grid = Grid(self.gates)
 
     # algorithm_dict = {
     #     "1": "random",
@@ -98,8 +102,40 @@ class Metaclimber:
     def run(self):
         pass
     # select criterium to erase path /// use nets.reset_wires with helpers.conflict_analysis or 
-    def hilldescent(self, criterium):
-        pass
+    def hilldescent(grid, nets):
+        """ descents towards new lows!
+            rebuilds nets and keeps the score if it improves """
+        grid = grid
+        nets = nets
+        old_costs, y, z = costs(nets, grid)
+        temp_grid = copy.deepcopy(grid)
+        temp_nets = copy.deepcopy(nets)
+        
+        print(old_costs)
+        # Try to improve each net
+        for net in nets:
+            net.reset_wires
+            a_star = A_star(grid, net)
+            a_star.search()
+            # # new_costs, y, z = costs(nets, grid)
+            # print(net.wires)
+            # print(temp_net.wires)
+            # print(new_costs)
+            # print(old_costs)
+            # if new_costs > old_costs:
+            #     print("no luck")
+            #     net = temp_net
+            #     grid = temp_grid
+            # elif new_costs == old_costs: 
+            #     print("Tie. Wire replaced.")
+            # else:
+            #     x = old_costs - new_costs
+            #     old_costs = new_costs
+            #     print(f"Improvement! Costs decreased by {x}! ")    
+        new_costs, y, z = costs(net, grid)
+        if new_costs < old_costs:
+            return grid, nets
+        return temp_grid, temp_nets
 
     def conflict_remover(grid, nets):
         """ Removes conflicting nets and returns a list of nets to rebuild """ 
@@ -108,13 +144,11 @@ class Metaclimber:
             intersections = count_intersections(grid)
             if intersections:        
                 problem_nets, rivals, worst_net_id = conflict_analysis(grid, nets)
-                print(worst_net_id)
                 for net in nets:
                     if net.id == worst_net_id:
                         removed_nets.append(net)
                         worst_net = net
                 reset_net(grid, worst_net) # geeft worst_net id mee, moet misschien object zijn?
-                print(removed_nets)
             break
         return removed_nets
     
