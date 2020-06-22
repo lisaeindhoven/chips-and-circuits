@@ -73,3 +73,4 @@ class Grid():
                 for saved_net in net_list:
                     if saved_net == net:
                         net_list.remove(saved_net)
+            self.matrix.item(coordinate) == net_list
