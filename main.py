@@ -7,6 +7,9 @@ Misbaksels: Mik Schutte, Sebastiaan van der Laan & Lisa Eindhoven
 This file is the main python file
 """
 # TODO: op elke pagina imports goedkrijgen
+# TODO: elke bestand checken op todos en prints
+# TODO: git issues uitwerken voor t inleveren
+# TODO: allemaal keer de code door kijken of het duidelijk is
 import random
 import csv
 import math
