@@ -143,41 +143,29 @@ def menu():
 
     # Combination run
     elif algorithm == 7:
-        uncompleted = True
+        uncompleted = True   
         scary_dict = scary_gates(gates)
         while uncompleted:
             net_id = get_min_freedom_net(gates, grid)
             net = nets[net_id]
-            combo = A_star(grid, net, scary_dict)
-            path = combo.search()
+            avoider = A_star(grid, net, scary_dict, costs_tup=(1,301,100000,10,1))
+            path = avoider.search()
             uncompleted = uncompleted_nets(nets)
         total_costs, wire_count, intersection_count = costs(nets, grid)
-        print(f"First run (combo) costs are {total_costs}, made up of {wire_count} wirepieces and {intersection_count} intersections.")
+        print(f"First run (avoid) costs are {total_costs}, made up of {wire_count} wirepieces and {intersection_count} intersections.")
         
-        Metaclimber.conflict_remover(grid, nets)
-        uncompleted = uncompleted_nets(nets)
+        # Metaclimber.conflict_remover(grid, nets)
+        # uncompleted = uncompleted_nets(nets)
+        
+        # while uncompleted:
+        #     net_id = get_min_freedom_net(gates, grid)
+        #     net = nets[net_id]
+        #     finish = A_star(grid, net)
+        #     path = finish.search()
+        #     uncompleted = uncompleted_nets(nets)
 
-        while uncompleted:
-            net_id = get_min_freedom_net(gates, grid)
-            net = nets[net_id]
-            combo2 = Avoid_gates(grid, net, scary_dict)
-            path = combo2.search()
-            uncompleted = uncompleted_nets(nets)
-        total_costs, wire_count, intersection_count = costs(nets, grid)
-        print(f"Second run (avoid) costs are {total_costs}, made up of {wire_count} wirepieces and {intersection_count} intersections.")
-        
-        Metaclimber.conflict_remover(grid, nets)
-        uncompleted = uncompleted_nets(nets)
-        
-        while uncompleted:
-            net_id = get_min_freedom_net(gates, grid)
-            net = nets[net_id]
-            finish = A_star(grid, net)
-            path = finish.search()
-            uncompleted = uncompleted_nets(nets)
-
-        total_costs, wire_count, intersection_count = costs(nets, grid)
-        print(f"Third run (A star) costs are {total_costs}, made up of {wire_count} wirepieces and {intersection_count} intersections.")
+        # total_costs, wire_count, intersection_count = costs(nets, grid)
+        # print(f"Third run (A star) costs are {total_costs}, made up of {wire_count} wirepieces and {intersection_count} intersections.")
         
         grid, nets = Metaclimber.hilldescent(grid, nets)
         total_costs, wire_count, intersection_count = costs(nets, grid)
