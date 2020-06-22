@@ -139,8 +139,8 @@ class A_star():
 
         # Costs for upward movements are decreased.
         if neighbour[2] > current[2]:
-            cost += sky_cost       
-        
+            cost += sky_cost
+
         return cost 
 
     def search(self):
