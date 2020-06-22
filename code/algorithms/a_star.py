@@ -133,13 +133,16 @@ class A_star():
 
         # Gates are scary, set costs if neighbour is near a gate that isn't
         # from the net itsself. 
-        elif (neighbour in self.scary_dict and self.scary_dict[neighbour] != self.end_coordinate
+        if (neighbour in self.scary_dict and self.scary_dict[neighbour] != self.end_coordinate
             and self.scary_dict[neighbour] != self.begin_coordinate):
             cost += gate_cost
 
         # Costs for upward movements are decreased.
-        elif neighbour[2] > current[2]:
+        if neighbour[2] > current[2]:
             cost += sky_cost
+
+        if neighbour[2] == 0:
+            cost += 5
 
         return cost 
 
