@@ -148,8 +148,8 @@ def menu():
         while uncompleted:
             net_id = get_min_freedom_net(gates, grid)
             net = nets[net_id]
-            avoider = A_star(grid, net, scary_dict, costs_tup=(1,301,100000,10,1))
-            path = avoider.search()
+            a = A_star(grid, net, scary_dict, costs_tup=(1,301,100000,1,1))
+            path = a.search()
             uncompleted = uncompleted_nets(nets)
         total_costs, wire_count, intersection_count = costs(nets, grid)
         print(f"First run (avoid) costs are {total_costs}, made up of {wire_count} wirepieces and {intersection_count} intersections.")
@@ -167,7 +167,7 @@ def menu():
         # total_costs, wire_count, intersection_count = costs(nets, grid)
         # print(f"Third run (A star) costs are {total_costs}, made up of {wire_count} wirepieces and {intersection_count} intersections.")
         
-        grid, nets = Metaclimber.hilldescent(grid, nets)
+        grid, nets = Metaclimber.hilldescent(grid, nets, scary_dict, gates)
         total_costs, wire_count, intersection_count = costs(nets, grid)
         print(f"Hilldescent completed. Costs are {total_costs}, made up of {wire_count} wirepieces and {intersection_count} intersections.")
 
