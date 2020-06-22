@@ -141,12 +141,6 @@ class A_star():
         if neighbour[2] > current[2]:
             cost += sky_cost
 
-<<<<<<< HEAD
-        # if neighbour[2] == 0:
-        #     cost += 5
-
-=======
->>>>>>> 86140a0ba817501083970108c5670acfecb56190
         return cost 
 
     def search(self):
