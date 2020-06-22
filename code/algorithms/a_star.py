@@ -19,7 +19,7 @@ class A_star():
 
         costs_tup = (normal_cost, intersection_cost, collision_cost, gate_cost, sky_cost)
     """
-    def __init__(self, grid, net, scary_dict, costs_tup=(1,301,100000,1,1)):
+    def __init__(self, grid, net, scary_dict, costs_tup=(1,301,100000,1,0)):
         self.net = net
         self.begin_coordinate, self.end_coordinate = self.net.get_coordinates()
         self.grid = grid

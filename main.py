@@ -16,11 +16,11 @@ from code.models.grid import Grid
 from code.results import get_results, costs
 from code.algorithms.random_algo import *
 from code.algorithms.dijkstra import Dijkstra
-from code.algorithms.avoid_gates import Avoid_gates
+#from code.algorithms.avoid_gates import Avoid_gates
 from code.algorithms.a_star import A_star
-from code.algorithms.skyscraper import Skyscraper
-from code.algorithms.free_intersections import Free_intersections
-from code.algorithms.combo import Combo
+#from code.algorithms.skyscraper import Skyscraper
+#from code.algorithms.free_intersections import Free_intersections
+#from code.algorithms.combo import Combo
 from code.helpers import get_gates_and_nets, get_paths, uncompleted_nets, create_bigpath, scary_gates, reset_net
 from code.visualisation.visualiser import visualiser 
 from code.algorithms.select_net import get_min_freedom_net, get_random_nets, get_min_manhattan_net, get_max_manhattan_net
@@ -93,7 +93,7 @@ def menu():
 
             # Dijkstra
             net = nets[net_id]
-            dijk = Dijkstra(grid, net, scary_dict, costs_tup=(1,301,100000,1,1))
+            dijk = Dijkstra(grid, net, scary_dict, costs_tup=(1,301,100000,1,0))
             path = dijk.search()
             uncompleted = uncompleted_nets(nets)
 
@@ -104,7 +104,7 @@ def menu():
         while uncompleted:
             net_id = get_min_freedom_net(gates, grid)
             net = nets[net_id]
-            a_star = A_star(grid, net, scary_dict, costs_tup=(1,301,100000,1,1))
+            a_star = A_star(grid, net, scary_dict, costs_tup=(1,301,100000,1,0))
             path = a_star.search()
             uncompleted = uncompleted_nets(nets)
 
@@ -115,7 +115,7 @@ def menu():
         while uncompleted:
             net_id = get_min_freedom_net(gates, grid)
             net = nets[net_id]
-            avoider = A_star(grid, net, scary_dict, costs_tup=(1,301,100000,10,1))
+            avoider = A_star(grid, net, scary_dict, costs_tup=(1,301,100000,10,0))
             path = avoider.search()
             uncompleted = uncompleted_nets(nets)
     
@@ -137,7 +137,7 @@ def menu():
         while uncompleted:
             net_id = get_min_freedom_net(gates, grid)
             net = nets[net_id]
-            freeway = A_star(grid, net, scary_dict, costs_tup=(1,0,100000,1,1))
+            freeway = A_star(grid, net, scary_dict, costs_tup=(1,0,100000,1,0))
             path = freeway.search()
             uncompleted = uncompleted_nets(nets)
 
@@ -148,7 +148,7 @@ def menu():
         while uncompleted:
             net_id = get_min_freedom_net(gates, grid)
             net = nets[net_id]
-            a = A_star(grid, net, scary_dict, costs_tup=(1,301,100000,1,1))
+            a = A_star(grid, net, scary_dict, costs_tup=(1,301,100000,1,0))
             path = a.search()
             uncompleted = uncompleted_nets(nets)
         total_costs, wire_count, intersection_count = costs(nets, grid)
@@ -167,7 +167,7 @@ def menu():
         # total_costs, wire_count, intersection_count = costs(nets, grid)
         # print(f"Third run (A star) costs are {total_costs}, made up of {wire_count} wirepieces and {intersection_count} intersections.")
         
-        grid, nets = Metaclimber.hilldescent(grid, nets, scary_dict, gates)
+        grid, nets = Metaclimber.hilldescent(grid, nets, gates)
         total_costs, wire_count, intersection_count = costs(nets, grid)
         print(f"Hilldescent completed. Costs are {total_costs}, made up of {wire_count} wirepieces and {intersection_count} intersections.")
 
