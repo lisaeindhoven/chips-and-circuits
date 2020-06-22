@@ -11,9 +11,10 @@ contains intelligent hillclimbing tools
 import copy
 
 from code.algorithms.a_star import A_star
-from code.helpers import reset_net
+from code.helpers import get_gates_and_nets, get_paths, uncompleted_nets, create_bigpath, scary_gates, reset_net
 from code.results import costs, list_intersections, conflict_analysis, count_intersections
 from code.algorithms.select_net import get_min_freedom_net
+from code.visualisation.visualiser import visualiser 
 
 # METACLIMBER WORDT AANGESTUURD VANUIT MAIN
 # MAIN HEEFT DE INTERFACE EN ROEPT METACLIMBER AAN MET BEPAALDE INPUT
@@ -59,7 +60,7 @@ class Metaclimber:
     def run(self):
         pass
     # select criterium to erase path /// use nets.reset_wires with helpers.conflict_analysis or 
-    def hilldescent(grid, nets):
+    def hilldescent(grid, nets, scary_dict, gates):
         """ descents towards new lows!
             rebuilds nets and keeps the score if it improves """
         grid = grid
@@ -67,18 +68,26 @@ class Metaclimber:
         
         # Try to improve each net
         for net in nets:
+            print(net.id)
             temp_grid = copy.deepcopy(grid)
             temp_nets = copy.deepcopy(nets)
+            temp_net = copy.deepcopy(net)
             old_costs, y, z = costs(nets, grid)
             print(f"old costs {old_costs}")
+            print(net.wires)
             reset_net(grid, net)
-            a_star = A_star(grid, net)
+            print(net.wires)
+            bigpath = create_bigpath(nets)
+            visualiser(grid, gates, bigpath)
+            a_star = A_star(grid, net, scary_dict)
             a_star.search()
+            print(f"nieuw pad{net.wires}")
             new_costs, y, z = costs(nets, grid)
             print(f"new costs: {new_costs}")
-            if new_costs > old_costs:
+            if new_costs >= old_costs:
                 grid = temp_grid
                 nets = temp_nets
+                net = temp_net
 
         return grid, nets
 
