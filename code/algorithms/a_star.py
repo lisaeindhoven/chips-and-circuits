@@ -105,7 +105,7 @@ class A_star():
         # Check if intersection or collision and adjust cost
         cost = normal_cost
         if (isinstance(self.grid.matrix[neighbour], list) and len(self.grid.matrix[neighbour]) >= 1):
-            cost = intersection_cost
+            cost += intersection_cost
 
             # From gate to neighbour collision
             for neighbournet in self.grid.matrix[neighbour]:
@@ -133,16 +133,13 @@ class A_star():
 
         # Gates are scary, set costs if neighbour is near a gate that isn't
         # from the net itsself. 
-        if (neighbour in self.scary_dict and self.scary_dict[neighbour] != self.end_coordinate
+        elif (neighbour in self.scary_dict and self.scary_dict[neighbour] != self.end_coordinate
             and self.scary_dict[neighbour] != self.begin_coordinate):
-            return gate_cost
+            cost += gate_cost
 
         # Costs for upward movements are decreased.
-        if neighbour[2] > current[2]:
-            cost = sky_cost
-
-        if neighbour[2] < current[2]: 
-            cost = sky_cost
+        elif neighbour[2] > current[2]:
+            cost += sky_cost
 
         return cost 
 
