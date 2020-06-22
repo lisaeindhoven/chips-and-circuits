@@ -40,49 +40,6 @@ class Metaclimber:
         self.best_value =  costs(nets, grid)
         # self.initialize_variables()
 
-    # def initialize_variables(self):
-    #     print("Welkom")
-
-    #     # Specify what gate and what nets csv file to take
-    #     self.chip = int(input("Kies de chip (0, 1 of 2): "))
-    #     gate_coordinates_csv_path = f"data/input/gates&netlists/chip_{self.chip}/print_{self.chip}.csv"
-    #     self.netlist = int(input("Kies de netlist(1, 2 of 3): ")) + 3 * self.chip
-    #     gate_connections_csv_path = f"data/input/gates&netlists/chip_{self.chip}/netlist_{str(self.netlist)}.csv"
-        
-    #     # Get gates and nets list with all the gates and nets
-    #     self.gates, self.nets = get_gates_and_nets(gate_coordinates_csv_path, gate_connections_csv_path)
-
-    #     # Create a matrix of the grid with all the gates
-    #     self.grid = Grid(self.gates)
-
-    # algorithm_dict = {
-    #     "1": "random",
-    #     "2": "dijkstra",
-    #     "3": "astar",
-    #     "4": "scary_astar"
-    # }
-
-    # net_select_dict = {
-    #     "1": "Net met minste extra vrijheid rond de gate",
-    #     "2": "Net met minste manhattan distance eerst",
-    #     "3": "Net met meeste manhattan distance eerst"
-    # }
-
-    # # Choose and run algorithm
-    # algorithm = int(input("Kies het nummer van de algorithme (1, 2, 3 of 4) of 0 voor meer informatie: "))
-    # if algorithm == 0:
-    #     print(algorithm_dict)
-    #     algorithm = int(input("Kies het nummer van de algorithme (1, 2, 3 of 4): "))
-        
-    #         while uncompleted:
-    #             # Get the right net
-    #             if select_net == 1:
-    #                 net_id = get_min_freedom_net(gates, grid)
-    #             elif select_net == 2:
-    #                 net_id = get_min_manhattan_net(nets)
-    #             elif select_net == 3:
-    #                 net_id = get_max_manhattan_net(nets)
-
     # main function om stapsgewijs te runnen en descenden
     def execute(self):
         """ executes metaclimber x number of times or until there's no more improvement
@@ -108,7 +65,6 @@ class Metaclimber:
         grid = grid
         nets = nets  
         
-        
         # Try to improve each net
         for net in nets:
             temp_grid = copy.deepcopy(grid)
@@ -125,22 +81,6 @@ class Metaclimber:
                 nets = temp_nets
 
         return grid, nets
-            # # new_costs, y, z = costs(nets, grid)
-            # print(net.wires)
-            # print(temp_net.wires)
-            # print(new_costs)
-            # print(old_costs)
-            # if new_costs > old_costs:
-            #     print("no luck")
-            #     net = temp_net
-            #     grid = temp_grid
-            # elif new_costs == old_costs: 
-            #     print("Tie. Wire replaced.")
-            # else:
-            #     x = old_costs - new_costs
-            #     old_costs = new_costs
-            #     print(f"Improvement! Costs decreased by {x}! ")    
-
 
     def conflict_remover(grid, nets):
         """ Removes conflicting nets and returns a list of nets to rebuild """ 
