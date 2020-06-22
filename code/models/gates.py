@@ -34,3 +34,8 @@ class Gate():
         """
         coordinate = (self.x, self.y, self.z)
         return coordinate
+
+    def reset_wires(self, net):
+        """ Remove the wires from the net and grid.
+        """
+        self.wires[net] = []

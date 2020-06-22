@@ -19,7 +19,7 @@ class A_star():
 
         costs_tup = (normal_cost, intersection_cost, collision_cost, gate_cost, sky_cost)
     """
-    def __init__(self, grid, net, scary_dict, costs_tup=(1,301,100000,1,0)):
+    def __init__(self, grid, net, scary_dict, costs_tup=(1,300,100000,0,0)):
         self.net = net
         self.begin_coordinate, self.end_coordinate = self.net.get_coordinates()
         self.grid = grid
@@ -70,7 +70,7 @@ class A_star():
                     self.archive[neighbour] = current
 
     def make_path(self):
-        """ Follow the archive of neighbours from end to start
+        """ Follow the archive of neighbours from end to start.
         """
         # Start at the goal and reverse to start position
         current = self.end_coordinate
@@ -122,7 +122,7 @@ class A_star():
         # From current to gate collision
         elif isinstance(self.grid.matrix[neighbour], Gate):
             for net in self.grid.matrix[neighbour].wires:
-
+                
                 if (self.end_coordinate == self.grid.matrix[neighbour].wires[net][0]
                     and current == self.grid.matrix[neighbour].wires[net][1]):
                     return collision_cost
@@ -139,14 +139,8 @@ class A_star():
 
         # Costs for upward movements are decreased.
         if neighbour[2] > current[2]:
-            cost += sky_cost
-
-<<<<<<< HEAD
-        # if neighbour[2] == 0:
-        #     cost += 5
-
-=======
->>>>>>> 86140a0ba817501083970108c5670acfecb56190
+            cost += sky_cost       
+        
         return cost 
 
     def search(self):

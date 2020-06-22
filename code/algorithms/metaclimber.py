@@ -70,26 +70,17 @@ class Metaclimber:
         
         # Try to improve each net
         for net in nets:
-            print(net.id)
-            print(net.wires)
             reset_net(grid, net)
-            print(net.wires)
-            # bigpath = create_bigpath(nets)
-            # visualiser(grid, gates, bigpath)
+            old_costs, y, z = costs(nets, grid)
+            print(f"old costs: {old_costs}")
             a_star = A_star(grid, net, scary_dict)
             a_star.search()
-            print(net.wires)
-            # print(f"{net.wires} is het nieuwe pad")
-            # new_costs, y, z = costs(nets, grid)
-            # print(f"new costs: {new_costs}")
-            # if new_costs > old_costs:
-            #     grid = copy.deepcopy(temp_grid)
-            #     nets = copy.deepcopy(temp_nets)
-                # temp_net = net
-        # oldpath = create_bigpath(temp_nets)
-        # newpath = create_bigpath(nets)
-        # bigpath = oldpath + newpath
-        # visualiser(grid, gates, bigpath)
+            new_costs, y, z = costs(nets, grid)
+            print(f"new costs: {new_costs}")
+            if new_costs > old_costs:
+                grid = copy.deepcopy(temp_grid)
+                nets = copy.deepcopy(temp_nets)
+
         return grid, nets
 
     def conflict_remover(grid, nets):
