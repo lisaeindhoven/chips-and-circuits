@@ -81,6 +81,7 @@ def menu():
             select_net = int(input("Kies de net keuze (1, 2 of 3): "))
             
         uncompleted = True
+        scary_dict = scary_gates(gates)
         while uncompleted:
             # Get the right net
             if select_net == 1:
@@ -92,17 +93,18 @@ def menu():
 
             # Dijkstra
             net = nets[net_id]
-            dijk = Dijkstra(grid, net)
+            dijk = Dijkstra(grid, net, scary_dict, costs_tup=(1,301,100000,1,1))
             path = dijk.search()
             uncompleted = uncompleted_nets(nets)
 
     # A star
     elif algorithm == 3:
         uncompleted = True
+        scary_dict = scary_gates(gates)
         while uncompleted:
             net_id = get_min_freedom_net(gates, grid)
             net = nets[net_id]
-            a_star = A_star(grid, net)
+            a_star = A_star(grid, net, scary_dict, costs_tup=(1,301,100000,1,1))
             path = a_star.search()
             uncompleted = uncompleted_nets(nets)
 
@@ -113,27 +115,29 @@ def menu():
         while uncompleted:
             net_id = get_min_freedom_net(gates, grid)
             net = nets[net_id]
-            avoider = Avoid_gates(grid, net, scary_dict)
+            avoider = A_star(grid, net, scary_dict, costs_tup=(1,301,100000,10,1))
             path = avoider.search()
             uncompleted = uncompleted_nets(nets)
     
     # Skyscraper (A star)
     elif algorithm == 5:
         uncompleted = True
+        scary_dict = scary_gates(gates)
         while uncompleted:
             net_id = get_min_freedom_net(gates, grid)
             net = nets[net_id]
-            skyscraper = Skyscraper(grid, net)
+            skyscraper = A_star(grid, net, scary_dict, costs_tup=(1,301,100000,1,0))
             path = skyscraper.search()
             uncompleted = uncompleted_nets(nets)
 
     # Free intersections (A star)
     elif algorithm == 6:
         uncompleted = True
+        scary_dict = scary_gates(gates)
         while uncompleted:
             net_id = get_min_freedom_net(gates, grid)
             net = nets[net_id]
-            freeway = Free_intersections(grid, net)
+            freeway = A_star(grid, net, scary_dict, costs_tup=(1,0,100000,1,1))
             path = freeway.search()
             uncompleted = uncompleted_nets(nets)
 
@@ -144,7 +148,7 @@ def menu():
         while uncompleted:
             net_id = get_min_freedom_net(gates, grid)
             net = nets[net_id]
-            combo = Combo(grid, net, scary_dict)
+            combo = A_star(grid, net, scary_dict)
             path = combo.search()
             uncompleted = uncompleted_nets(nets)
         total_costs, wire_count, intersection_count = costs(nets, grid)
