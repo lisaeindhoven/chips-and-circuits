@@ -72,16 +72,19 @@ def set_coordinates(current_net):
     coordinate = current_net.get_coordinates()
     return coordinate[0], coordinate[1], copy.deepcopy(coordinate[0])
 
-def find_options(current_coordinates):
+def find_options(current_coordinates):`
+    # TODO: maak van dit een algemene functie in een bestand algo_helpers.py zodat elke algo dit kan aanroepen
+    # en random gaat ze shufflen dan
+    # o en we kunnen dan oo wel gelijk find options en filter options in elkaar zetten, dus bij het toevoegen kijken of t mag of niet
     """ List path options in all six directions, shuffled.
     """
-    north = (current_coordinates[0], current_coordinates[1]+1, current_coordinates[2])
-    south = (current_coordinates[0], current_coordinates[1]-1, current_coordinates[2])
-    west = (current_coordinates[0]-1, current_coordinates[1], current_coordinates[2])
-    east = (current_coordinates[0]+1, current_coordinates[1], current_coordinates[2])
-    up = (current_coordinates[0], current_coordinates[1], current_coordinates[2]+1)
-    down = (current_coordinates[0], current_coordinates[1], current_coordinates[2]-1)
-    options = [north, south, west, east, up, down]
+    options = []
+    coordinate = [current_coordinates[0], current_coordinates[1], current_coordinates[2]]
+    for coordinate_index in range(len(coordinate)):
+        for neighbourcoordinate in range(-1, 2, 2):
+            temp_coordinate = copy.deepcopy(coordinate)
+            temp_coordinate[coordinate_index] += neighbourcoordinate
+            options.append(tuple(temp_coordinate))
     rnd.shuffle(options)
     return options
 
