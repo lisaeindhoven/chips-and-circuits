@@ -16,11 +16,19 @@ import queue, math
 class A_star():
     """ Class containing the A* algorithm, which is an improvement upon
         dijkstra.py due to the added heuristic. 
+
+        costs_tup = (normal_cost, intersection_cost, collision_cost, gate_cost, sky_cost)
     """
-    def __init__(self, grid, net):
+    def __init__(self, grid, net, scary_dict, costs_tup=(1,301,100000, 1, 1)):
         self.net = net
         self.begin_coordinate, self.end_coordinate = self.net.get_coordinates()
         self.grid = grid
+        self.scary_dict = scary_dict
+
+        # Set costs
+        if not isinstance(costs, tuple):
+            raise TypeError("Costs must be given as tuple")
+        self.costs = costs
 
     def expand_frontier(self):
         """ Picks and removes a location from the frontier and expands it by looking at
@@ -93,22 +101,23 @@ class A_star():
         """ Takes in neighbour and current coordinate and returns 
             it's costs.
         """
+        normal_cost, intersection_cost, collision_cost, gate_cost, sky_cost = self.costs
         # Check if intersection or collision and adjust cost
-        cost = 1
+        cost = normal_cost
         if (isinstance(self.grid.matrix[neighbour], list) and len(self.grid.matrix[neighbour]) >= 1):
-            cost = 301
+            cost = intersection_cost
 
             # From gate to neighbour collision
             for neighbournet in self.grid.matrix[neighbour]:
                 if (self.begin_coordinate == neighbournet.wires[-1] 
                     or self.begin_coordinate == neighbournet.wires[0]):
-                    return 100000
+                    return collision_cost
             
                 # Double intersection collision
                 idx = neighbournet.wires.index(neighbour)
                 if (neighbournet.wires[idx+1] == current
                     or neighbournet.wires[idx-1] == current):
-                    return 100000
+                    return collision_cost
 
         # From current to gate collision
         elif isinstance(self.grid.matrix[neighbour], Gate):
@@ -116,11 +125,22 @@ class A_star():
 
                 if (self.end_coordinate == self.grid.matrix[neighbour].wires[net][0]
                     and current == self.grid.matrix[neighbour].wires[net][1]):
-                    return 100000
+                    return collision_cost
 
                 elif (self.end_coordinate == self.grid.matrix[neighbour].wires[net][-1]
                     and current == self.grid.matrix[neighbour].wires[net][-2]):
-                    return 100000
+                    return collision_cost
+
+        # Gates are scary, set costs if neighbour is near a gate that isn't
+        # from the net itsself. 
+        if (neighbour in self.scary_dict and self.scary_dict[neighbour] != self.end_coordinate
+            and self.scary_dict[neighbour] != self.begin_coordinate):
+            return gate_cost
+
+        # Costs for upward movements are decreased.
+        if neighbour[2] > current[2]:
+            cost = sky_cost
+
         return cost 
 
     def search(self):
