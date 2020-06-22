@@ -19,16 +19,16 @@ class A_star():
 
         costs_tup = (normal_cost, intersection_cost, collision_cost, gate_cost, sky_cost)
     """
-    def __init__(self, grid, net, scary_dict, costs_tup=(1,301,100000, 1, 1)):
+    def __init__(self, grid, net, scary_dict, costs_tup=(1,301,100000,1,1)):
         self.net = net
         self.begin_coordinate, self.end_coordinate = self.net.get_coordinates()
         self.grid = grid
         self.scary_dict = scary_dict
 
         # Set costs
-        if not isinstance(costs, tuple):
+        if not isinstance(costs_tup, tuple):
             raise TypeError("Costs must be given as tuple")
-        self.costs = costs
+        self.costs_tup = costs_tup
 
     def expand_frontier(self):
         """ Picks and removes a location from the frontier and expands it by looking at
@@ -101,7 +101,7 @@ class A_star():
         """ Takes in neighbour and current coordinate and returns 
             it's costs.
         """
-        normal_cost, intersection_cost, collision_cost, gate_cost, sky_cost = self.costs
+        normal_cost, intersection_cost, collision_cost, gate_cost, sky_cost = self.costs_tup
         # Check if intersection or collision and adjust cost
         cost = normal_cost
         if (isinstance(self.grid.matrix[neighbour], list) and len(self.grid.matrix[neighbour]) >= 1):
@@ -139,6 +139,9 @@ class A_star():
 
         # Costs for upward movements are decreased.
         if neighbour[2] > current[2]:
+            cost = sky_cost
+
+        if neighbour[2] < current[2]: 
             cost = sky_cost
 
         return cost 
