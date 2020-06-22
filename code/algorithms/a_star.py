@@ -141,8 +141,8 @@ class A_star():
         if neighbour[2] > current[2]:
             cost += sky_cost
 
-        if neighbour[2] == 0:
-            cost += 5
+        # if neighbour[2] == 0:
+        #     cost += 5
 
         return cost 
 
