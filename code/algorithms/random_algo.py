@@ -72,7 +72,7 @@ def set_coordinates(current_net):
     coordinate = current_net.get_coordinates()
     return coordinate[0], coordinate[1], copy.deepcopy(coordinate[0])
 
-def find_options(current_coordinates):`
+def find_options(current_coordinates):
     # TODO: maak van dit een algemene functie in een bestand algo_helpers.py zodat elke algo dit kan aanroepen
     # en random gaat ze shufflen dan
     # o en we kunnen dan oo wel gelijk find options en filter options in elkaar zetten, dus bij het toevoegen kijken of t mag of niet
