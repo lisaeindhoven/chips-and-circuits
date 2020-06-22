@@ -106,17 +106,25 @@ class Metaclimber:
         """ descents towards new lows!
             rebuilds nets and keeps the score if it improves """
         grid = grid
-        nets = nets
-        old_costs, y, z = costs(nets, grid)
-        temp_grid = copy.deepcopy(grid)
-        temp_nets = copy.deepcopy(nets)
+        nets = nets  
         
-        print(old_costs)
+        
         # Try to improve each net
         for net in nets:
-            net.reset_wires
+            temp_grid = copy.deepcopy(grid)
+            temp_nets = copy.deepcopy(nets)
+            old_costs, y, z = costs(nets, grid)
+            print(f"old costs {old_costs}")
+            reset_net(grid, net)
             a_star = A_star(grid, net)
             a_star.search()
+            new_costs, y, z = costs(nets, grid)
+            print(f"new costs: {new_costs}")
+            if new_costs > old_costs:
+                grid = temp_grid
+                nets = temp_nets
+
+        return grid, nets
             # # new_costs, y, z = costs(nets, grid)
             # print(net.wires)
             # print(temp_net.wires)
@@ -132,10 +140,7 @@ class Metaclimber:
             #     x = old_costs - new_costs
             #     old_costs = new_costs
             #     print(f"Improvement! Costs decreased by {x}! ")    
-        new_costs, y, z = costs(net, grid)
-        if new_costs < old_costs:
-            return grid, nets
-        return temp_grid, temp_nets
+
 
     def conflict_remover(grid, nets):
         """ Removes conflicting nets and returns a list of nets to rebuild """ 
