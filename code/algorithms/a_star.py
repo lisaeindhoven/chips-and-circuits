@@ -69,9 +69,10 @@ class A_star():
                     priority = new_cost + measure(neighbour, self.end_coordinate)
                     frontier.put(neighbour, priority)
                     self.archive[neighbour] = current
-        # DED
+                              
+        # Check for dead-ends
         if (frontier.empty() and self.end_coordinate not in self.archive.values()):
-            print('BIG TROUBLE')
+            print('Pad kon niet gelegd worden. De run stopt.')
             exit()
 
     def make_path(self):
