@@ -7,6 +7,7 @@ Misbaksels: Mik Schutte, Sebastiaan van der Laan & Lisa Eindhoven
 This file got the whole random algorithm in it. If you want to use the whole
 algorithm, you should use the function random. But you can also use parts.
 """
+from code.helpers import find_options, filter_options
 import random as rnd
 import copy
 
@@ -72,31 +73,6 @@ def set_coordinates(current_net):
     """
     coordinate = current_net.get_coordinates()
     return coordinate[0], coordinate[1], copy.deepcopy(coordinate[0])
-
-def find_options(current_coordinates):
-    # TODO: maak van dit een algemene functie in een bestand algo_helpers.py zodat elke algo dit kan aanroepen
-    # en random gaat ze shufflen dan
-    # o en we kunnen dan oo wel gelijk find options en filter options in elkaar zetten, dus bij het toevoegen kijken of t mag of niet
-    """ List path options in all six directions, shuffled.
-    """
-    options = []
-    for coordinate_index in range(0, 3):
-        
-        # Determine options neighbouring the current coordinate
-        for neighbourcoordinate in range(-1, 2, 2):
-            temp_coordinate = [current_coordinates[0], current_coordinates[1], current_coordinates[2]]
-            temp_coordinate[coordinate_index] += neighbourcoordinate
-            options.append(tuple(temp_coordinate))
-    return options
-
-def filter_options(options, grid):
-    """ Check if options are within grid parameters.
-    """
-    valid_options = []
-    for option in options:
-        if not (min(option) <= -1 or option[0] >= grid.x_dim or option[1] >= grid.y_dim or option[2] >= grid.z_dim):
-            valid_options.append(option)
-    return valid_options
                     
 def reached_end(current_option, grid, current_net):
     """ Check if option is destination.

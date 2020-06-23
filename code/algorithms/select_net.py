@@ -7,7 +7,7 @@ Misbaksels: Mik Schutte, Sebastiaan van der Laan & Lisa Eindhoven
 This file contains every function to get nets in different orders.
 """
 import random as rnd
-from code.algorithms.random_algo import filter_options, find_options
+from code.helpers import filter_options, find_options
 from code.algorithms.manhattan import min_nets, max_nets
 
 def get_random_nets(nets):

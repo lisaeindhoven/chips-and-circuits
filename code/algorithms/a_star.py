@@ -9,7 +9,7 @@ than the dijkstra shortest path algorithm.
 """
 
 from code.models.gates import Gate
-from code.algorithms.random_algo import find_options, filter_options
+from code.helpers import find_options, filter_options
 from code.algorithms.manhattan import measure
 import queue, math
 
