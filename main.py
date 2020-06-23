@@ -145,7 +145,10 @@ def menu():
     # Hilldescent
     if algorithm == 6 or algorithm == 7:
         total_costs, wire_count, intersection_count = costs(nets, grid)
-        print(f"Costs prior to hilldescent are {total_costs}, made up of {wire_count} wirepieces and {intersection_count} intersections.")
+        if grid.collision:
+            print(f"Costs prior to hilldescent are {total_costs}, made up of {wire_count} wirepieces and {intersection_count} intersections. \n A collision was made prior to hilldescent!")
+        else:
+            print(f"Costs prior to hilldescent are {total_costs}, made up of {wire_count} wirepieces and {intersection_count} intersections.")
 
         hilldescent(grid, nets, scary_dict, gates)
         print(f"Hilldescent completed. ")

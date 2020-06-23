@@ -17,7 +17,7 @@ class A_star():
     """ Class containing the A* algorithm, which is an improvement upon
         dijkstra.py due to the added heuristic. 
 
-        costs_tup = (normal_cost, intersection_cost, collision_cost, gate_cost, sky_cost)
+        costs_tup = (normal_cost, intersection_cost, collision_cost, gate_cost, sky_cost)\n
         Set sky_cost to -1 to make upward movements free.
     """
     def __init__(self, grid, net, scary_dict, costs_tup=(1,300,100000,0,0)):
@@ -49,7 +49,7 @@ class A_star():
 
             # Stop expanding frontier when end-coordinate is reached
             if current is self.end_coordinate:
-                break
+                return
 
             # Don't allow a path to go through a gate
             if (isinstance(self.grid.matrix[current], Gate) and current != self.begin_coordinate
@@ -71,7 +71,7 @@ class A_star():
                     self.archive[neighbour] = current
 
         # Check for dead-ends
-        if (frontier.empty() and self.end_coordinate not in self.archive.values()):
+        if self.end_coordinate not in self.archive.keys():
             print('Pad kon niet gelegd worden. De run stopt.')
             exit()
 
@@ -108,7 +108,7 @@ class A_star():
         self.grid.matrix[self.begin_coordinate].wires[self.net.id] = path
         self.grid.matrix[self.end_coordinate].wires[self.net.id] = path
 
-        print(f"Net is gelegd tussen gate {self.net.begin_gate.id} en {self.net.end_gate.id}")
+        print(f"Net is gelegd tussen gate {self.net.begin_gate.id} en {self.net.end_gate.id}!")
 
     def check_neighbour(self, neighbour, current):
         """ Takes in neighbour and current coordinate and returns 
@@ -153,12 +153,11 @@ class A_star():
         # Costs for upward movements are decreased
         if neighbour[2] > current[2]:
             cost += sky_cost
-
         return cost 
 
     def search(self):
-        ''' Expands the frontier, determines shortest path and returns the 
+        """ Expands the frontier, determines shortest path and returns the 
             path that was laid.
-        '''
+        """
         self.expand_frontier()
         self.make_path()
