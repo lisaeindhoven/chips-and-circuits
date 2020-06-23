@@ -4,7 +4,7 @@ select_net.py
 Minor Programmeren, Programmeertheorie, Chips & Circuits
 Misbaksels: Lisa Eindhoven, Sebastiaan van der Laan & Mik Schutte
 
-This file contains every function to get nets in different orders.
+This file contains functions to get nets in different orders.
 """
 import random as rnd
 from code.helpers import filter_options, find_options
@@ -63,8 +63,7 @@ def get_min_freedom_net(gates, grid):
             return net.id - 1
 
 def get_min_manhattan_net(nets):
-    """ Determines the uncompleded net with the lowest 
-        Manhattan distance. 
+    """ Finds the uncompleted net with the shortest Manhattan distance. 
     """
     uncompleted_nets = []
     for net in nets:
@@ -73,8 +72,7 @@ def get_min_manhattan_net(nets):
     return (min_nets(uncompleted_nets) - 1)
 
 def get_max_manhattan_net(nets):
-    """ Determines the uncompleded net with the highest 
-        Manhattan distance. 
+    """ Finds the uncompleded net with the longest Manhattan distance. 
     """
     uncompleted_nets = []
     for net in nets:

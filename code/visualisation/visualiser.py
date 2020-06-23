@@ -50,3 +50,4 @@ def visualiser(grid, gates, paths):
         plt.plot(x_val, y_val, z_val)
 
     plt.show()    
+    

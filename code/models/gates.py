@@ -4,7 +4,7 @@ gates.py
 Minor Programmeren, Programmeertheorie, Chips & Circuits
 Misbaksels: Lisa Eindhoven, Sebastiaan van der Laan & Mik Schutte
 
-This file contains the class gates and all the functions of the class
+This file contains the gate class and all functions a gate could want.
 """
 class Gate():
     """ Class containing gate object used to fill a grid and

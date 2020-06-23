@@ -4,8 +4,7 @@ random.py
 Minor Programmeren, Programmeertheorie, Chips & Circuits
 Misbaksels: Lisa Eindhoven, Sebastiaan van der Laan & Mik Schutte
 
-This file got the whole random algorithm in it. If you want to use the whole
-algorithm, you should use the function random. But you can also use parts.
+This file contains the random algorithm and some functions one could import.
 """
 from code.helpers import find_options, filter_options
 import random as rnd

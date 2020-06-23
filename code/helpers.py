@@ -28,7 +28,6 @@ def get_gates(gate_csv_path):
 def get_nets(gates, netlist_csv_path):
     """ Returns a list of nets and an updates list of gates with all the information.
     """
-    # Get netlisit and save them
     with open(netlist_csv_path, mode='r') as f:
         reader = csv.reader(f)
         count = 1
@@ -48,8 +47,6 @@ def random_netlist(gates, netlist_csv_path):
     """ Returns a list of nets and an updates list of gates with all the information.
         Netlist is self random made.
     """
-    # Create random netlist and save them in the objects, gates and nets
-
     # Count the amount of nets
     with open(netlist_csv_path) as f:
         net_count = sum(1 for line in f) - 1
@@ -67,7 +64,7 @@ def random_netlist(gates, netlist_csv_path):
         end_gate_options = list(range(0, len(gates) - 1))
         rnd.shuffle(end_gate_options)
 
-        # Fnd a correct end gate
+        # Find a correct end gate
         while True:
             end_gate = end_gate_options.pop()
             if (end_gate != begin_gate) and (not (end_gate in gates[begin_gate].connections)) and (len(gates[end_gate].connections) <= 4):
@@ -136,7 +133,7 @@ def find_options(current_coordinates):
     """
     options = []
     for coordinate_index in range(0, 3):
-        
+
         # Determine options neighbouring the current coordinate
         for neighbourcoordinate in range(-1, 2, 2):
             temp_coordinate = [current_coordinates[0], current_coordinates[1], current_coordinates[2]]

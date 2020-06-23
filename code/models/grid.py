@@ -4,12 +4,14 @@ grid.py
 Minor Programmeren, Programmeertheorie, Chips & Circuits
 Misbaksels: Lisa Eindhoven, Sebastiaan van der Laan & Mik Schutte
 
-This file contains the class grid and all the functions of the class
+This file contains the grid class and all functions a grid could want.
 """
 import numpy as np
 
 class Grid():
-    """ Class containing grid object used to lie paths and gates on.
+    """ Class containing grid object with a threedimensional array to keep
+        track of everything. 
+        Each coordinate holds a gate or a list (with net(s).
     """
     def __init__(self, gate_list):
         self.x_dim = 0
@@ -31,8 +33,8 @@ class Grid():
             x_list.append(gate.x)
             y_list.append(gate.y)
 
-        # Dimensions increased by 2 to excede gate by one and adjust
-        # adjust for indexing
+        # Dimensions increased by 2 to exceed furthest gates by exactly one
+        # and adjust for indexing
         self.x_dim = max(x_list) + 2
         self.y_dim = max(y_list) + 2
         return np.empty(shape=(self.x_dim, self.y_dim, self.z_dim), dtype=object)
