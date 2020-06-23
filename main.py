@@ -92,19 +92,22 @@ def menu():
 
             # Dijkstra
             if algorithm == 2:
-                costs_tup=(1,301,100000,1,0)
+                costs_tup=(1,300,100000,0,0)
             # A star
             elif algorithm == 3:
-                costs_tup=(1,301,100000,1,0)
+                costs_tup=(1,300,100000,0,0)
             # Avoid gates (A star)
             elif algorithm == 4:
-                costs_tup=(1,301,100000,10,0)
+                costs_tup=(1,300,100000,10,0)
             # Skyscraper (A star)
             elif algorithm == 5:
-                costs_tup=(1,301,100000,1,0)
+                costs_tup=(1,300,100000,0,-1)
             # Free intersections (A star)
             elif algorithm == 6:
-                costs_tup=(1,0,100000,1,0)
+                costs_tup=(1,0,100000,0,0)
+            # Hilclimber
+            elif algorithm == 7:
+                cost_tup(1,300,100000,0,0)
 
             if "dijkstra" in algorithm_dict[str(algorithm)]:
                 dijk = Dijkstra(grid, net, scary_dict, costs_tup)
