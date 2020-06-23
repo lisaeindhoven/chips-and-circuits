@@ -6,10 +6,9 @@ Misbaksels: Lisa Eindhoven, Sebastiaan van der Laan & Mik Schutte
 
 Use this file to check and save results.
 """
-import csv, os, errno, functools, random
+import csv, os, errno, functools
 import numpy as np
 from datetime import datetime
-from collections import defaultdict
 
 def get_results(save_folder, chip_name, nets, grid):
     """ Saves results in a csv file in the given folder,
@@ -23,7 +22,7 @@ def get_results(save_folder, chip_name, nets, grid):
     if grid.collision is False:
         return f"Kosten zijn {total_costs}, voortkomend uit {wire_count} draad-eenheden en {intersection_count} intersections."
     else:
-        return f"Een collision is gemaakt, het algorithme heeft gefaald."
+        return f"Een collision is gemaakt, het algoritme heeft gefaald."
 
 def costs(nets, grid):
     """ Returns total cost, number of wires and intersections.

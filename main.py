@@ -155,7 +155,7 @@ def menu():
     visualiser(grid, gates, bigpath)
 
 
-if __name__ == "__main__":`
+if __name__ == "__main__":
     # TODO: dit uitcommenten voor t einde en de menu() alleenstaand wel verwijderen
     menu()
 
