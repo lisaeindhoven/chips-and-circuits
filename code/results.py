@@ -49,17 +49,10 @@ def count_intersections(grid):
     return intersection_count
 
 def conflict_analysis(grid, nets):
-    """ Returns two dictionaries and the key with highest problem_nets value.
-        problem_nets: {net: int}
-        rivals: {net: [rival net, rival net]}
+    """ Returns a list of every net involved in intersections.
     """
-    #TODO Header beter toelichten, wat zijn problem_nets en rivals?
     intersections = list_intersections(grid)
-
-    # For each problematic net we track conflicts and their rivals
     problem_nets = []
-
-    # Add both conflicting nets to the dictionary
     for intersection in intersections:
         problem_nets.append(intersection[0])
         problem_nets.append(intersection[1])
