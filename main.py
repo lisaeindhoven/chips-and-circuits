@@ -26,15 +26,15 @@ from code.algorithms.select_net import get_min_freedom_net, get_random_nets, get
 from code.visualisation.visualiser import visualiser 
 
 def menu():
-    print("Welkom")
+    print("Welkom bij Chips-and-Circuits van Lisa, Mik en Sebas (de Misbaksels)")
 
     # Specify what chip to take and save the gates into gate objects
-    chip = int(input("Kies de chip (0, 1 of 2): "))
+    chip = int(input("Kies de chip (van klein tot groot: 0, 1 of 2): "))
     gate_csv_path = f"data/input/gates&netlists/chip_{chip}/print_{chip}.csv"
     gates = get_gates(gate_csv_path)
 
     # Specify what netlist to take and save the nets into nets objects and append the nets to the gates
-    netlist = int(input("Kies de netlist(1, 2 of 3): ")) + 3 * chip
+    netlist = int(input("Kies de netlist (van simpel tot complex: 1, 2 of 3): ")) + 3 * chip
     netlist_method = int(input("Wilt u een random netlist (0) gebruiken of een bestaande (1)? "))
     netlist_csv_path = f"data/input/gates&netlists/chip_{chip}/netlist_{str(netlist)}.csv"
     if netlist_method == 1:
@@ -62,7 +62,10 @@ def menu():
     }
 
     # Choose and run algorithm
-    algorithm = int(input("Kies het algoritme (1, 2, 3, 4, 5, 6, of 7) of 0 voor meer informatie (of lees de read me voor een nog duidelijkere omschrijving van de algoritmes): "))
+    algorithm = int(input("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - \
+    \nKies het algoritme (1, 2, 3, 4, 5, 6, of 7) of 0 voor meer informatie \
+    \n3 is snel, maar 6 garandeert een mooi resultaat - duur van 6 bedraagt < :30, < 2:00, < 5:00 voor chip 0, 1 en 2, resp. \
+    \nLees de read me voor een nog duidelijkere omschrijving van de algoritmes: "))
     if algorithm == 0:
         print(algorithm_dict)
         algorithm = int(input("Kies het algoritme (1, 2, 3, 4, 5, 6, of 7): "))
