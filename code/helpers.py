@@ -77,7 +77,7 @@ def random_netlist(gates, netlist_csv_path):
         gates[end_gate].add_net(net)
         gates[end_gate].add_connection(begin_gate)
         nets.append(net)
-        print(f"Net {net_id} gaat van {begin_gate + 1} naar {end_gate + 1}")
+        print(f"Net {net_id} gaat van gate {begin_gate + 1} naar {end_gate + 1}")
     return gates, nets
 
 def get_paths(path_csv):

@@ -22,11 +22,7 @@ def get_results(save_folder, chip_name, nets, grid):
     if grid.collision is False:
         return f"Kosten zijn {total_costs}, voortkomend uit {wire_count} draad-eenheden en {intersection_count} intersections."
     else:
-<<<<<<< HEAD
         return f"Kosten zijn {total_costs}, voortkomend uit {wire_count} draad-eenheden en {intersection_count} intersections. Echter, ergens is een collision gemaakt, het algorithme heeft gefaald in een run."
-=======
-        return f"Een collision is gemaakt, het algoritme kon een pad niet zonder leggen."
->>>>>>> c468517aaeed82644a8eabc59f8e0840d4399039
 
 def costs(nets, grid):
     """ Returns total cost, number of wires and intersections.
