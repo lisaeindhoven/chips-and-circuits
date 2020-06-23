@@ -2,7 +2,7 @@
 select_net.py
 
 Minor Programmeren, Programmeertheorie, Chips & Circuits
-Misbaksels: Mik Schutte, Sebastiaan van der Laan & Lisa Eindhoven
+Misbaksels: Lisa Eindhoven, Sebastiaan van der Laan & Mik Schutte
 
 This file contains every function to get nets in different orders.
 """
@@ -81,3 +81,4 @@ def get_max_manhattan_net(nets):
         if net.completed == False:
             uncompleted_nets.append(net)
     return (max_nets(uncompleted_nets) - 1)
+    

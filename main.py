@@ -10,20 +10,20 @@ This file is the main python file
 # TODO: elke bestand checken op todos en prints
 # TODO: git issues uitwerken voor t inleveren
 # TODO: allemaal keer de code door kijken of het duidelijk is
-import random
+# import random as rnd
 import csv
 import math
 import numpy as np
 
 from code.models.grid import Grid
 from code.results import get_results, costs
-from code.algorithms.random_algo import *
+from code.algorithms.random_algo import random
 from code.algorithms.dijkstra import Dijkstra
 from code.algorithms.a_star import A_star
 from code.helpers import get_gates, get_nets, get_paths, uncompleted_nets, create_bigpath, scary_gates, reset_net, random_netlist, find_options, filter_options
+from code.algorithms.downhill import hilldescent, conflict_remover
+from code.algorithms.select_net import get_min_freedom_net, get_min_manhattan_net, get_max_manhattan_net
 from code.visualisation.visualiser import visualiser 
-from code.algorithms.select_net import get_min_freedom_net, get_random_nets, get_min_manhattan_net, get_max_manhattan_net
-from code.algorithms.metaclimber import Metaclimber
 
 def menu():
     print("Welkom")
@@ -98,9 +98,9 @@ def menu():
         # Hilldescent (after Avoid gates)
         elif algorithm == 6:
             costs_tup=(1,300,100000,10,0)
-        # Cheap intersections(A star) + Conflict_remover and Avoid gates + Hilldescent
+        # Cheap intersections(Avoid A star) + Conflict_remover and Avoid gates + Hilldescent
         elif algorithm == 7:
-            costs_tup=(1,3,100000,0,0)
+            costs_tup=(1,3,100000,10,0)
             
         while uncompleted_nets(nets):
             # Get the right net
@@ -129,7 +129,7 @@ def menu():
         print(f"First run (cheap_intersections) costs are {total_costs}, made up of {wire_count} wirepieces and {intersection_count} intersections.")
 
         # Remove all the nets involved in conflicts
-        removed_nets = Metaclimber.conflict_remover(grid, nets)
+        removed_nets = conflict_remover(grid, nets)
         print("Removed all nets involved in intersections")
         costs_tup=(1,300,100000,10,0)
         #
@@ -142,7 +142,7 @@ def menu():
         total_costs, wire_count, intersection_count = costs(nets, grid)
         print(f"Costs prior to hilldescent are {total_costs}, made up of {wire_count} wirepieces and {intersection_count} intersections.")
         
-        grid, nets = Metaclimber.hilldescent(grid, nets, scary_dict, gates)
+        grid, nets = hilldescent(grid, nets, scary_dict, gates)
         print(f"Hilldescent completed. ")
 
     # Collect all nets for the visualisation
