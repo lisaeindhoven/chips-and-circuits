@@ -66,9 +66,7 @@ def conflict_analysis(grid, nets):
     return problem_nets
 
 def list_intersections(grid):
-    """ Returns a list with lists of nets that occupy crowded gridpoints.
-        Index denotes grid position, content is either a gate, 
-        an empty list or a list of net(s).
+    """ Returns a list with lists of two nets that intersect.
     """
     intersections = []
     for index, content in np.ndenumerate(grid.matrix):
