@@ -20,7 +20,7 @@ class A_star():
         costs_tup = (normal_cost, intersection_cost, collision_cost, gate_cost, sky_cost)
         Set sky_cost to -1 to make upward movements free.
     """
-    def __init__(self, grid, net, scary_dict, costs_tup):
+    def __init__(self, grid, net, scary_dict, costs_tup=(1,300,100000,0,0)):
         self.net = net
         self.begin_coordinate, self.end_coordinate = self.net.get_coordinates()
         self.grid = grid
@@ -133,7 +133,7 @@ class A_star():
                     return collision_cost
 
         # Gates are scary, set costs if neighbour is near a gate that isn't
-        # from the net itsself
+        # from the net itself
         if (neighbour in self.scary_dict and self.scary_dict[neighbour] != self.end_coordinate
             and self.scary_dict[neighbour] != self.begin_coordinate):
             cost += gate_cost
@@ -149,3 +149,4 @@ class A_star():
             path that was laid.
         '''
         self.expand_frontier()
+        self.make_path()

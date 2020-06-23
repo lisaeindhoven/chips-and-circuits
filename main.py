@@ -133,14 +133,15 @@ def menu():
         #
         for net in removed_nets:
             a_star = A_star(grid, net, scary_dict, costs_tup)
-            path = a_star.search()
+            a_star.search()
     
     # Hilldescent
     if algorithm == 6 or algorithm == 7:
         total_costs, wire_count, intersection_count = costs(nets, grid)
         print(f"Costs prior to hilldescent are {total_costs}, made up of {wire_count} wirepieces and {intersection_count} intersections.")
-        
-        grid, nets = hilldescent(grid, nets, scary_dict, gates)
+
+        # TODO grid, nets hoeven niet terug te krijgen
+        hilldescent(grid, nets, scary_dict, gates)
         print(f"Hilldescent completed. ")
 
     # Collect all nets for the visualisation
