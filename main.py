@@ -40,7 +40,7 @@ def menu():
     if netlist_method == 1:
         gates, nets = get_nets(gates, netlist_csv_path)
     else:
-        random_netlist(gates, netlist_csv_path)
+        gates, nets = random_netlist(gates, netlist_csv_path)
 
     # Create a matrix of the grid with all the gates
     grid = Grid(gates)
@@ -121,6 +121,7 @@ def menu():
                 a_star = A_star(grid, net, scary_dict, costs_tup)
                 path = a_star.search()
             
+    # TODO comment met uiteg in dit hele stuk
     if algorithm == 7:
         total_costs, wire_count, intersection_count = costs(nets, grid)
         print(f"First run (avoid) costs are {total_costs}, made up of {wire_count} wirepieces and {intersection_count} intersections.")

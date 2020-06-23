@@ -7,6 +7,7 @@ Misbaksels: Mik Schutte, Sebastiaan van der Laan & Lisa Eindhoven
 This file contains the helper functions used in the code.
 """
 import csv, ast
+import random as rnd
 from .models.gates import Gate
 from .models.grid import Grid
 from .models.nets import Nets
@@ -35,7 +36,9 @@ def get_nets(gates, netlist_csv_path):
             if row[0] != "chip_a":
                 net = Nets(count, gates[int(row[0])-1], gates[int(row[1])-1])
                 gates[int(row[0])-1].add_net(net)
+                gates[int(row[0])-1].add_connection(int(row[1])-1)
                 gates[int(row[1])-1].add_net(net)
+                gates[int(row[1])-1].add_connection(int(row[0])-1)
                 nets.append(net)
                 count += 1
     return gates, nets
@@ -46,8 +49,27 @@ def random_netlist(gates, netlist_csv_path):
     
     nets = []
 
-    for net_id in range(net_count):
-        print(net_id)
+    for net_id in range(1, net_count + 1):
+        begin_gate = rnd.randint(0, len(gates) - 1)
+
+        while True:
+            end_gate_options = range(0, len(gates - 1))
+            random.shuffle(end_gate_options)
+            end_gate = end_gate_options.pop
+            if (end_gate != begin_gate) and (not (end_gate in gates[begin_gate].connections)) and (len(gates[begin_gate].connections) <= 4) and (len(gates[end_gate].connections) <= 4):
+                break
+            if end_gate_options == []:
+                break
+
+        net = Nets(net_id, gates[begin_gate], gates[end_gate])
+        gates[begin_gate].add_net(net)
+        gates[begin_gate].add_connection(end_gate)
+        gates[end_gate].add_net(net)
+        gates[end_gate].add_connection(begin_gate)
+        nets.append(net)
+        print(f"Net {net_id} gaat van {begin_gate + 1} naar {end_gate + 1}")
+
+    return gates, nets
 
 
 def get_paths(path_csv):
