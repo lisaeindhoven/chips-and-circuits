@@ -4,7 +4,7 @@ nets.py
 Minor Programmeren, Programmeertheorie, Chips & Circuits
 Misbaksels: Lisa Eindhoven, Sebastiaan van der Laan & Mik Schutte
 
-This file contains the class nets and all the functions of the class
+This file holds nets with all data and functions essential to a good net.
 """
 class Nets():
     """ Class containing nets object used to fill a grid and
@@ -24,12 +24,12 @@ class Nets():
         return (self.begin_gate.id, self.end_gate.id)
 
     def add_wire(self, coordinate):
-        """ Add new coordinate to the route. 
+        """ Add new coordinate to the net.wires path. 
         """
         self.wires.append(tuple(coordinate))
 
     def wire_count(self):
-        """ Return the amount of units for this net.
+        """ Return the amount of wire-units for this net.
         """
         return len(self.wires) - 1
 
