@@ -57,11 +57,11 @@ def random_netlist(gates, netlist_csv_path):
     for net_id in range(1, net_count + 1):
         # Find a correct begin gate
         while True:
-            begin_gate = rnd.randint(0, len(gates) - 1)
+            begin_gate = rnd.randint(0, len(gates))
             if (len(gates[begin_gate].connections) <= 4):
                 break
 
-        end_gate_options = list(range(0, len(gates) - 1))
+        end_gate_options = list(range(0, len(gates)))
         rnd.shuffle(end_gate_options)
 
         # Find a correct end gate

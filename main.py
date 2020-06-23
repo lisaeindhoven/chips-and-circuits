@@ -169,9 +169,10 @@ def menu():
 
 
 if __name__ == "__main__":
-    try:
-        menu()
-    except:
-        print("Het lijkt erop dat er iets fout is gegaan. Probeer het nog een keer of contacteer de Misbaksels!",
-        "Als je wilt weten wat er precies fout gaat, kan deze try except uitgezet worden, zodat het de main alleen het menu aanroept en de orginele foutmelding in de terminal verschijnt!",
-        sep="\n")
+    menu()
+    # try:
+    #     menu()
+    # except:
+    #     print("Het lijkt erop dat er iets fout is gegaan. Probeer het nog een keer of contacteer de Misbaksels!",
+    #     "Als je wilt weten wat er precies fout gaat, kan deze try except uitgezet worden, zodat het de main alleen het menu aanroept en de orginele foutmelding in de terminal verschijnt!",
+    #     sep="\n")
