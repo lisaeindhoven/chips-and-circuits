@@ -15,8 +15,8 @@ def get_results(save_folder, chip_name, nets, grid):
     """ Saves results in a csv file in the given folder,
         as a file called output with date and time.
         Returns a nice f-string of costs.
-        TODO yet to add actual collisions.
     """
+    #TODO yet to add actual collisions
     total_costs, wire_count, intersection_count = costs(nets, grid)
     save_results(save_folder, chip_name, nets, total_costs)
     return f"Costs are {total_costs}, made up of {wire_count} wirepieces and {intersection_count} intersections."
@@ -53,6 +53,7 @@ def conflict_analysis(grid, nets):
         problem_nets: {net: int}
         rivals: {net: [rival net, rival net]}
     """
+    #TODO Header beter toelichten, wat zijn problem_nets en rivals?
     intersections = list_intersections(grid)
 
     # For each problematic net we track conflicts and their rivals
@@ -91,7 +92,7 @@ def save_results(save_folder, chip_name, nets, total_costs):
     date_time = now.strftime("%m.%d.%Y_%H.%M.%S")
     result_doc = save_folder + "output_" + date_time + ".csv"
 
-    # Create folder if it doesn't exist yet.
+    # Create folder if it doesn't exist yet
     try:
         os.makedirs(save_folder)
     except OSError as e:
@@ -111,5 +112,3 @@ def save_results(save_folder, chip_name, nets, total_costs):
             connection = connection.replace(" ", "")
             writer.writerow([net.completed, connection, net.wires])
         writer.writerow([chip_name, total_costs])
-
-     

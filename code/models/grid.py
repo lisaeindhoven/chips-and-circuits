@@ -31,7 +31,7 @@ class Grid():
             y_list.append(gate.y)
 
         # Dimensions increased by 2 to excede gate by one and adjust
-        # adjust for indexing.
+        # adjust for indexing
         self.x_dim = max(x_list) + 2
         self.y_dim = max(y_list) + 2
         return np.empty(shape=(self.x_dim, self.y_dim, self.z_dim), dtype=object)
@@ -44,7 +44,7 @@ class Grid():
         for gate in gate_list:
             self.matrix[gate.x][gate.y][gate.z] = gate
 
-        # Add list to every open space for possible wire.
+        # Add list to every open space for possible wire
         for index, obj in np.ndenumerate(self.matrix):
             if not obj:
                 self.matrix[index] = []

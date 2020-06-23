@@ -8,7 +8,6 @@ This file contains the visualiser function class which creates a
 3D plot showing the grid, the gates and the paths that traverse 
 the grid to their gates.
 """
-
 import matplotlib.pyplot as plt
 import numpy as np
 from mpl_toolkits import mplot3d
@@ -19,20 +18,18 @@ def visualiser(grid, gates, paths):
     """
     x_dim, y_dim, z_dim = [grid.x_dim, grid.y_dim, grid.z_dim]
 
-    # If input was file as string, make paths list.
+    # If input was file as string, make paths list
     if isinstance(paths, str):
         paths = get_paths(paths)
 
-    # Plot 3D axes and set correct limits.
+    # Plot 3D axes and set correct limits
     fig = plt.figure(figsize=(x_dim, z_dim))
     ax = mplot3d.Axes3D(fig)
     ax.set_zlim(0, z_dim*0.5)
     ax.set_xlim(0, x_dim-1)
     ax.set_ylim(0, y_dim-1)
 
-    # Disable x and y ticks and set correct z ticks.
-    # ax.set_xticklabels([])
-    # ax.set_yticklabels([])
+    # Disable x and y ticks and set correct z ticks
     ax.set_xticks(np.arange(0, x_dim, 1))
     ax.set_yticks(np.arange(0, y_dim, 1))
     ax.set_zticks(np.arange(0, z_dim, 1))

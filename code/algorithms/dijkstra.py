@@ -28,15 +28,15 @@ class Dijkstra(A_star):
         current_cost[self.begin_coordinate] = 0
 
         # Pick neighbour from the frontier and expand it by adding its
-        # own neighbours to the frontier.
+        # own neighbours to the frontier
         while not frontier.empty():
             current = frontier.get()
 
-            # Stop expanding frontier when end-coordinate is reached.
+            # Stop expanding frontier when end-coordinate is reached
             if current is self.end_coordinate:
                 break
 
-            # Don't allow a path to go through a gate.
+            # Don't allow a path to go through a gate
             if (isinstance(self.grid.matrix[current], Gate) and current != self.begin_coordinate
                 and current != self.end_coordinate):
                 continue
@@ -44,11 +44,11 @@ class Dijkstra(A_star):
             options = filter_options(find_options(current), self.grid)
             for neighbour in options:
 
-                # Determine move's cost.
+                # Determine move's cost
                 cost = self.check_neighbour(neighbour, current)
                 new_cost = current_cost[current] + cost 
 
-                # Create archive shortest routes.
+                # Create archive shortest routes
                 if (neighbour not in current_cost or new_cost < current_cost[neighbour]):
                     current_cost[neighbour] = new_cost
                     priority = new_cost

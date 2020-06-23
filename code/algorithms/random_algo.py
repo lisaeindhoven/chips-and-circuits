@@ -4,7 +4,7 @@ random.py
 Minor Programmeren, Programmeertheorie, Chips & Circuits
 Misbaksels: Mik Schutte, Sebastiaan van der Laan & Lisa Eindhoven
 
-This file got the whole random algorithm in it. If you want to user the whole
+This file got the whole random algorithm in it. If you want to use the whole
 algorithm, you should use the function random. But you can also use parts.
 """
 import random as rnd
@@ -81,6 +81,8 @@ def find_options(current_coordinates):
     options = []
     coordinate = [current_coordinates[0], current_coordinates[1], current_coordinates[2]]
     for coordinate_index in range(len(coordinate)):
+        
+        # Determine options neighbouring the current coordinate
         for neighbourcoordinate in range(-1, 2, 2):
             temp_coordinate = copy.deepcopy(coordinate)
             temp_coordinate[coordinate_index] += neighbourcoordinate
