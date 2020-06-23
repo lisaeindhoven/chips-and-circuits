@@ -137,7 +137,8 @@ def menu():
         removed_nets = conflict_remover(grid, nets)
         print("Removed all nets involved in intersections")
         costs_tup=(1,300,100000,10,0)
-        #
+
+        # Create paths again
         for net in removed_nets:
             a_star = A_star(grid, net, scary_dict, costs_tup)
             a_star.search()
@@ -169,9 +170,10 @@ def menu():
 
 
 if __name__ == "__main__":
-    try:
-        menu()
-    except:
-        print("Het lijkt erop dat er iets fout is gegaan. Probeer het nog een keer of contacteer de Misbaksels!",
-        "Als je wilt weten wat er precies fout gaat, kan deze try except uitgezet worden, zodat het de main alleen het menu aanroept en de orginele foutmelding in de terminal verschijnt!",
-        sep="\n")
+    menu()
+    # try:
+    #     menu()
+    # except:
+    #     print("Het lijkt erop dat er iets fout is gegaan. Probeer het nog een keer of contacteer de Misbaksels!",
+    #     "Als je wilt weten wat er precies fout gaat, kan deze try except uitgezet worden, zodat het de main alleen het menu aanroept en de orginele foutmelding in de terminal verschijnt!",
+    #     sep="\n")
