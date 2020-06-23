@@ -87,13 +87,15 @@ class Metaclimber:
         while True:
             intersections = count_intersections(grid)
             if intersections:        
-                problem_nets, rivals, worst_net_id = conflict_analysis(grid, nets)
-                for net in nets:
-                    if net.id == worst_net_id:
-                        removed_nets.append(net)
-                        worst_net = net
-                reset_net(grid, worst_net)
+                problem_nets = conflict_analysis(grid, nets)
+                problem_nets = list(dict.fromkeys(problem_nets))
+                for net in problem_nets:
+                    print(net.wires)
+                    removed_nets.append(net)
+                    reset_net(grid, net)
+                    print(net.wires)
             break
+        print(removed_nets)
         return removed_nets
     
 if __name__ == "__main__":

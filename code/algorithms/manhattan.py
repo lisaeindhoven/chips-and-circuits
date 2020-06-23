@@ -2,7 +2,7 @@
 manhattan.py
 
 Minor Programmeren, Programmeertheorie, Chips & Circuits
-Misbaksels: Mik Schutte, Sebastiaan van der Laan & Lisa Eindhoven
+Misbaksels: Lisa Eindhoven, Sebastiaan van der Laan & Mik Schutte
 
 These functions calculate the (minimum/maximum) manhattan distance between
 (a multitude of) two sets of coordinates. Use min/max_net for the determined 

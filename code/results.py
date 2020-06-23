@@ -57,19 +57,15 @@ def conflict_analysis(grid, nets):
     intersections = list_intersections(grid)
 
     # For each problematic net we track conflicts and their rivals
-    problem_nets = defaultdict(int)
-    rivals = defaultdict(list)
+    problem_nets = []
 
-    # Add 1 and the rival net to the dictionaries
+    # Add both conflicting nets to the dictionary
     for intersection in intersections:
-        problem_nets[intersection[0]] += 1
-        problem_nets[intersection[1]] += 1
-        rivals[intersection[0]].append(intersection[1])
-        rivals[intersection[1]].append(intersection[0])
-
-    max_conflicts = max(problem_nets.values())
-    max_problems = [net_id for net_id in problem_nets if problem_nets[net_id] == max_conflicts]
-    return problem_nets, rivals, random.choice(max_problems)
+        print(intersection)
+        problem_nets.append(intersection[0])
+        problem_nets.append(intersection[1])
+        print(problem_nets)
+    return problem_nets
 
 def list_intersections(grid):
     """ Returns a list with lists of nets that occupy crowded gridpoints.
@@ -81,7 +77,7 @@ def list_intersections(grid):
         if (isinstance(content, list) and len(content) > 1):
             occupants = []
             for net in content:
-                occupants.append(net.id)
+                occupants.append(net)
             intersections.append(occupants)
     return intersections
 
