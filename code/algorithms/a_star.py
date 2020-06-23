@@ -69,6 +69,10 @@ class A_star():
                     priority = new_cost + measure(neighbour, self.end_coordinate)
                     frontier.put(neighbour, priority)
                     self.archive[neighbour] = current
+        # DED
+        if (frontier.empty() and self.end_coordinate not in self.archive.values()):
+            print('BIG TROUBLE')
+            exit()
 
     def make_path(self):
         """ Follow the archive of neighbours from end to start.
