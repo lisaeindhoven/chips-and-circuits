@@ -5,8 +5,6 @@ In this assignment, the chips are all but finished: a circuit is provided with g
 
 Our mission is to arrange the totality of nets between all connectable gates in the shortest manner possible. This results in cheap and fast chips!
 
-<!-- TODO misschien nog toevoegen van namen en de uva dat het een opdrachgt is? -->
-
 ## Setup
 The [requirements.txt](https://github.com/lisaeindhoven/chips-and-circuits/blob/master/requirements.txt) file contains the packages that have been used to run the code and determine chip layout. Install packages using: <br/>
 `pip install -r requirements.txt`
@@ -16,15 +14,15 @@ Or by
 `conda install --file requirements.txt`
 
 ## Usage
-Run "python main.py", to generate results (with the newest version installed as per requirements.txt). This will prompt the user for specifics on which algorithm to run and what heuristics to use. After the option is selected the algorithm will run and conclude with a matplotlib visualisation.
+Run "python main.py", to generate results (with the newest version installed as per requirements.txt). This will prompt the user for specifics (in Dutch) on which algorithm to run and what heuristics to use. Dutch prompting was chosen due to the nationality of our supervisers. After the option is selected, the algorithm will run and conclude with a matplotlib visualisation.
 ![matplotlib visualisation](/docs/visualised_chip.png).
 
 ## Structure
 The repository is organised into three main folders: code, data and docs. The root additionally contains the main.py file, used to run the program.
 
 * /code: Contains all code used in this project.
-    * /algorithms: Containins the random, Dijkstra and A* algorithms.   
-    * /models: Contains the gates, grid and nets classes used in to represent a chip.
+    * /algorithms: Contains the random, Dijkstra, A*, downhill, Manhattan and select-net algorithms.   
+    * /models: Contains the gates, grid and nets classes used to represent a chip.
     * /visualisation: Contains the code to create a 3D matplotlib visualisation.
 
 * /data: Contains both the input as well as the generated output data.
