@@ -34,6 +34,12 @@ def visualiser(grid, gates, paths):
     ax.set_yticks(np.arange(0, y_dim, 1))
     ax.set_zticks(np.arange(0, z_dim, 1))
 
+    # Name axis
+    ax.set_xlabel('X')
+    ax.set_ylabel('Y')
+    ax.set_zlabel('Z')
+    ax.set_title('Your amazing chip')    
+
     # Place gates
     x_scat, y_scat, z_scat = [[], [], []]
     for gate in gates:
