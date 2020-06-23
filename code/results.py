@@ -82,6 +82,7 @@ def list_intersections(grid):
 def save_results(save_folder, chip_name, nets, total_costs):
     """ Creates folder name with current date and time.
     """
+    # Get the current date and time for the file name
     now = datetime.now()
     date_time = now.strftime("%m.%d.%Y_%H.%M.%S")
     result_doc = save_folder + "output_" + date_time + ".csv"
@@ -93,16 +94,16 @@ def save_results(save_folder, chip_name, nets, total_costs):
         if e.errno != errno.EEXIST:
             raise
 
+    # Create the results csv
     with open(result_doc, mode='w', newline='') as f:
         writer = csv.writer(f)
         writer.writerow(["net","wires"])
 
-        # TODO: verwijder net.completed uit de csv voor check50
         for net in nets:
             # TODO: kan dit makkelijker zonder spaties?
             net.wires = str(net.wires)
             net.wires = net.wires.replace(" ", "")
             connection = str(net.get_connection())
             connection = connection.replace(" ", "")
-            writer.writerow([net.completed, connection, net.wires])
+            writer.writerow([connection, net.wires])
         writer.writerow([chip_name, total_costs])
