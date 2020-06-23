@@ -136,7 +136,10 @@ def menu():
     # Hilldescent
     if algorithm == 6 or algorithm == 7:
         total_costs, wire_count, intersection_count = costs(nets, grid)
-        print(f"Costs prior to hilldescent are {total_costs}, made up of {wire_count} wirepieces and {intersection_count} intersections.")
+        if grid.collision:
+            print(f"Collision was made prior to hilldescent.")
+        else:
+            print(f"Costs prior to hilldescent are {total_costs}, made up of {wire_count} wirepieces and {intersection_count} intersections.")
 
         hilldescent(grid, nets, scary_dict, gates)
         print(f"Hilldescent completed. ")
@@ -155,7 +158,7 @@ def menu():
     visualiser(grid, gates, bigpath)
 
 
-if __name__ == "__main__":`
+if __name__ == "__main__":
     # TODO: dit uitcommenten voor t einde en de menu() alleenstaand wel verwijderen
     menu()
 
