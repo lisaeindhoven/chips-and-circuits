@@ -18,6 +18,7 @@ class A_star():
         dijkstra.py due to the added heuristic. 
 
         costs_tup = (normal_cost, intersection_cost, collision_cost, gate_cost, sky_cost)
+        Set sky_cost to -1 to make upward movements free.
     """
     def __init__(self, grid, net, scary_dict, costs_tup=(1,300,100000,0,0)):
         self.net = net
