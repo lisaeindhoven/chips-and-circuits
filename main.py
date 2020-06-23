@@ -21,7 +21,9 @@ from code.algorithms.select_net import get_min_freedom_net, get_random_nets, get
 from code.visualisation.visualiser import visualiser 
 
 def menu():
-    print("Welkom bij Chips-and-Circuits van Lisa, Mik en Sebas (de Misbaksels)")
+    print("Welkom bij Chips-and-Circuits van Lisa, Mik en Sebas (de Misbaksels)",
+        "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -",
+        sep="\n")
 
     # Specify what chip to take and save the gates into gate objects
     chip = int(input("Kies de chip (van klein tot groot: 0, 1 of 2): "))
@@ -30,7 +32,7 @@ def menu():
 
     # Specify what netlist to take and save the nets into nets objects and append the nets to the gates
     netlist = int(input("Kies de netlist (van simpel tot complex: 1, 2 of 3): ")) + 3 * chip
-    netlist_method = int(input("Wilt u een random netlist (0) gebruiken of een bestaande (1)? "))
+    netlist_method = int(input("Wilt u een random (0) of een bestaande (1) netlist gebruiken? "))
     netlist_csv_path = f"data/input/gates&netlists/chip_{chip}/netlist_{str(netlist)}.csv"
     if netlist_method == 1:
         gates, nets = get_nets(gates, netlist_csv_path)
@@ -57,10 +59,12 @@ def menu():
     }
 
     # Choose and run algorithm
-    algorithm = int(input("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - \
-    \nKies het algoritme (1, 2, 3, 4, 5, 6, of 7) of 0 voor meer informatie \
-    \n3 is snel, maar 6 garandeert een mooi resultaat - duur van 6 bedraagt < :30, < 2:00, < 5:00 voor chip 0, 1 en 2, resp. \
-    \nLees de read me voor een nog duidelijkere omschrijving van de algoritmes: "))
+    print("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -",
+        "Kies het algoritme nummer (1, 2, 3, 4, 5, 6, of 7) of 0 voor meer informatie over welk nummer bij welk algoritme hoort",
+        "3 is snel, maar 6 garandeert een mooi resultaat - duur van 6 bedraagt < :30, < 2:00, < 5:00 voor chip 0, 1 en 2, resp",
+        sep="\n")
+
+    algorithm = int(input("Lees de read me voor een nog duidelijkere omschrijving van de algoritmes: "))
     if algorithm == 0:
         print(algorithm_dict)
         algorithm = int(input("Kies het algoritme (1, 2, 3, 4, 5, 6, of 7): "))
@@ -72,10 +76,15 @@ def menu():
 
     else:
         # Let the user choose the way the nets are selected
-        select_net = int(input("Kies de net keuze (1, 2 of 3) of 0 voor meer informatie: "))
+        print("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -",
+        "Kies de net keuze (1, 2 of 3) of 0 voor meer informatie",
+        sep="\n")
+        select_net = int(input("Optie 1 heeft onze voorkeur: "))
         if select_net == 0:
             print(net_select_dict)
             select_net = int(input("Kies de net keuze (1, 2 of 3): "))
+
+        print("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -")
 
         # Greate scary gate dictionary
         scary_dict = scary_gates(gates)
@@ -149,6 +158,7 @@ def menu():
     algorithm_name = algorithm_dict[f"{algorithm}"]
     save_folder = f"data/results/{algorithm_name}/chip_{chip}_net_{netlist}/"
     chip_name = f"chip_{chip}_net_{netlist}"
+    print("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -")
     print(get_results(save_folder, chip_name, nets, grid))
 
     # Visualisation
@@ -156,10 +166,9 @@ def menu():
 
 
 if __name__ == "__main__":
-    # TODO: dit uitcommenten voor t einde en de menu() alleenstaand wel verwijderen
-    menu()
-
-    # try:
-    #     menu()
-    # except:
-    #     print("Het lijkt erop dat er iets fout is gegaan. Probeer het nog een keer!")
+    try:
+        menu()
+    except:
+        print("Het lijkt erop dat er iets fout is gegaan. Probeer het nog een keer of contacteer de Misbaksels!",
+        "Als je wilt weten wat er precies fout gaat, kan deze try except uitgezet worden, zodat het de main alleen het menu aanroept en de orginele foutmelding in de terminal verschijnt!",
+        sep="\n")
