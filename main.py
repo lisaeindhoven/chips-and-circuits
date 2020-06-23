@@ -60,8 +60,8 @@ def menu():
 
     # Choose and run algorithm
     print("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -",
-        "Kies het algoritme nummer (1, 2, 3, 4, 5, 6, of 7) of 0 voor meer informatie over welk nummer bij welk algoritme hoort",
-        "3 is snel, maar 6 garandeert een mooi resultaat - duur van 6 bedraagt < :30, < 2:00, < 5:00 voor chip 0, 1 en 2, resp",
+        "Kies het algoritme nummer (1, 2, 3, 4, 5, 6, of 7) of 0 voor meer informatie over welk nummer bij welk algoritme hoort.",
+        "3 is snel, maar 6 garandeert een mooi resultaat - duur van 6 bedraagt < :30, < 2:00, < 5:00 voor chip 0, 1 en 2, resp.",
         sep="\n")
 
     algorithm = int(input("Lees de read me voor een nog duidelijkere omschrijving van de algoritmes: "))
@@ -77,7 +77,7 @@ def menu():
     else:
         # Let the user choose the way the nets are selected
         print("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -",
-        "Kies de net keuze (1, 2 of 3) of 0 voor meer informatie",
+        "Kies de net keuze (1, 2 of 3) of 0 voor meer informatie.``",
         "Let op, alle opties maken gebruik van een random keuze als er meerdere mogelijkheden zijn,",
         "hierdoor is het verstandig meerdere keren hetzelfde te runnen om het beste resultaat te krijgen.",
         "De resultaten zijn terug te vinden in de map data/results.",
