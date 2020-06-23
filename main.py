@@ -2,7 +2,7 @@
 main.py
 
 Minor Programmeren, Programmeertheorie, Chips & Circuits
-Misbaksels: Mik Schutte, Sebastiaan van der Laan & Lisa Eindhoven
+Misbaksels: Lisa Eindhoven, Sebastiaan van der Laan & Mik Schutte
 
 This file is the main python file
 """
@@ -22,7 +22,7 @@ from code.algorithms.dijkstra import Dijkstra
 from code.algorithms.a_star import A_star
 from code.helpers import get_gates, get_nets, get_paths, uncompleted_nets, create_bigpath, scary_gates, reset_net, random_netlist, find_options, filter_options
 from code.algorithms.downhill import hilldescent, conflict_remover
-from code.algorithms.select_net import get_min_freedom_net, get_min_manhattan_net, get_max_manhattan_net
+from code.algorithms.select_net import get_min_freedom_net, get_random_nets, get_min_manhattan_net, get_max_manhattan_net
 from code.visualisation.visualiser import visualiser 
 
 def menu():
@@ -69,7 +69,6 @@ def menu():
         
     # Random
     if algorithm == 1:
-        # TODO: optie geven om te loopen tot er een goede oplossing is gevonden
         random_net_ids = get_random_nets(nets)
         random(grid, gates, random_net_ids, nets)
 
@@ -122,7 +121,6 @@ def menu():
                 a_star = A_star(grid, net, scary_dict, costs_tup)
                 a_star.search()
             
-    # TODO comment met uiteg in dit hele stuk
     # The wombo combo
     if algorithm == 7:
         total_costs, wire_count, intersection_count = costs(nets, grid)
@@ -149,7 +147,7 @@ def menu():
     bigpath = create_bigpath(nets)
 
     # Get results and create csv file
-    # We edit net.wires to fit check50 results (why we make bigpath first)
+    # We edit net.wires to fit check50 results (why we make bigpath first so the visualisation can work with it)
     algorithm_name = algorithm_dict[f"{algorithm}"]
     save_folder = f"data/results/{algorithm_name}/chip_{chip}_net_{netlist}/"
     chip_name = f"chip_{chip}_net_{netlist}"

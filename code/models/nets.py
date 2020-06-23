@@ -2,7 +2,7 @@
 nets.py
 
 Minor Programmeren, Programmeertheorie, Chips & Circuits
-Misbaksels: Mik Schutte, Sebastiaan van der Laan & Lisa Eindhoven
+Misbaksels: Lisa Eindhoven, Sebastiaan van der Laan & Mik Schutte
 
 This file contains the class nets and all the functions of the class
 """

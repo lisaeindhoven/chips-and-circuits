@@ -2,7 +2,7 @@
 random.py
 
 Minor Programmeren, Programmeertheorie, Chips & Circuits
-Misbaksels: Mik Schutte, Sebastiaan van der Laan & Lisa Eindhoven
+Misbaksels: Lisa Eindhoven, Sebastiaan van der Laan & Mik Schutte
 
 This file got the whole random algorithm in it. If you want to use the whole
 algorithm, you should use the function random. But you can also use parts.

@@ -20,7 +20,7 @@ class A_star():
         costs_tup = (normal_cost, intersection_cost, collision_cost, gate_cost, sky_cost)
         Set sky_cost to -1 to make upward movements free.
     """
-    def __init__(self, grid, net, scary_dict, costs_tup=(1,300,100000,0,0)):
+    def __init__(self, grid, net, scary_dict, costs_tup):
         self.net = net
         self.begin_coordinate, self.end_coordinate = self.net.get_coordinates()
         self.grid = grid

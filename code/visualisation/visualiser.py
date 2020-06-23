@@ -2,7 +2,7 @@
 visualiser.py
 
 Minor Programmeren, Programmeertheorie, Chips & Circuits
-Misbaksels: Mik Schutte, Sebastiaan van der Laan & Lisa Eindhoven
+Misbaksels: Lisa Eindhoven, Sebastiaan van der Laan & Mik Schutte
 
 This file contains the visualiser function class which creates a
 3D plot showing the grid, the gates and the paths that traverse 
