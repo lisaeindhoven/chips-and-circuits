@@ -61,10 +61,8 @@ def conflict_analysis(grid, nets):
 
     # Add both conflicting nets to the dictionary
     for intersection in intersections:
-        print(intersection)
         problem_nets.append(intersection[0])
         problem_nets.append(intersection[1])
-        print(problem_nets)
     return problem_nets
 
 def list_intersections(grid):
