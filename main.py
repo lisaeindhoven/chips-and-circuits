@@ -20,7 +20,7 @@ from code.results import get_results, costs
 from code.algorithms.random_algo import *
 from code.algorithms.dijkstra import Dijkstra
 from code.algorithms.a_star import A_star
-from code.helpers import get_gates_and_nets, get_paths, uncompleted_nets, create_bigpath, scary_gates, reset_net
+from code.helpers import get_gates, get_nets, get_paths, uncompleted_nets, create_bigpath, scary_gates, reset_net, random_netlist
 from code.visualisation.visualiser import visualiser 
 from code.algorithms.select_net import get_min_freedom_net, get_random_nets, get_min_manhattan_net, get_max_manhattan_net
 from code.algorithms.metaclimber import Metaclimber
@@ -28,14 +28,19 @@ from code.algorithms.metaclimber import Metaclimber
 def menu():
     print("Welkom")
 
-    # Specify what gate and what nets csv file to take
+    # Specify what chip to take and save the gates into gate objects
     chip = int(input("Kies de chip (0, 1 of 2): "))
-    gate_coordinates_csv_path = f"data/input/gates&netlists/chip_{chip}/print_{chip}.csv"
+    gate_csv_path = f"data/input/gates&netlists/chip_{chip}/print_{chip}.csv"
+    gates = get_gates(gate_csv_path)
+
+    # Specify what netlist to take and save the nets into nets objects and append the nets to the gates
     netlist = int(input("Kies de netlist(1, 2 of 3): ")) + 3 * chip
-    gate_connections_csv_path = f"data/input/gates&netlists/chip_{chip}/netlist_{str(netlist)}.csv"
-    
-    # Get gates and nets list with all the gates and nets
-    gates, nets = get_gates_and_nets(gate_coordinates_csv_path, gate_connections_csv_path)
+    netlist_method = int(input("Wilt u een random netlist (0) gebruiken of een bestaande (1)? "))
+    netlist_csv_path = f"data/input/gates&netlists/chip_{chip}/netlist_{str(netlist)}.csv"
+    if netlist_method == 1:
+        gates, nets = get_nets(gates, netlist_csv_path)
+    else:
+        random_netlist(gates, netlist_csv_path)
 
     # Create a matrix of the grid with all the gates
     grid = Grid(gates)
@@ -107,7 +112,7 @@ def menu():
                 costs_tup=(1,0,100000,0,0)
             # Hilclimber
             elif algorithm == 7:
-                cost_tup(1,300,100000,0,0)
+                costs_tup=(1,300,100000,0,0)
 
             if "dijkstra" in algorithm_dict[str(algorithm)]:
                 dijk = Dijkstra(grid, net, scary_dict, costs_tup)
@@ -116,13 +121,13 @@ def menu():
                 a_star = A_star(grid, net, scary_dict, costs_tup)
                 path = a_star.search()
             
-                if algorithm == 7:
-                    total_costs, wire_count, intersection_count = costs(nets, grid)
-                    print(f"First run (avoid) costs are {total_costs}, made up of {wire_count} wirepieces and {intersection_count} intersections.")
-                    
-                    grid, nets = Metaclimber.hilldescent(grid, nets, scary_dict, gates)
-                    total_costs, wire_count, intersection_count = costs(nets, grid)
-                    print(f"Hilldescent completed. Costs are {total_costs}, made up of {wire_count} wirepieces and {intersection_count} intersections.")
+    if algorithm == 7:
+        total_costs, wire_count, intersection_count = costs(nets, grid)
+        print(f"First run (avoid) costs are {total_costs}, made up of {wire_count} wirepieces and {intersection_count} intersections.")
+        
+        grid, nets = Metaclimber.hilldescent(grid, nets, scary_dict, gates)
+        total_costs, wire_count, intersection_count = costs(nets, grid)
+        print(f"Hilldescent completed. Costs are {total_costs}, made up of {wire_count} wirepieces and {intersection_count} intersections.")
 
     # Great bigpath for the visualisation
     bigpath = create_bigpath(nets)

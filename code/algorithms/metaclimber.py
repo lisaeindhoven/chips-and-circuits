@@ -11,7 +11,7 @@ contains intelligent hillclimbing tools
 import copy
 
 from code.algorithms.a_star import A_star
-from code.helpers import get_gates_and_nets, get_paths, uncompleted_nets, create_bigpath, scary_gates, reset_net
+from code.helpers import get_gates, get_nets, get_paths, uncompleted_nets, create_bigpath, scary_gates, reset_net
 from code.results import costs, list_intersections, conflict_analysis, count_intersections
 from code.algorithms.select_net import get_min_freedom_net
 from code.visualisation.visualiser import visualiser 

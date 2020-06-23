@@ -12,20 +12,22 @@ from .models.grid import Grid
 from .models.nets import Nets
 from .algorithms.random_algo import find_options, filter_options
 
-def get_gates_and_nets(gate_coordinates_csv_path, gate_connections_csv_path):
+def get_gates(gate_csv_path):
     """ Returns a dictionary with the gate number, coordinate and connected gates.
     """
     # Get coordinates
-    with open(gate_coordinates_csv_path, mode='r') as f:
+    with open(gate_csv_path, mode='r') as f:
         reader = csv.reader(f)
         gates = []
         for row in reader:
             if row[0] != "chip":
                 gate = Gate(row[0], row[1], row[2])
                 gates.append(gate)
+    return gates
 
-    # Get connections
-    with open(gate_connections_csv_path, mode='r') as f:
+def get_nets(gates, netlist_csv_path):
+    # Get netlisit and save them
+    with open(netlist_csv_path, mode='r') as f:
         reader = csv.reader(f)
         count = 1
         nets = []
@@ -37,6 +39,16 @@ def get_gates_and_nets(gate_coordinates_csv_path, gate_connections_csv_path):
                 nets.append(net)
                 count += 1
     return gates, nets
+
+def random_netlist(gates, netlist_csv_path):
+    with open(netlist_csv_path) as f:
+        net_count = sum(1 for line in f) - 1
+    
+    nets = []
+
+    for net_id in range(net_count):
+        print(net_id)
+
 
 def get_paths(path_csv):
     """ Gets the path coordinates from an output.csv file.
@@ -84,4 +96,4 @@ def reset_net(grid, net):
     del net.begin_gate.wires[net.id]
     del net.end_gate.wires[net.id]
     grid.reset_net(net)
-    net.reset_wires() 
+    net.reset_wires()
