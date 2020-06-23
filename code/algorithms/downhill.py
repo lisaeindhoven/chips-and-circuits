@@ -34,4 +34,6 @@ def conflict_remover(grid, nets):
         for net in problem_nets:
             removed_nets.append(net)
             reset_net(grid, net)
+        
+        grid.collision = False
     return removed_nets
