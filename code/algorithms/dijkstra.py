@@ -2,10 +2,11 @@
 dijkstra.py
 
 Minor Programmeren, Programmeertheorie, Chips & Circuits
-Misbaksels: Mik Schutte, Sebastiaan van der Laan & Lisa Eindhoven
+Misbaksels: Lisa Eindhoven, Sebastiaan van der Laan & Mik Schutte
 
 This file contains the dijkstra class which searches for the shortest
-path from gate to gate.
+path from gate to gate by exploring all the options
+and tracking back to the start upon arriving at its goal.
 """
 import queue, math
 from code.models.gates import Gate

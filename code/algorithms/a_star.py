@@ -2,7 +2,7 @@
 a_star.py
 
 Minor Programmeren, Programmeertheorie, Chips & Circuits
-Misbaksels: Mik Schutte, Sebastiaan van der Laan & Lisa Eindhoven
+Misbaksels: Lisa Eindhoven, Sebastiaan van der Laan & Mik Schutte
 
 This file contains the A* class which uses heuristics to be more awesome
 than the dijkstra shortest path algorithm.
