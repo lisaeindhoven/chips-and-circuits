@@ -11,7 +11,7 @@ and tracking back to the start upon arriving at its goal.
 import queue, math
 from code.models.gates import Gate
 from code.algorithms.a_star import A_star
-from code.algorithms.random_algo import find_options, filter_options
+from code.helpers import find_options, filter_options
 
 class Dijkstra(A_star):
     """ Class containing dijkstra's shortes path algorithm which 

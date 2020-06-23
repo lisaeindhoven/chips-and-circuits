@@ -20,7 +20,7 @@ from code.results import get_results, costs
 from code.algorithms.random_algo import *
 from code.algorithms.dijkstra import Dijkstra
 from code.algorithms.a_star import A_star
-from code.helpers import get_gates, get_nets, get_paths, uncompleted_nets, create_bigpath, scary_gates, reset_net, random_netlist
+from code.helpers import get_gates, get_nets, get_paths, uncompleted_nets, create_bigpath, scary_gates, reset_net, random_netlist, find_options, filter_options
 from code.visualisation.visualiser import visualiser 
 from code.algorithms.select_net import get_min_freedom_net, get_random_nets, get_min_manhattan_net, get_max_manhattan_net
 from code.algorithms.metaclimber import Metaclimber
