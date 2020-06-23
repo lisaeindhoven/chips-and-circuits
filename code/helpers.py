@@ -57,7 +57,7 @@ def random_netlist(gates, netlist_csv_path):
     for net_id in range(1, net_count + 1):
         # Find a correct begin gate
         while True:
-            begin_gate = rnd.randint(0, len(gates))
+            begin_gate = rnd.randint(0, len(gates) - 1)
             if (len(gates[begin_gate].connections) <= 4):
                 break
 
@@ -67,7 +67,7 @@ def random_netlist(gates, netlist_csv_path):
         # Find a correct end gate
         while True:
             end_gate = end_gate_options.pop()
-            if (end_gate != begin_gate) and (not (end_gate in gates[begin_gate].connections)) and (len(gates[end_gate].connections) <= 4):
+            if (end_gate != begin_gate) and (not (end_gate in gates[begin_gate - 1].connections)) and (len(gates[end_gate].connections) <= 4):
                 break
 
         # Save the net and print the net 
