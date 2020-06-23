@@ -6,11 +6,6 @@ Misbaksels: Lisa Eindhoven, Sebastiaan van der Laan & Mik Schutte
 
 This file is the main python file
 """
-# TODO: op elke pagina imports goedkrijgen
-# TODO: elke bestand checken op todos en prints
-# TODO: git issues uitwerken voor t inleveren
-# TODO: allemaal keer de code door kijken of het duidelijk is
-# import random as rnd
 import csv
 import math
 import numpy as np
@@ -143,7 +138,6 @@ def menu():
         total_costs, wire_count, intersection_count = costs(nets, grid)
         print(f"Costs prior to hilldescent are {total_costs}, made up of {wire_count} wirepieces and {intersection_count} intersections.")
 
-        # TODO grid, nets hoeven niet terug te krijgen
         hilldescent(grid, nets, scary_dict, gates)
         print(f"Hilldescent completed. ")
 
