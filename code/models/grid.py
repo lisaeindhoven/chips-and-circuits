@@ -4,7 +4,7 @@ grid.py
 Minor Programmeren, Programmeertheorie, Chips & Circuits
 Misbaksels: Lisa Eindhoven, Sebastiaan van der Laan & Mik Schutte
 
-This file contains the class grid and all the functions of the class
+This file contains the grid class and all functions a grid could want.
 """
 import numpy as np
 
@@ -75,4 +75,3 @@ class Grid():
                 for saved_net in self.matrix[coordinate]:
                     if saved_net == net:
                         self.matrix[coordinate].remove(saved_net)
-                        
