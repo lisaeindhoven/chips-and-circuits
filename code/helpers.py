@@ -13,7 +13,7 @@ from .models.grid import Grid
 from .models.nets import Nets
 
 def get_gates(gate_csv_path):
-    """ Returns a dictionary with the gate number, coordinate and connected gates.
+    """ Returns a list of gates with the gate information.
     """
     # Get coordinates
     with open(gate_csv_path, mode='r') as f:
@@ -26,6 +26,8 @@ def get_gates(gate_csv_path):
     return gates
 
 def get_nets(gates, netlist_csv_path):
+    """ Returns a list of nets and an updates list of gates with all the information.
+    """
     # Get netlisit and save them
     with open(netlist_csv_path, mode='r') as f:
         reader = csv.reader(f)
@@ -43,6 +45,9 @@ def get_nets(gates, netlist_csv_path):
     return gates, nets
 
 def random_netlist(gates, netlist_csv_path):
+    """ Returns a list of nets and an updates list of gates with all the information.
+        Netlist is self random made.
+    """
     # Create random netlist and save them in the objects, gates and nets
 
     # Count the amount of nets
@@ -127,9 +132,6 @@ def reset_net(grid, net):
     net.reset_wires()
 
 def find_options(current_coordinates):
-    # TODO: maak van dit een algemene functie in een bestand algo_helpers.py zodat elke algo dit kan aanroepen
-    # en random gaat ze shufflen dan
-    # o en we kunnen dan oo wel gelijk find options en filter options in elkaar zetten, dus bij het toevoegen kijken of t mag of niet
     """ List path options in all six directions, shuffled.
     """
     options = []

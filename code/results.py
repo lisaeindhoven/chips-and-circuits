@@ -99,8 +99,8 @@ def save_results(save_folder, chip_name, nets, total_costs):
         writer = csv.writer(f)
         writer.writerow(["net","wires"])
 
+        # For check50 the csv can't handle spaces, so filter the spaces
         for net in nets:
-            # TODO: kan dit makkelijker zonder spaties?
             net.wires = str(net.wires)
             net.wires = net.wires.replace(" ", "")
             connection = str(net.get_connection())
