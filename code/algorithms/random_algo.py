@@ -40,6 +40,7 @@ def create_net(random_net, nets, grid):
 
         # Find path options
         options = find_options(current_coordinates)
+        rnd.shuffle(options)
         options = filter_options(options, grid)
 
         # This boolean will change if there if a path is found and chosen
@@ -87,7 +88,6 @@ def find_options(current_coordinates):
             temp_coordinate = copy.deepcopy(coordinate)
             temp_coordinate[coordinate_index] += neighbourcoordinate
             options.append(tuple(temp_coordinate))
-    rnd.shuffle(options)
     return options
 
 def filter_options(options, grid):

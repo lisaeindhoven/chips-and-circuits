@@ -44,23 +44,32 @@ def get_nets(gates, netlist_csv_path):
     return gates, nets
 
 def random_netlist(gates, netlist_csv_path):
+    # Create random netlist and save them in the objects, gates and nets
+
+    # Count the amount of nets
     with open(netlist_csv_path) as f:
         net_count = sum(1 for line in f) - 1
     
     nets = []
 
+    # Create a net and save them in nets and gates
     for net_id in range(1, net_count + 1):
-        begin_gate = rnd.randint(0, len(gates) - 1)
-
+        # Find a correct begin gate
         while True:
-            end_gate_options = range(0, len(gates - 1))
-            random.shuffle(end_gate_options)
-            end_gate = end_gate_options.pop
-            if (end_gate != begin_gate) and (not (end_gate in gates[begin_gate].connections)) and (len(gates[begin_gate].connections) <= 4) and (len(gates[end_gate].connections) <= 4):
-                break
-            if end_gate_options == []:
+            begin_gate = rnd.randint(0, len(gates) - 1)
+            if (len(gates[begin_gate].connections) <= 4):
                 break
 
+        end_gate_options = list(range(0, len(gates) - 1))
+        rnd.shuffle(end_gate_options)
+
+        # Fnd a correct end gate
+        while True:
+            end_gate = end_gate_options.pop()
+            if (end_gate != begin_gate) and (not (end_gate in gates[begin_gate].connections)) and (len(gates[end_gate].connections) <= 4):
+                break
+
+        # Save the net and print the net 
         net = Nets(net_id, gates[begin_gate], gates[end_gate])
         gates[begin_gate].add_net(net)
         gates[begin_gate].add_connection(end_gate)
