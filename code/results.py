@@ -4,7 +4,7 @@ results.py
 Minor Programmeren, Programmeertheorie, Chips & Circuits
 Misbaksels: Lisa Eindhoven, Sebastiaan van der Laan & Mik Schutte
 
-Use this file to check and save results.
+Use this file to check and save results/parameters.
 """
 import csv, os, errno, functools
 import numpy as np
@@ -18,11 +18,11 @@ def get_results(save_folder, chip_name, nets, grid):
     total_costs, wire_count, intersection_count = costs(nets, grid)
     save_results(save_folder, chip_name, nets, total_costs)
 
-    # Check if collision on grid
+    # Check if there's a collision on grid
     if grid.collision is False:
         return f"Kosten zijn {total_costs}, voortkomend uit {wire_count} draad-eenheden en {intersection_count} intersections."
     else:
-        return f"Een collision is gemaakt, het algoritme heeft gefaald."
+        return f"Een collision is gemaakt, het algoritme kon een pad niet zonder leggen."
 
 def costs(nets, grid):
     """ Returns total cost, number of wires and intersections.
@@ -76,7 +76,6 @@ def list_intersections(grid):
 def save_results(save_folder, chip_name, nets, total_costs):
     """ Creates folder name with current date and time.
     """
-    # Get the current date and time for the file name
     now = datetime.now()
     date_time = now.strftime("%m.%d.%Y_%H.%M.%S")
     result_doc = save_folder + "output_" + date_time + ".csv"
@@ -93,7 +92,7 @@ def save_results(save_folder, chip_name, nets, total_costs):
         writer = csv.writer(f)
         writer.writerow(["net","wires"])
 
-        # For check50 the csv can't handle spaces, so filter the spaces
+        # Filter spaces for check50
         for net in nets:
             net.wires = str(net.wires)
             net.wires = net.wires.replace(" ", "")
