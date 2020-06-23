@@ -81,7 +81,7 @@ def scary_gates(gate_list):
 def reset_net(grid, net):
     """ Reset wires in grid and net example.
     """
-    del net.begin_gate.wires[net.id]
-    del net.end_gate.wires[net.id]
+    net.begin_gate.wires.pop(net.id, None)
+    net.end_gate.wires.pop(net.id, None)
     grid.reset_net(net)
     net.reset_wires() 
