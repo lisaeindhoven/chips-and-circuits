@@ -78,6 +78,9 @@ def menu():
         # Let the user choose the way the nets are selected
         print("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -",
         "Kies de net keuze (1, 2 of 3) of 0 voor meer informatie",
+        "Let op, alle opties maken gebruik van een random keuze als er meerdere mogelijkheden zijn,",
+        "hierdoor is het verstandig meerdere keren hetzelfde te runnen om het beste resultaat te krijgen.",
+        "De resultaten zijn terug te vinden in de map data/results.",
         sep="\n")
         select_net = int(input("Optie 1 heeft onze voorkeur: "))
         if select_net == 0:
@@ -167,10 +170,9 @@ def menu():
 
 
 if __name__ == "__main__":
-    menu()
-    # try:
-    #     menu()
-    # except:
-    #     print("Het lijkt erop dat er iets fout is gegaan. Probeer het nog een keer of contacteer de Misbaksels!",
-    #     "Als je wilt weten wat er precies fout gaat, kan deze try except uitgezet worden, zodat het de main alleen het menu aanroept en de orginele foutmelding in de terminal verschijnt!",
-    #     sep="\n")
+    try:
+        menu()
+    except:
+        print("Het lijkt erop dat er iets fout is gegaan. Probeer het nog een keer of contacteer de Misbaksels!",
+        "Als je wilt weten wat er precies fout gaat, kan deze try except uitgezet worden, zodat het de main alleen het menu aanroept en de orginele foutmelding in de terminal verschijnt!",
+        sep="\n")
