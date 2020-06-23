@@ -149,4 +149,3 @@ class A_star():
             path that was laid.
         '''
         self.expand_frontier()
-        return self.make_path()

@@ -48,7 +48,7 @@ def menu():
     algorithm_dict = {
         "1": "random",
         "2": "dijkstra",
-        "3": "A_star",
+        "3": "a_star",
         "4": "avoid_gates",
         "5": "skyscraper",
         "6": "hilldescent",
@@ -62,7 +62,7 @@ def menu():
     }
 
     # Choose and run algorithm
-    algorithm = int(input("Kies het algoritme (1, 2, 3, 4, 5, 6, of 7) of 0 voor meer informatie: "))
+    algorithm = int(input("Kies het algoritme (1, 2, 3, 4, 5, 6, of 7) of 0 voor meer informatie (of lees de read me voor een nog duidelijkere omschrijving van de algoritmes): "))
     if algorithm == 0:
         print(algorithm_dict)
         algorithm = int(input("Kies het algoritme (1, 2, 3, 4, 5, 6, of 7): "))
@@ -117,10 +117,10 @@ def menu():
             # Lay paths
             if "dijkstra" in algorithm_dict[str(algorithm)]:
                 dijk = Dijkstra(grid, net, scary_dict, costs_tup)
-                path = dijk.search()
+                dijk.search()
             else:
                 a_star = A_star(grid, net, scary_dict, costs_tup)
-                path = a_star.search()
+                a_star.search()
             
     # TODO comment met uiteg in dit hele stuk
     # The wombo combo
