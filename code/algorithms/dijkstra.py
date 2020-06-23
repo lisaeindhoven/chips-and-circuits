@@ -25,8 +25,8 @@ class Dijkstra(A_star):
         frontier.put(self.begin_coordinate, 0)
         self.archive = {}
         self.archive[self.begin_coordinate] = None
-        current_cost = {}
-        current_cost[self.begin_coordinate] = 0
+        self.current_cost = {}
+        self.current_cost[self.begin_coordinate] = 0
 
         # Pick neighbour from the frontier and expand it by adding its
         # own neighbours to the frontier
@@ -47,11 +47,11 @@ class Dijkstra(A_star):
 
                 # Determine move's cost
                 cost = self.check_neighbour(neighbour, current)
-                new_cost = current_cost[current] + cost 
+                new_cost = self.current_cost[current] + cost 
 
                 # Create archive shortest routes
-                if (neighbour not in current_cost or new_cost < current_cost[neighbour]):
-                    current_cost[neighbour] = new_cost
+                if (neighbour not in self.current_cost or new_cost < self.current_cost[neighbour]):
+                    self.current_cost[neighbour] = new_cost
                     priority = new_cost
                     frontier.put(neighbour, priority)
                     self.archive[neighbour] = current
