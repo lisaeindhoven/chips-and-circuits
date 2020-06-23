@@ -49,7 +49,7 @@ class A_star():
 
             # Stop expanding frontier when end-coordinate is reached
             if current is self.end_coordinate:
-                break
+                return
 
             # Don't allow a path to go through a gate
             if (isinstance(self.grid.matrix[current], Gate) and current != self.begin_coordinate
@@ -71,7 +71,7 @@ class A_star():
                     self.archive[neighbour] = current
 
         # Check for dead-ends
-        if (frontier.empty() and self.end_coordinate not in self.archive.values()):
+        if self.end_coordinate not in self.archive.keys():
             print('Pad kon niet gelegd worden. De run stopt.')
             exit()
 
