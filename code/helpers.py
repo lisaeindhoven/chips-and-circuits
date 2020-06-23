@@ -11,7 +11,6 @@ import random as rnd
 from .models.gates import Gate
 from .models.grid import Grid
 from .models.nets import Nets
-from .algorithms.random_algo import find_options, filter_options
 
 def get_gates(gate_csv_path):
     """ Returns a dictionary with the gate number, coordinate and connected gates.
@@ -77,9 +76,7 @@ def random_netlist(gates, netlist_csv_path):
         gates[end_gate].add_connection(begin_gate)
         nets.append(net)
         print(f"Net {net_id} gaat van {begin_gate + 1} naar {end_gate + 1}")
-
     return gates, nets
-
 
 def get_paths(path_csv):
     """ Gets the path coordinates from an output.csv file.
@@ -128,3 +125,28 @@ def reset_net(grid, net):
     net.end_gate.wires.pop(net.id, None)
     grid.reset_net(net)
     net.reset_wires()
+
+def find_options(current_coordinates):
+    # TODO: maak van dit een algemene functie in een bestand algo_helpers.py zodat elke algo dit kan aanroepen
+    # en random gaat ze shufflen dan
+    # o en we kunnen dan oo wel gelijk find options en filter options in elkaar zetten, dus bij het toevoegen kijken of t mag of niet
+    """ List path options in all six directions, shuffled.
+    """
+    options = []
+    for coordinate_index in range(0, 3):
+        
+        # Determine options neighbouring the current coordinate
+        for neighbourcoordinate in range(-1, 2, 2):
+            temp_coordinate = [current_coordinates[0], current_coordinates[1], current_coordinates[2]]
+            temp_coordinate[coordinate_index] += neighbourcoordinate
+            options.append(tuple(temp_coordinate))
+    return options
+
+def filter_options(options, grid):
+    """ Check if options are within grid parameters.
+    """
+    valid_options = []
+    for option in options:
+        if not (min(option) <= -1 or option[0] >= grid.x_dim or option[1] >= grid.y_dim or option[2] >= grid.z_dim):
+            valid_options.append(option)
+    return valid_options
