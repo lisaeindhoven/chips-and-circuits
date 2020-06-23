@@ -61,26 +61,24 @@ class Metaclimber:
         pass
     # select criterium to erase path /// use nets.reset_wires with helpers.conflict_analysis or 
     def hilldescent(grid, nets, scary_dict, gates):
-        """ descents towards new lows!
-            rebuilds nets and keeps the score if it improves """
-        old_costs, y, z = costs(nets, grid)
-        print(old_costs)
-        temp_grid = copy.deepcopy(grid)
-        temp_nets = copy.deepcopy(nets)
-        
-        # Try to improve each net
+        """ Descents towards new lows!
+            Rebuilds nets one at a time.
+            Uncomment for a score check to keep new or reset old path,
+            but our A-star never delivers a worse result!
+            Conservatives change line 80 ">" into ">=" """  
         for net in nets:
+            # temp_grid = copy.deepcopy(grid)
+            # temp_nets = copy.deepcopy(nets)
+            # old_costs, y, z = costs(nets, grid)
+            # print(f"Old costs: {old_costs}")
             reset_net(grid, net)
-            old_costs, y, z = costs(nets, grid)
-            print(f"old costs: {old_costs}")
             a_star = A_star(grid, net, scary_dict)
             a_star.search()
-            new_costs, y, z = costs(nets, grid)
-            print(f"new costs: {new_costs}")
-            if new_costs > old_costs:
-                grid = copy.deepcopy(temp_grid)
-                nets = copy.deepcopy(temp_nets)
-
+            # new_costs, y, z = costs(nets, grid)
+            # print(f"New costs: {new_costs}")
+            # if new_costs > old_costs:
+            #     grid = copy.deepcopy(temp_grid)
+            #     nets = copy.deepcopy(temp_nets)
         return grid, nets
 
     def conflict_remover(grid, nets):
