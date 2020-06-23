@@ -68,9 +68,7 @@ class Grid():
         """ Remove net from grid-matrix.
         """
         for coordinate in net.wires:
-            net_list = self.matrix[coordinate] 
-            if isinstance(net_list, list):
-                for saved_net in net_list:
+            if isinstance(self.matrix[coordinate], list):
+                for saved_net in self.matrix[coordinate]:
                     if saved_net == net:
-                        net_list.remove(saved_net)
-            self.matrix[coordinate] = net_list
+                        self.matrix[coordinate].remove(saved_net)
