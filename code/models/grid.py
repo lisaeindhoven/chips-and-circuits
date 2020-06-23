@@ -17,6 +17,7 @@ class Grid():
         self.z_dim = 8
         self.matrix = self.make_matrix(gate_list)
         self.fill_matrix(gate_list)
+        self.collision = False
 
     def make_matrix(self, gate_list):
         """ Determines the dimensions of the matrix based on

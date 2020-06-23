@@ -16,10 +16,14 @@ def get_results(save_folder, chip_name, nets, grid):
         as a file called output with date and time.
         Returns a nice f-string of costs.
     """
-    #TODO yet to add actual collisions
     total_costs, wire_count, intersection_count = costs(nets, grid)
     save_results(save_folder, chip_name, nets, total_costs)
-    return f"Costs are {total_costs}, made up of {wire_count} wirepieces and {intersection_count} intersections."
+
+    # Check if collision on grid
+    if grid.collision is False:
+        return f"Kosten zijn {total_costs}, voortkomend uit {wire_count} draad-eenheden en {intersection_count} intersections."
+    else:
+        return f"Een collision is gemaakt, het algorithme heeft gefaald."
 
 def costs(nets, grid):
     """ Returns total cost, number of wires and intersections.

@@ -39,8 +39,8 @@ class A_star():
         frontier.put(self.begin_coordinate, 0)
         self.archive = {}
         self.archive[self.begin_coordinate] = None
-        current_cost = {}
-        current_cost[self.begin_coordinate] = 0
+        self.current_cost = {}
+        self.current_cost[self.begin_coordinate] = 0
 
         # Pick neighbour from the frontier and expand it by adding its
         # own neighbours to the frontier
@@ -61,15 +61,15 @@ class A_star():
 
                 # Determine move's cost
                 cost = self.check_neighbour(neighbour, current)
-                new_cost = current_cost[current] + cost 
+                new_cost = self.current_cost[current] + cost 
 
                 # Create archive of shortest routes
-                if (neighbour not in current_cost or new_cost < current_cost[neighbour]):
-                    current_cost[neighbour] = new_cost
+                if (neighbour not in self.current_cost or new_cost < self.current_cost[neighbour]):
+                    self.current_cost[neighbour] = new_cost
                     priority = new_cost + measure(neighbour, self.end_coordinate)
                     frontier.put(neighbour, priority)
                     self.archive[neighbour] = current
-                              
+
         # Check for dead-ends
         if (frontier.empty() and self.end_coordinate not in self.archive.values()):
             print('Pad kon niet gelegd worden. De run stopt.')
@@ -87,6 +87,11 @@ class A_star():
         while current != self.begin_coordinate:
             path.append(current)
             current = self.archive[current]
+
+            # Check if a collision is made
+            if self.current_cost[current] >= self.costs_tup[2]:
+                self.grid.collision = True
+
         path.append(self.begin_coordinate)
         path.reverse()
 
