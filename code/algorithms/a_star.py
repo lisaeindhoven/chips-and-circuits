@@ -108,7 +108,7 @@ class A_star():
         self.grid.matrix[self.begin_coordinate].wires[self.net.id] = path
         self.grid.matrix[self.end_coordinate].wires[self.net.id] = path
 
-        print(f"Net {self.net.id} is gelegd tussen gate {self.net.begin_gate.id} en {self.net.end_gate.id}!")
+        print(f"Net {self.net.id} is gelegd tussen gate {self.net.begin_gate.id} en {self.net.end_gate.id}.")
 
     def check_neighbour(self, neighbour, current):
         """ Takes in neighbour and current coordinate and returns 
