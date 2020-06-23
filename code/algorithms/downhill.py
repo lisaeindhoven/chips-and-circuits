@@ -15,6 +15,7 @@ def hilldescent(grid, nets, scary_dict, gates):
         No comparison needed because A* always delivers!
         Returns updates grid and nets
     """  
+    grid.collision = False
     for net in nets:
         reset_net(grid, net)
         a_star = A_star(grid, net, scary_dict)
