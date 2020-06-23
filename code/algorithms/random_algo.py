@@ -80,12 +80,11 @@ def find_options(current_coordinates):
     """ List path options in all six directions, shuffled.
     """
     options = []
-    coordinate = [current_coordinates[0], current_coordinates[1], current_coordinates[2]]
-    for coordinate_index in range(len(coordinate)):
+    for coordinate_index in range(0, 3):
         
         # Determine options neighbouring the current coordinate
         for neighbourcoordinate in range(-1, 2, 2):
-            temp_coordinate = copy.deepcopy(coordinate)
+            temp_coordinate = [current_coordinates[0], current_coordinates[1], current_coordinates[2]]
             temp_coordinate[coordinate_index] += neighbourcoordinate
             options.append(tuple(temp_coordinate))
     return options
