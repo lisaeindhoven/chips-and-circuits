@@ -88,6 +88,8 @@ class A_star():
         # Add the wire path to the net
         self.net.wires = path
         self.net.completed = True
+        print(f"Net is gelegd tussen gate {self.net.begin_gate.id} en {self.net.end_gate.id}")
+        
         
         # Place the nets along the path in the grid
         self.intersection_count = 0

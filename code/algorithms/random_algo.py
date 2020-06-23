@@ -83,6 +83,7 @@ def reached_end(current_option, grid, current_net):
     if item == current_net.end_gate:
         current_net.add_wire(current_option)
         current_net.completed = True
+        print(f"Net is gelegd tussen gate {current_net.begin_gate.id} en {current_net.end_gate.id}")
         return True, copy.deepcopy(current_option)
     return False, current_option
 
